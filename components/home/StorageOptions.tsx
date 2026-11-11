@@ -1,6 +1,6 @@
-// "Storage Options" on sand: section number and heading, then the three kinds of storage as a numbered index
-// (rows between 1px rules: big number, title, text) beside a 2x2 grid of square facility photos that open the
-// lightbox. Stacked from 1100px down. Motion: heading rises in, index rows come in one after another (Stagger),
+// "Storage Options" on mist: section number and heading, then the three kinds of storage as a numbered list of
+// glossy rounded cards (.card: big blue number, title, text) beside a 2x2 grid of rounded facility photos that
+// open the lightbox. Stacked from 1100px down. Motion: heading rises in, index rows come in one after another (Stagger),
 // each photo is uncovered by a sliding curtain (Curtain, delays 0 / .1 / .2 / .3s) inside components/home/Gallery.
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import type { SiteContent } from "@/lib/content-schema";
@@ -20,13 +20,16 @@ export function StorageOptions({ content, no }: { content: SiteContent; no: stri
         <div className="h-options-grid">
           <Stagger as="ol" className="h-index" gap={0.12}>
             {storageOptions.items.map((item, i) => (
-              <StaggerItem as="li" className="h-index-row" key={`${i}-${item.title}`}>
-                <span className="h-index-no" aria-hidden="true">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div className="h-index-body">
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
+              <StaggerItem as="li" className="h-index-item" key={`${i}-${item.title}`}>
+                {/* The card face sits inside the animated item: Motion owns the item's transform. */}
+                <div className="h-index-row card">
+                  <span className="h-index-no" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div className="h-index-body">
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                  </div>
                 </div>
               </StaggerItem>
             ))}

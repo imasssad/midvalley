@@ -1,6 +1,6 @@
-// "Our Locations", moved up right under the value strip: section number on a rule, the heading, then the two
-// location tickets side by side (one column on phones). Motion: the heading block rises in, then the tickets
-// come in one after another (Stagger); each ticket lifts onto its offset block on hover (.card.lift, CSS).
+// "Our Locations", right after About: section number on a rule, the heading, then the two glossy location cards
+// side by side (one column on phones). Motion: the heading block rises in, then the cards come in one after
+// another (Stagger); each card lifts onto a soft blue glow on hover (.card.lift, CSS).
 import { LocationCard } from "@/components/LocationCard";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import type { SiteContent } from "@/lib/content-schema";

@@ -1,6 +1,7 @@
-// "About Mid Valley Storage" on bone: a big split. Left: the small caps label, the homepage's ONE h1, the first
-// paragraph as a lede and the rest as body text. Right: the lobby photo, tall (4:5; 4:3 on phones), on an offset
-// blue block. Stacked from 900px down (text first).
+// "About Mid Valley Storage" on mist, right after the value strip so the homepage's ONE h1 is its first section
+// heading: a big split. Left: the small caps label, the h1, the first paragraph as a lede and the rest as body
+// text. Right: the lobby photo, tall (4:5; 4:3 on phones), rounded with a soft blue glow (.frame). Stacked from
+// 900px down (text first).
 // Motion: the text blocks rise in one after another (Reveal, 0 / .1s), the photo block slides in from the right
 // (Reveal), and the photo drifts slower than the page while it crosses the screen (Parallax, ±8%).
 import { Reveal } from "@/components/motion/Reveal";
@@ -12,7 +13,7 @@ export function AboutIntro({ content, no }: { content: SiteContent; no: string }
   const { about } = content.home;
   const [first, ...rest] = about.paragraphs;
   return (
-    <section id="about" className="section bg-bone h-about" aria-labelledby="home-about-heading">
+    <section id="about" className="section bg-sand h-about" aria-labelledby="home-about-heading">
       <div className="wrap h-about-grid">
         <div className="h-about-text">
           <Reveal className="h-about-head">

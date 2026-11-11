@@ -1,6 +1,6 @@
 // Customer reviews. Hidden until the admin adds reviews (the old site's section was empty, and we never invent
 // any): renders nothing while content.testimonials.items is empty. When there are reviews: section number and
-// heading, then square white cards on hairlines (3 across, 1 on phones) that lift on hover.
+// heading, then glossy rounded cards (.card, 3 across, 1 on phones) that lift onto a blue glow on hover.
 // Motion: heading rises in (Reveal), the cards come in one after another (Stagger).
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import type { SiteContent } from "@/lib/content-schema";

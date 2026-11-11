@@ -3,9 +3,12 @@
 // Facility photo gallery: a 2x2 grid of square thumbnail buttons that open a lightbox (native <dialog>, no
 // library). The dialog gives focus trapping and Escape for free; arrow keys and the buttons step through the
 // photos, and closing returns focus to the thumbnail of the photo last shown.
+// Thumbnails are rounded (--radius-photo) on a soft blue glow; the lightbox is a rounded glassy panel on navy with
+// rounded glossy buttons. The photo description is read once (the img alt); the visible caption is aria-hidden
+// and only the counter ("2 of 4") is announced, from its own live region.
 // Motion: each thumbnail is uncovered by a sliding curtain when it scrolls into view (Curtain, staggered 0.1s);
-// on hover the photo zooms to 1.05 and a thin orange inner rule fades in; a tap presses it to 0.98 (CSS,
-// transform/opacity only). The lightbox fades in (CSS).
+// on hover it lifts onto a stronger glow, the photo zooms to 1.05 and a white glossy rim fades in; a tap presses
+// it to 0.98 (CSS, transform/opacity only). The lightbox fades in (CSS).
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/Icon";
@@ -28,6 +31,8 @@ export function Gallery({ photos, labels, dialogLabel }: Props) {
   const [index, setIndex] = useState<number | null>(null);
   const count = photos.length;
   const current = index === null ? null : photos[index];
+  const countText =
+    index === null ? "" : labels.photoCount.replace("{current}", String(index + 1)).replace("{total}", String(count));
 
   // Open the dialog once its content has rendered, so focus lands on the close button (first in the dialog).
   useEffect(() => {
@@ -85,7 +90,7 @@ export function Gallery({ photos, labels, dialogLabel }: Props) {
       >
         {current && index !== null && (
           <figure className="h-lb-figure" data-dismiss>
-            <button type="button" className="h-lb-btn h-lb-close" onClick={close}>
+            <button type="button" className="btn btn-light h-lb-btn h-lb-close" onClick={close}>
               <Icon name="close" size={22} />
               <span className="sr-only">{labels.close}</span>
             </button>
@@ -100,19 +105,22 @@ export function Gallery({ photos, labels, dialogLabel }: Props) {
                 style={{ objectFit: "contain" }}
               />
             </div>
-            <figcaption className="h-lb-caption" aria-live="polite">
-              <span className="h-lb-count">
-                {labels.photoCount.replace("{current}", String(index + 1)).replace("{total}", String(count))}
-              </span>
+            {/* Visible caption, hidden from screen readers: the img alt already gives the description, and the
+                counter is announced by the live region below. */}
+            <figcaption className="h-lb-caption" aria-hidden="true">
+              <span className="h-lb-count">{countText}</span>
               {current.alt && <span>{current.alt}</span>}
             </figcaption>
+            <p className="sr-only" aria-live="polite" aria-atomic="true">
+              {countText}
+            </p>
             {count > 1 && (
               <>
-                <button type="button" className="h-lb-btn h-lb-prev" onClick={() => step(-1)}>
+                <button type="button" className="btn btn-light h-lb-btn h-lb-prev" onClick={() => step(-1)}>
                   <Icon name="chevron" size={24} />
                   <span className="sr-only">{labels.previousPhoto}</span>
                 </button>
-                <button type="button" className="h-lb-btn h-lb-next" onClick={() => step(1)}>
+                <button type="button" className="btn btn-light h-lb-btn h-lb-next" onClick={() => step(1)}>
                   <Icon name="chevron" size={24} />
                   <span className="sr-only">{labels.nextPhoto}</span>
                 </button>

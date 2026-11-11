@@ -1,6 +1,7 @@
-// "Facility Features" as a full-bleed blue band: section number and heading (white), then the intro (sky) beside
-// the boat photo on an offset orange block, then the 12-point checklist in 3 columns (2 on tablet, 1 on phone)
-// with small square peach check marks. The photo is wide (16:10, 5:4 on phones) so the band stays compact.
+// "Facility Features" as a full-bleed glossy blue band: section number and heading (white), then the intro beside
+// the rounded boat photo (.frame), then the 12-point checklist on a glassy rounded panel in 3 columns (2 on
+// tablet, 1 on phone) with round white check marks. The photo is wide (16:10, 5:4 on phones) so the band stays
+// compact.
 // Motion: heading and intro rise in (Reveal), the photo block rises in and its photo moves with parallax (±7%),
 // the checklist items come in one after another (Stagger, 0.05s apart).
 import { Icon } from "@/components/Icon";
@@ -25,7 +26,7 @@ export function FeaturesList({ content, no }: { content: SiteContent; no: string
             <p className="lede">{features.intro}</p>
           </Reveal>
           <Reveal className="h-features-media" delay={0.15}>
-            <div className="frame frame-orange">
+            <div className="frame">
               <Parallax className="h-features-photo" strength={0.07}>
                 <Photo photo={features.photo} className="h-fill" sizes="(max-width: 680px) 92vw, (max-width: 1100px) 46vw, 760px" />
               </Parallax>
