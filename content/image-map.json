@@ -1,0 +1,253 @@
+[
+  {
+    "local": "/images/logo.svg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/Midvalley-Logo.svg",
+    "also_seen_as": [],
+    "used_on": [
+      "header",
+      "footer"
+    ]
+  },
+  {
+    "local": "/images/site-icon.png",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/cropped-Midvalley-mark.png",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/cropped-Midvalley-mark-32x32.png",
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/cropped-Midvalley-mark-192x192.png",
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/cropped-Midvalley-mark-180x180.png"
+    ],
+    "used_on": [
+      "favicon / app icon"
+    ]
+  },
+  {
+    "local": "/images/hero-promo-desktop.png",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2026/08/desktop.png",
+    "also_seen_as": [],
+    "used_on": [
+      "home hero background (desktop)"
+    ]
+  },
+  {
+    "local": "/images/hero-promo-tablet.png",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2026/08/tablet.png",
+    "also_seen_as": [],
+    "used_on": [
+      "home hero background (tablet)"
+    ]
+  },
+  {
+    "local": "/images/hero-promo-mobile.png",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2026/08/mobile.png",
+    "also_seen_as": [],
+    "used_on": [
+      "home hero background (mobile)"
+    ]
+  },
+  {
+    "local": "/images/lobby.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/Lobby11.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/Lobby11-1024x630.jpg"
+    ],
+    "used_on": [
+      "home: About Mid Valley Storage"
+    ]
+  },
+  {
+    "local": "/images/facility-7cc08763-hdr.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08763-HDR.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08763-HDR-300x200.jpg"
+    ],
+    "used_on": [
+      "home: Storage Options gallery",
+      "facilityfeatures: section background",
+      "contact: section background"
+    ]
+  },
+  {
+    "local": "/images/facility-7cc08783.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08783.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08783-300x200.jpg"
+    ],
+    "used_on": [
+      "home: Storage Options gallery",
+      "home: testimonials section background",
+      "about-us: section background",
+      "contact: section background"
+    ]
+  },
+  {
+    "local": "/images/aerial-dji-0050.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/DJI_0050.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/DJI_0050-300x200.jpg"
+    ],
+    "used_on": [
+      "home: Storage Options gallery"
+    ]
+  },
+  {
+    "local": "/images/facility-img-2020.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_2020.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_2020-300x200.jpg"
+    ],
+    "used_on": [
+      "home: Storage Options gallery"
+    ]
+  },
+  {
+    "local": "/images/facility-features.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2019/12/A4D21FCC-AFB1-4D83-B047-FC26C98760DD.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2019/12/A4D21FCC-AFB1-4D83-B047-FC26C98760DD-1024x944.jpg"
+    ],
+    "used_on": [
+      "home: Facility Features"
+    ]
+  },
+  {
+    "local": "/images/large-storage-units.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/04/dover-large-storage-units.jpg",
+    "also_seen_as": [],
+    "used_on": [
+      "footer gallery"
+    ]
+  },
+  {
+    "local": "/images/friendly-staff.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/Service-Final.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/Service-Final-2048x1287.jpg",
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/Service-Final-scaled.jpg"
+    ],
+    "used_on": [
+      "footer gallery",
+      "facilityfeatures: Friendly Staff"
+    ]
+  },
+  {
+    "local": "/images/temperature-controlled.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/Temperature-Controlled11.jpg",
+    "also_seen_as": [],
+    "used_on": [
+      "footer gallery",
+      "facilityfeatures: Temperature Controlled Storage"
+    ]
+  },
+  {
+    "local": "/images/facility-img-20200518.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_20200518_110511-scaled-e1591656308255.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_20200518_110511-scaled-e1591656308255-150x150.jpg"
+    ],
+    "used_on": [
+      "footer gallery",
+      "about-us: slider"
+    ]
+  },
+  {
+    "local": "/images/rv-storage-img-4031.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_4031.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_4031-scaled.jpg"
+    ],
+    "used_on": [
+      "footer gallery",
+      "facilityfeatures: Individual Enclosed RV Storage"
+    ]
+  },
+  {
+    "local": "/images/free-truck.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/freetruck.jpg",
+    "also_seen_as": [],
+    "used_on": [
+      "footer gallery"
+    ]
+  },
+  {
+    "local": "/images/office-elevation.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/Office-Elevation2.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/Office-Elevation2-150x150.jpg"
+    ],
+    "used_on": [
+      "about-us: slider"
+    ]
+  },
+  {
+    "local": "/images/night-full-elevation.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/Night-Full-Elevation1-1.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/Night-Full-Elevation1-1-150x150.jpg"
+    ],
+    "used_on": [
+      "about-us: slider"
+    ]
+  },
+  {
+    "local": "/images/rss.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/RSS.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/RSS-150x150.jpg"
+    ],
+    "used_on": [
+      "about-us: slider"
+    ]
+  },
+  {
+    "local": "/images/keycode-access.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2022/07/MID-VALLEY-STORAGE-13.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/elementor/thumbs/MID-VALLEY-STORAGE-13-scaled-prbu2zsu9o9oorlvmbmic7kze024te42p49vipw134.jpg",
+      "https://midvalleystorage.com/wp-content/uploads/2022/07/MID-VALLEY-STORAGE-13-scaled.jpg"
+    ],
+    "used_on": [
+      "facilityfeatures: Individual Keycode Access"
+    ]
+  },
+  {
+    "local": "/images/outside-storage.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_4258.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/elementor/thumbs/IMG_4258-scaled-orf10tr6jayu5v4mc60cvsg5scopjaxc6552sw2jcw.jpg",
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_4258-scaled.jpg"
+    ],
+    "used_on": [
+      "facilityfeatures: Outside Storage"
+    ]
+  },
+  {
+    "local": "/images/drive-aisles-7cc08785.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08785.jpg",
+    "also_seen_as": [],
+    "used_on": [
+      "facilityfeatures: Easy accessibility"
+    ]
+  },
+  {
+    "local": "/images/gate-access.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_20200610_191322.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_20200610_191322-2048x1536.jpg",
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_20200610_191322-scaled.jpg"
+    ],
+    "used_on": [
+      "facilityfeatures: Convenient Access"
+    ]
+  },
+  {
+    "local": "/images/security.jpg",
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/Security.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/Security-2048x1536.jpg",
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/Security-scaled.jpg"
+    ],
+    "used_on": [
+      "facilityfeatures: Security"
+    ]
+  }
+]
