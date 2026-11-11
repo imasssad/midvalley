@@ -1,0 +1,676 @@
+/* Inner pages: the title band (components/PageHero.tsx), About Us, Facility Features, Contact Us with its form
+   (components/ContactForm.tsx), the Employee Portal placeholder and the 404 page.
+   Uses only the tokens in app/globals.css. Breakpoints: 1100px, 900px, 680px (phone). */
+
+/* ---------- Title band ---------- */
+.page-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(220px, 32vw, 420px);
+  overflow: hidden;
+  background: var(--navy);
+  color: var(--on-navy);
+}
+.page-hero-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: var(--navy-2);
+}
+/* Strong navy at the bottom-left where the heading sits (white text stays well above 4.5:1), lighter top-right
+   so the photo still reads. */
+.page-hero-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(0deg, rgba(11, 35, 64, 0.94) 0%, rgba(11, 35, 64, 0.72) 45%, rgba(11, 35, 64, 0.35) 100%),
+    linear-gradient(90deg, rgba(11, 35, 64, 0.6) 0%, rgba(11, 35, 64, 0) 70%);
+}
+.page-hero-inner {
+  padding-block: clamp(2.25rem, 1.5rem + 3vw, 4rem);
+}
+.page-hero h1 {
+  max-width: 24ch; /* keeps "About Mid Valley Storage" on one line on desktop */
+  color: var(--white);
+  text-shadow: 0 2px 24px rgba(11, 35, 64, 0.45);
+}
+.page-hero h1::after {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 5px;
+  margin-top: clamp(0.9rem, 0.7rem + 0.8vw, 1.4rem);
+  border-radius: 3px;
+  background: var(--orange);
+}
+.page-hero .eyebrow {
+  color: var(--orange-hover);
+}
+
+/* ---------- About Us: Our Story ---------- */
+.ab-story-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 1rem + 4vw, 5rem);
+  align-items: start;
+}
+.ab-story-text {
+  max-width: 65ch;
+}
+.ab-story-text h2 {
+  margin-bottom: clamp(1.25rem, 1rem + 1vw, 2rem);
+}
+.ab-story-text p {
+  font-size: var(--text-lg);
+  line-height: 1.7;
+}
+@media (min-width: 901px) {
+  .ab-story-text {
+    position: sticky;
+    top: 2rem;
+  }
+}
+
+/* Photo mosaic. With 3+ photos the first is tall; an even count ends with a wide photo across both columns. */
+.ab-photos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.6rem, 0.4rem + 0.8vw, 1rem);
+}
+.ab-photo-cell {
+  min-width: 0;
+}
+.ab-photo {
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+}
+.ab-photos.is-mosaic {
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  grid-auto-rows: clamp(130px, 13vw, 210px);
+}
+.ab-photos.is-mosaic .ab-photo {
+  aspect-ratio: auto;
+}
+.ab-photos.is-mosaic > :first-child {
+  grid-row: span 2;
+}
+.ab-photos.is-mosaic > :last-child:nth-child(even) {
+  grid-column: 1 / -1;
+}
+
+/* ---------- About Us: Our History timeline ---------- */
+.ab-history h2 {
+  margin-bottom: clamp(2rem, 1.4rem + 2.4vw, 3.5rem);
+}
+.timeline {
+  --tl-dot: 16px;
+  --tl-gap: clamp(1.25rem, 0.8rem + 1.8vw, 2.5rem);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2.5rem var(--tl-gap);
+  list-style: none;
+}
+.tl-item {
+  position: relative;
+  padding-top: calc(var(--tl-dot) + 1.5rem);
+}
+/* Dot */
+.tl-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--tl-dot);
+  height: var(--tl-dot);
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 0 5px var(--cream), 0 0 0 7px var(--blue);
+  z-index: 1;
+}
+/* Line to the next item */
+.tl-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--tl-dot) / 2 - 1px);
+  left: var(--tl-dot);
+  right: calc(-1 * var(--tl-gap));
+  height: 2px;
+  background: var(--blue);
+  opacity: 0.35;
+}
+.tl-item:nth-child(4n)::after {
+  display: none;
+}
+.tl-year {
+  color: var(--blue);
+  font-size: clamp(2.4rem, 1.7rem + 2.6vw, 3.8rem);
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.tl-text {
+  margin-top: 0.9rem;
+  max-width: 34ch;
+  color: var(--text);
+}
+
+/* ---------- Facility Features ---------- */
+.ff-index {
+  border-bottom: 1px solid var(--line);
+  background: var(--white);
+}
+.ff-index-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding-block: 1.25rem;
+  list-style: none;
+}
+.ff-index-list a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid var(--line-cool);
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+.ff-index-list a:hover {
+  border-color: var(--blue);
+  background: var(--blue-tint);
+  color: var(--blue);
+}
+
+.ff-list .wrap {
+  display: grid;
+  gap: var(--space-section);
+}
+.ff-item {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 1rem + 4vw, 5rem);
+  align-items: center;
+  scroll-margin-top: 1.5rem;
+}
+/* Every other row puts the photo on the right. */
+.ff-item:nth-child(even) .ff-media {
+  order: 2;
+}
+.ff-photo {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.ff-text {
+  max-width: 36rem;
+}
+.ff-num {
+  margin-bottom: 1rem;
+  color: var(--orange-ink);
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+.ff-num span {
+  color: var(--muted);
+  font-weight: 600;
+}
+.ff-text h2 {
+  margin-bottom: 1.1rem;
+  font-size: clamp(1.75rem, 1.3rem + 1.7vw, 2.75rem);
+}
+.ff-text p:last-child {
+  font-size: var(--text-lg);
+  line-height: 1.7;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ff-photo img {
+    transition: transform 0.9s var(--ease-out);
+  }
+  .ff-item:hover .ff-photo img {
+    transform: scale(1.03);
+  }
+}
+
+/* ---------- Contact Us ---------- */
+.ct-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(1.5rem, 0.8rem + 2.6vw, 3.5rem);
+  align-items: start;
+}
+.ct-info {
+  display: grid;
+  gap: clamp(1rem, 0.8rem + 0.8vw, 1.5rem);
+}
+.ct-loc {
+  display: grid;
+  gap: 0.75rem;
+}
+.ct-loc .loc-card {
+  height: auto;
+}
+.ct-map {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--cream-2);
+  box-shadow: var(--shadow-sm);
+}
+.ct-map iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  border: 0;
+}
+.ct-follow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding: clamp(1.25rem, 1rem + 1vw, 1.75rem) clamp(1.4rem, 1rem + 1.6vw, 2.25rem);
+  border-radius: var(--radius-lg);
+  background: var(--navy);
+  color: var(--on-navy);
+}
+.ct-follow h2 {
+  color: var(--white);
+  font-size: var(--h3);
+}
+.ct-social,
+.ct-social:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  color: var(--white);
+  font-weight: 700;
+  text-decoration: none;
+}
+.ct-social:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+.ct-social .icon {
+  color: var(--orange);
+  transition: transform 0.18s var(--ease-out);
+}
+.ct-follow :focus-visible {
+  outline-color: var(--orange-hover);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ct-social:hover .icon {
+    transform: scale(1.1);
+  }
+}
+
+/* The orange top bar is an inset shadow, not a thick border-top, so it follows the large radius cleanly. */
+.ct-form-card {
+  padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    inset 0 5px 0 var(--orange),
+    var(--shadow-md);
+}
+.ct-form-card h2 {
+  margin-bottom: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  font-size: clamp(1.6rem, 1.25rem + 1.3vw, 2.4rem);
+}
+@media (min-width: 1101px) {
+  .ct-form-card {
+    position: sticky;
+    top: 2rem;
+  }
+}
+
+/* ---------- Contact form ---------- */
+.cf {
+  --cf-error: #b3261e; /* error red: 6.5:1 on white */
+  display: grid;
+  gap: 1.15rem;
+}
+.cf-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.15rem;
+}
+.cf-field {
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+}
+/* "* Required" legend above the fields. */
+.cf-note {
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+.cf-note .cf-req {
+  margin-left: 0;
+}
+.cf-field label {
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+.cf-req {
+  margin-left: 0.15rem;
+  color: var(--orange-ink);
+}
+.cf input,
+.cf select,
+.cf textarea {
+  width: 100%;
+  min-height: 3.1rem;
+  padding: 0.75rem 0.95rem;
+  border: 1.5px solid #b9c3cf; /* 3:1+ against white for the field outline */
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--ink);
+  font-size: max(16px, var(--text-base)); /* 16px+ stops iOS zooming in on focus */
+  line-height: 1.4;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.cf textarea {
+  min-height: 9rem;
+  resize: vertical;
+}
+.cf input:hover,
+.cf select:hover,
+.cf textarea:hover {
+  border-color: var(--muted);
+}
+.cf input:focus-visible,
+.cf select:focus-visible,
+.cf textarea:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 1px;
+  border-color: var(--blue);
+  border-radius: var(--radius-sm);
+}
+.cf [aria-invalid="true"] {
+  border-color: var(--cf-error);
+  box-shadow: 0 0 0 1px var(--cf-error);
+}
+.cf-select {
+  position: relative;
+}
+.cf select {
+  padding-right: 2.75rem;
+  appearance: none;
+  cursor: pointer;
+}
+.cf-select-icon {
+  position: absolute;
+  top: 50%;
+  right: 0.95rem;
+  translate: 0 -50%;
+  color: var(--blue);
+  pointer-events: none;
+}
+.cf-error {
+  color: var(--cf-error);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+/* Spam trap: off-screen, not display:none (some bots skip hidden fields). */
+.cf-hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.cf-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 1.25rem;
+  margin-top: 0.35rem;
+}
+.cf-submit {
+  min-width: 10rem;
+}
+.cf-submit:disabled {
+  opacity: 0.65;
+  cursor: progress;
+}
+.cf-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1 1 14rem;
+  font-weight: 600;
+}
+.cf-status[data-state="sending"] {
+  color: var(--muted);
+}
+.cf-status[data-state="sent"] {
+  color: #1d6b3a; /* success green: 6.4:1 on white */
+}
+.cf-status[data-state="error"] {
+  color: var(--cf-error);
+}
+.cf-call {
+  flex-basis: 100%;
+}
+
+/* ---------- Employee Portal placeholder ---------- */
+.emp .wrap {
+  display: grid;
+  place-items: center;
+  min-height: clamp(280px, 40vh, 460px);
+}
+.emp-card {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  width: min(100%, 36rem);
+  padding: clamp(2rem, 1.5rem + 2.4vw, 3.5rem) clamp(1.5rem, 1rem + 2vw, 3rem);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    inset 0 5px 0 var(--blue),
+    var(--shadow-md);
+  text-align: center;
+}
+.emp-card h1 {
+  font-size: var(--h2);
+}
+.emp-icon {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: var(--blue-tint);
+  color: var(--blue);
+}
+
+/* ---------- 404 ---------- */
+.nf-inner {
+  display: grid;
+  justify-items: start;
+  gap: 1.25rem;
+}
+.nf-code {
+  color: var(--blue);
+  font-size: clamp(5rem, 3rem + 9vw, 10rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+.nf-text {
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-size: var(--h3);
+  font-weight: 750;
+}
+.nf-phones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+.nf-phones li {
+  display: grid;
+  gap: 0.2rem;
+}
+.nf-phones a {
+  min-height: 44px; /* tap target */
+}
+.nf-loc {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  font-weight: 650;
+}
+
+/* ---------- Small desktop ---------- */
+@media (max-width: 1100px) {
+  .timeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .tl-item:nth-child(4n)::after {
+    display: block;
+  }
+  .tl-item:nth-child(2n)::after {
+    display: none;
+  }
+  .ct-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ct-info {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* Each location keeps its natural height: no stretched card with an empty gap above its buttons. */
+    align-items: start;
+  }
+  .ct-loc {
+    align-content: start;
+  }
+  .ct-follow {
+    grid-column: 1 / -1;
+  }
+  /* Facility Features: photo and text stay side by side (alternating) down to the phone breakpoint, with the
+     text filling its column. */
+  .ff-item {
+    gap: clamp(1.5rem, 0.8rem + 2vw, 2.5rem);
+  }
+  .ff-text {
+    max-width: none;
+  }
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  .ab-story-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ab-photos.is-mosaic {
+    grid-auto-rows: clamp(130px, 24vw, 210px);
+  }
+  .ff-item {
+    align-items: start;
+  }
+  .ff-num {
+    margin-bottom: 0.6rem;
+  }
+  .ff-text h2 {
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.4rem, 1.1rem + 1.2vw, 1.85rem);
+  }
+  .ff-text p:last-child {
+    font-size: var(--text-base);
+    line-height: 1.65;
+  }
+}
+
+/* ---------- Phone ---------- */
+@media (max-width: 680px) {
+  .ab-photos.is-mosaic {
+    grid-auto-rows: clamp(110px, 30vw, 170px);
+  }
+  /* Timeline goes vertical with the line on the left. */
+  .timeline {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+  .tl-item {
+    padding-top: 0;
+    padding-left: calc(var(--tl-dot) + 1.4rem);
+  }
+  .tl-item::before {
+    top: 0.65rem;
+  }
+  .tl-item:not(:last-child)::after,
+  .tl-item:nth-child(4n):not(:last-child)::after,
+  .tl-item:nth-child(2n):not(:last-child)::after {
+    display: block;
+    top: calc(0.65rem + var(--tl-dot));
+    bottom: -2rem;
+    left: calc(var(--tl-dot) / 2 - 1px);
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+  .tl-text {
+    margin-top: 0.5rem;
+  }
+
+  /* Feature index: the chips wrap onto several lines (no sideways scrolling, so every chip starts inside the
+     gutter and keyboard focus never lands off-screen). */
+  .ff-index-list {
+    gap: 0.5rem;
+    padding-block: 1rem;
+  }
+  .ff-index-list a {
+    padding-inline: 0.85rem;
+    white-space: normal;
+  }
+
+  /* Facility Features: stacked, photo first. */
+  .ff-item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+  .ff-item:nth-child(even) .ff-media {
+    order: 0;
+  }
+
+  .ct-info {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cf-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cf-submit {
+    width: 100%;
+  }
+  .nf-phones {
+    flex-direction: column;
+  }
+}
