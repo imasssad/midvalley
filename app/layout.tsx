@@ -1,12 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { Footer } from "@/components/Footer";
-import { Gtm, GtmNoScript } from "@/components/Gtm";
-import { Header } from "@/components/Header";
-import { LocalBusinessJsonLd } from "@/components/LocalBusinessJsonLd";
 import { MotionProvider } from "@/components/motion/MotionProvider";
-import { Ready } from "@/components/motion/Ready";
-import { getSiteContent, getYear } from "@/lib/content";
+import { getSiteContent } from "@/lib/content";
 import { SITE_URL } from "@/lib/links";
 import "./globals.css";
 import "./styles/shared.css";
@@ -47,28 +42,16 @@ export const viewport: Viewport = {
   themeColor: "#0b2340",
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [content, year] = await Promise.all([getSiteContent(), getYear()]);
+// The document shell shared by the public website (app/(site)/layout.tsx adds its header and footer) and the admin
+// panel (app/admin/layout.tsx). Motion's provider wraps both: the admin's live preview draws the site's components.
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-US" data-scroll-behavior="smooth" className={`${archivo.variable} ${inter.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
       <body>
-        <GtmNoScript />
-        <a className="skip-link" href="#main">
-          {content.labels.skipToContent}
-        </a>
-        <MotionProvider>
-          <Header content={content} />
-          <main id="main" tabIndex={-1}>
-            {children}
-          </main>
-          <Footer content={content} year={year} />
-        </MotionProvider>
-        <Ready />
-        <LocalBusinessJsonLd content={content} />
-        <Gtm />
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );
