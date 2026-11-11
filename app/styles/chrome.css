@@ -151,10 +151,6 @@
   font-weight: 500;
   overflow-wrap: anywhere;
 }
-.hdr-box-empty {
-  display: block;
-}
-
 /* ---- Slim page nav row: small letter-spaced caps on bone between two hairlines. The current page (and the
    hovered link) gets a blue bar that grows out from the centre and sits on the bottom rule (scaleX only). */
 .hdr-nav {

@@ -1,8 +1,9 @@
-// Site header (layout fixed by the client): logo on the left and, on the right, three rows that take visitors
-// straight to payment, phone and online rental for each location. Below it, a slim page nav row with an
+// Site header (layout fixed by the client): logo on the left and, on the right, two rows that take visitors
+// straight to payment and phone for each location (as on the old site; the client asked to leave Rent Online
+// out of the header, it stays on the location cards and the closing band). Below it, a slim page nav row with an
 // underline that grows from the centre (transform only). In normal document flow (never fixed or sticky) and
-// never animated in, so it paints at once. On phones the three rows and the nav row are hidden and HeaderMobile
-// shows four big buttons instead (both are in the HTML; CSS shows one or the other with display: none).
+// never animated in, so it paints at once. On phones the two rows and the nav row are hidden and HeaderMobile
+// shows three big buttons instead (both are in the HTML; CSS shows one or the other with display: none).
 // Styles: app/styles/chrome.css (hdr-, hm-, nav-).
 import Image from "next/image";
 import Link from "next/link";
@@ -82,27 +83,6 @@ export function Header({ content }: { content: SiteContent }) {
               </a>
             ))}
           </Row>
-
-          {locations.some((l) => l.rentOnlineUrl) && (
-            <Row label={header.rentLabel}>
-              {/* PLACEHOLDER (to confirm): these are the old QuikStor links until the client confirms. A location
-                  without a link gets an empty cell, so the boxes stay lined up with the rows above. */}
-              {locations.map((l) =>
-                l.rentOnlineUrl ? (
-                  <a key={l.id} className="hdr-box" href={l.rentOnlineUrl} {...externalLinkProps(l.rentOnlineUrl)}>
-                    <Icon name="key" size={22} />
-                    <span className="hdr-box-text">
-                      <span className="sr-only">{header.rentLabel}: </span>
-                      <span className="hdr-box-title">{l.brandName}</span>
-                      {newTab(l.rentOnlineUrl)}
-                    </span>
-                  </a>
-                ) : (
-                  <span key={l.id} className="hdr-box-empty" aria-hidden="true" />
-                ),
-              )}
-            </Row>
-          )}
         </div>
 
         {/* Phone (680px and below). */}

@@ -87,7 +87,6 @@ export const headerSchema = z.object({
   callLabel: required(30),
   rentLabel: required(30),
   mobilePaymentLabel: required(30),
-  mobileRentLabel: required(30),
   /** Phone only: "Call" + location short name + phone */
   mobileCallWord: required(15),
 });

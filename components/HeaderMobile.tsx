@@ -1,7 +1,8 @@
 "use client";
 
-// Phone header actions (680px and below): "Make a Payment" and "Rent Online" buttons that each open a small
-// panel with one link per location, then a "Call <location> <phone>" button per location. No hamburger menu.
+// Phone header actions (680px and below): a "Make a Payment" button that opens a small panel with one link per
+// location, then a "Call <location> <phone>" button per location. No hamburger menu. (Rent Online was left out
+// of the header at the client's request; it stays on the location cards and the closing band.)
 //
 // Motion (motion/react, m.* only): the panels open and close with a smooth height + opacity transition (0.3s)
 // and the chevron turns 180deg (transform). With prefers-reduced-motion the duration is 0, so the panels just
@@ -25,7 +26,7 @@ import { externalLinkProps } from "@/lib/links";
 import { Icon } from "./Icon";
 import { NewTabNote } from "./NewTab";
 
-type PanelKey = "pay" | "rent";
+type PanelKey = "pay";
 /** newTabLabel: content.labels.newTab. */
 type Props = { header: SiteContent["header"]; locations: Location[]; newTabLabel: string };
 
@@ -94,11 +95,10 @@ export function HeaderMobile({ header, locations, newTabLabel }: Props) {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const rentable = locations.filter((l) => l.rentOnlineUrl);
   // One panel at a time: opening one closes the other.
   const toggle = (key: PanelKey) => setOpen((cur) => (cur === key ? null : key));
 
-  const panelButton = (key: PanelKey, icon: "card" | "key", label: string) => (
+  const panelButton = (key: PanelKey, icon: "card", label: string) => (
     <button
       type="button"
       className="hm-btn hm-btn-navy"
@@ -150,32 +150,6 @@ export function HeaderMobile({ header, locations, newTabLabel }: Props) {
           </ul>
         </Panel>
       </div>
-
-      {rentable.length > 0 && (
-        <div className="hm-item">
-          {panelButton("rent", "key", header.mobileRentLabel)}
-          <Panel id={panelId("rent")} open={open === "rent"} ready={ready}>
-            {/* PLACEHOLDER (to confirm): rentOnlineUrl is the old QuikStor link until the client confirms it. */}
-            <ul className="hm-links" role="list">
-              {rentable.map((l) => {
-                const ext = externalLinkProps(l.rentOnlineUrl);
-                return (
-                  <li key={l.id}>
-                    <a className="hm-link" href={l.rentOnlineUrl} {...ext}>
-                      <span className="hm-link-text">
-                        <span className="sr-only">{header.mobileRentLabel}: </span>
-                        <span className="hm-link-title">{l.brandName}</span>
-                        {ext.target && <NewTabNote text={newTabLabel} />}
-                      </span>
-                      <Icon name="arrow" size={20} />
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </Panel>
-        </div>
-      )}
 
       {/* Call buttons: orange square buttons (.btn .btn-cta: press on tap, lift on hover), in normal case. */}
       {locations.map((l) => (
