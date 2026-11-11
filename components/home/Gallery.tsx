@@ -1,11 +1,15 @@
 "use client";
 
-// Facility photo gallery: a grid of thumbnail buttons that open a small lightbox (native <dialog>, no library).
-// The dialog gives focus trapping and Escape for free; arrow keys and the buttons step through the photos, and
-// closing returns focus to the thumbnail of the photo last shown.
+// Facility photo gallery: a 2x2 grid of square thumbnail buttons that open a lightbox (native <dialog>, no
+// library). The dialog gives focus trapping and Escape for free; arrow keys and the buttons step through the
+// photos, and closing returns focus to the thumbnail of the photo last shown.
+// Motion: each thumbnail is uncovered by a sliding curtain when it scrolls into view (Curtain, staggered 0.1s);
+// on hover the photo zooms to 1.05 and a thin orange inner rule fades in; a tap presses it to 0.98 (CSS,
+// transform/opacity only). The lightbox fades in (CSS).
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/Icon";
+import { Curtain } from "@/components/motion/Curtain";
 import { Photo } from "@/components/Photo";
 import type { Photo as PhotoData, SiteContent } from "@/lib/content-schema";
 
@@ -43,12 +47,12 @@ export function Gallery({ photos, labels, dialogLabel }: Props) {
 
   return (
     <>
-      <ul className="gallery-grid">
+      <ul className="h-gallery">
         {photos.map((p, i) => (
           <li key={`${i}-${p.src}`}>
             <button
               type="button"
-              className="gallery-thumb"
+              className="h-thumb"
               ref={(el) => {
                 thumbRefs.current[i] = el;
               }}
@@ -56,7 +60,9 @@ export function Gallery({ photos, labels, dialogLabel }: Props) {
               aria-label={p.alt ? `${labels.galleryOpen}: ${p.alt}` : `${labels.galleryOpen} ${i + 1}`}
               onClick={() => setIndex(i)}
             >
-              <Photo photo={p} className="gallery-photo" sizes="(max-width: 680px) 46vw, (max-width: 1380px) 24vw, 330px" />
+              <Curtain className="h-thumb-media" delay={i * 0.1}>
+                <Photo photo={p} className="h-thumb-photo" sizes="(max-width: 680px) 46vw, (max-width: 1100px) 24vw, 330px" />
+              </Curtain>
             </button>
           </li>
         ))}
@@ -64,7 +70,7 @@ export function Gallery({ photos, labels, dialogLabel }: Props) {
 
       <dialog
         ref={dialogRef}
-        className="lightbox on-navy"
+        className="h-lb on-dark"
         aria-label={dialogLabel}
         onClose={onClose}
         onClick={(e) => {
@@ -78,12 +84,12 @@ export function Gallery({ photos, labels, dialogLabel }: Props) {
         }}
       >
         {current && index !== null && (
-          <figure className="lightbox-figure" data-dismiss>
-            <button type="button" className="lightbox-btn lightbox-close" onClick={close}>
+          <figure className="h-lb-figure" data-dismiss>
+            <button type="button" className="h-lb-btn h-lb-close" onClick={close}>
               <Icon name="close" size={22} />
               <span className="sr-only">{labels.close}</span>
             </button>
-            <div className="lightbox-stage" data-dismiss>
+            <div className="h-lb-stage" data-dismiss>
               <Image
                 key={current.src}
                 src={current.src}
@@ -94,19 +100,19 @@ export function Gallery({ photos, labels, dialogLabel }: Props) {
                 style={{ objectFit: "contain" }}
               />
             </div>
-            <figcaption className="lightbox-caption" aria-live="polite">
-              <span className="lightbox-count">
+            <figcaption className="h-lb-caption" aria-live="polite">
+              <span className="h-lb-count">
                 {labels.photoCount.replace("{current}", String(index + 1)).replace("{total}", String(count))}
               </span>
               {current.alt && <span>{current.alt}</span>}
             </figcaption>
             {count > 1 && (
               <>
-                <button type="button" className="lightbox-btn lightbox-prev" onClick={() => step(-1)}>
+                <button type="button" className="h-lb-btn h-lb-prev" onClick={() => step(-1)}>
                   <Icon name="chevron" size={24} />
                   <span className="sr-only">{labels.previousPhoto}</span>
                 </button>
-                <button type="button" className="lightbox-btn lightbox-next" onClick={() => step(1)}>
+                <button type="button" className="h-lb-btn h-lb-next" onClick={() => step(1)}>
                   <Icon name="chevron" size={24} />
                   <span className="sr-only">{labels.nextPhoto}</span>
                 </button>

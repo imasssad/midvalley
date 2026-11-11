@@ -31,7 +31,7 @@ export function HeroVideo({ src, poster, focus }: Props) {
   return (
     <video
       ref={ref}
-      className="hero-video-media"
+      className="h-video-media"
       src={src}
       poster={poster}
       muted
