@@ -4,7 +4,8 @@ import { Footer } from "@/components/Footer";
 import { Gtm, GtmNoScript } from "@/components/Gtm";
 import { Header } from "@/components/Header";
 import { LocalBusinessJsonLd } from "@/components/LocalBusinessJsonLd";
-import { Motion } from "@/components/Motion";
+import { MotionProvider } from "@/components/motion/MotionProvider";
+import { Ready } from "@/components/motion/Ready";
 import { getSiteContent, getYear } from "@/lib/content";
 import { SITE_URL } from "@/lib/links";
 import "./globals.css";
@@ -24,8 +25,9 @@ const archivo = localFont({
 });
 const inter = localFont({ src: "./fonts/inter-variable.woff2", variable: "--font-inter", weight: "100 900", display: "swap" });
 
-// Before first paint: lets CSS hide [data-reveal] content only when JS runs, and shows it again if the app
-// hasn't started within 4s, so a slow or failed load never leaves sections invisible.
+// Before first paint: marks that JS runs (html.js). If the app hasn't started within 4s, it removes the mark so
+// CSS shows every scroll-reveal block at once (app/globals.css), and a slow or failed load never hides content.
+// components/motion/Ready.tsx sets window.__mvsMotion once the app has started.
 const bootScript = `(function(){var d=document.documentElement;d.classList.add("js");setTimeout(function(){if(!window.__mvsMotion)d.classList.remove("js")},4000)})()`;
 
 // Every page sets its own title (lib/seo.ts); the default here covers pages without one, like not-found.
@@ -56,12 +58,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <a className="skip-link" href="#main">
           {content.labels.skipToContent}
         </a>
-        <Header content={content} />
-        <main id="main" tabIndex={-1}>
-          {children}
-        </main>
-        <Footer content={content} year={year} />
-        <Motion />
+        <MotionProvider>
+          <Header content={content} />
+          <main id="main" tabIndex={-1}>
+            {children}
+          </main>
+          <Footer content={content} year={year} />
+        </MotionProvider>
+        <Ready />
         <LocalBusinessJsonLd content={content} />
         <Gtm />
       </body>
