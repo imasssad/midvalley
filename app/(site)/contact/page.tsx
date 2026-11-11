@@ -122,6 +122,7 @@ export default async function ContactPage() {
                   fields={contact.fields}
                   messages={contact.messages}
                   requiredLabel={labels.required}
+                  sendAnotherLabel={contact.messages.sendAnother}
                 />
               </div>
             </section>
