@@ -1,11 +1,10 @@
 // "Our Locations", right after About, on white: the section pill and the heading in navy-to-blue gradient text,
 // then the two glossy location cards side by side (one column on phones) floating over a soft glow blob and a
-// fading dot-grid field. Mist mountain ridge at the bottom, rising into Storage Options.
+// fading dot-grid field.
 // Motion: the heading block rises in, then the cards come in one after another (Stagger); each card lifts onto a
 // soft blue glow on hover (.card.lift, CSS).
 import { LocationCard } from "@/components/LocationCard";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
-import { Ridge } from "@/components/Ridge";
 import type { SiteContent } from "@/lib/content-schema";
 
 export function Locations({ content, no }: { content: SiteContent; no: string }) {
@@ -33,7 +32,6 @@ export function Locations({ content, no }: { content: SiteContent; no: string })
           </Stagger>
         </div>
       </div>
-      <Ridge edge="bottom" fill="var(--mist)" height={64} className="h-ridge" />
     </section>
   );
 }

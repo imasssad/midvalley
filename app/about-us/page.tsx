@@ -1,9 +1,9 @@
 // About Us (/about-us, same URL as the old site), in the "Valley glass" look:
-// - Title block (PageHero) with the location names as glass chips on the photo; a white ridge leads into
+// - Title block (PageHero) with the location names as glass chips on the photo; then
 // - "01 Our Story": an editorial split on white. Left: the section head (glass number pill, gradient heading,
 //   glossy bar) and the story with a drop cap set in a small glossy blue tile. Right: a rounded bento mosaic of
 //   the story photos (one big, small, tall and wide cells) over a soft glow and an offset dot-grid panel. A mist
-//   ridge at the bottom rises into
+//   bottom edge leads into
 // - "02 Our History" on dotted mist: a timeline of glossy rounded cards (years big in gradient text) hung off a
 //   glowing gradient line with round glossy nodes. Above 1100px the line runs across and the cards zig-zag above
 //   and below it; 681-1100px the line runs down the middle and the cards alternate sides; phones: line down the left.
@@ -19,7 +19,6 @@ import { Parallax } from "@/components/motion/Parallax";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { PageHero } from "@/components/PageHero";
 import { Photo } from "@/components/Photo";
-import { Ridge } from "@/components/Ridge";
 import type { Photo as PhotoData } from "@/lib/content-schema";
 import { getSiteContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
@@ -139,14 +138,6 @@ export default async function AboutPage() {
             )}
           </div>
         </div>
-        {hasHistory && (
-          <Ridge
-            edge="bottom"
-            fill="var(--mist)"
-            height={72}
-            className="pg-ridge"
-          />
-        )}
       </section>
 
       {hasHistory && (

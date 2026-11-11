@@ -3,7 +3,7 @@
 // gradient text, the first paragraph as a lede and the rest as body text. Right: the lobby photo, tall (4:5; 4:3
 // on phones), rounded with a soft blue glow (.frame), on top of a soft glow blob and an offset dot-grid panel,
 // with three glass chips (real Facility Features items) overlapping its edges (on phones they sit in a row
-// overlapping the photo's bottom edge). White mountain ridge at the bottom, rising into Our Locations.
+// overlapping the photo's bottom edge).
 // Stacked from 900px down (text first).
 // Motion: the text blocks rise in one after another (Reveal, 0 / .1s), the photo block slides in from the right
 // (Reveal), the photo drifts slower than the page while it crosses the screen (Parallax, ±8%) and zooms a touch
@@ -12,7 +12,6 @@ import { Icon } from "@/components/Icon";
 import { Parallax } from "@/components/motion/Parallax";
 import { Reveal } from "@/components/motion/Reveal";
 import { Photo } from "@/components/Photo";
-import { Ridge } from "@/components/Ridge";
 import type { SiteContent } from "@/lib/content-schema";
 import { pickItems } from "./pickItems";
 import { PopGroup, PopItem } from "./Pop";
@@ -71,7 +70,6 @@ export function AboutIntro({ content, no }: { content: SiteContent; no: string }
           )}
         </div>
       </div>
-      <Ridge edge="bottom" fill="var(--white)" height={80} className="h-ridge" />
     </section>
   );
 }

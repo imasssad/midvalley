@@ -3,7 +3,7 @@
    placeholder (emp-) and the 404 page (nf-).
    Colours: blue/navy and their light blue-grey tints on white, nothing else; orange only on the main
    call-to-action buttons (.btn-cta, globals). Uses the tokens and parts in app/globals.css (cards, frames, chips,
-   dots, glow blobs, gradient text, ridges).
+   dots, glow blobs, gradient text).
    Every animation here moves transform or opacity only and sits inside prefers-reduced-motion: no-preference (the
    global reduced-motion rule also cuts every duration). Decorative layers are static. Breakpoints: 1100px, 900px,
    680px (phone). */
@@ -18,22 +18,22 @@
   overflow: hidden;
   pointer-events: none;
 }
-/* Mountain ridge height (components/Ridge.tsx) used in the padding maths; phones draw every ridge 40px tall. */
+/* (Section dividers were removed at the client's request; --rg stays 0 for the padding maths.) */
 .ph,
 .ab-story,
 .ff-row,
 .emp,
 .nf {
-  --rg: 72px;
+  --rg: 0px;
 }
 .ff-row {
-  --rg: 64px;
+  --rg: 0px;
 }
 .emp {
-  --rg: 110px;
+  --rg: 0px;
 }
 .nf {
-  --rg: 90px;
+  --rg: 0px;
 }
 
 /* ---------- Title block (PageHero) ---------- */
@@ -294,9 +294,6 @@
   isolation: isolate;
   overflow-x: clip;
 }
-.ab-story:has(> .pg-ridge) {
-  padding-bottom: calc(var(--space-section) + var(--rg));
-}
 .ab-story-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
@@ -547,7 +544,7 @@
   z-index: 2;
   margin-top: calc(
     -1 * clamp(2.25rem, 1.5rem + 2.5vw, 3.75rem)
-  ); /* overlaps the hero's white ridge */
+  );
 }
 .ff-tray {
   padding: clamp(0.75rem, 0.6rem + 0.8vw, 1.35rem);
@@ -673,9 +670,6 @@
 }
 .ff-row.is-first {
   padding-top: calc(var(--row-pad) + 0.5rem);
-}
-.ff-row.has-ridge {
-  padding-bottom: calc(var(--row-pad) + var(--rg));
 }
 .ff-row:last-child {
   padding-bottom: var(--space-section);
@@ -1643,10 +1637,7 @@
   .ff-row,
   .emp,
   .nf {
-    --rg: 40px;
-  }
-  .pg-ridge {
-    height: 40px !important; /* overrides the Ridge height prop on phones */
+    --rg: 0px;
   }
   .ph-pic {
     aspect-ratio: 3 / 2;

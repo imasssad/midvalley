@@ -8,7 +8,7 @@
 // - a strip of six rounded square photos (hover: the photo rises a little onto a soft glow and the image grows
 //   inside its box);
 // - the sign-off: the business name set huge in condensed caps (decorative: hidden from screen readers, the logo
-//   carries it) in front of a faint double mountain ridge, the "valley" motif;
+//   carries it);
 // - the copyright line.
 // The top bar rises in; the tiles, photos and the words of the big name rise in one after another as they scroll
 // into view (Reveal / Stagger, transform and opacity only). Server component; the motion parts are small client
@@ -24,7 +24,6 @@ import { Reveal, Stagger, StaggerItem } from "./motion/Reveal";
 import { NavLinks, NavLinksStatic } from "./NavLinks";
 import { NewTabNote } from "./NewTab";
 import { Photo } from "./Photo";
-import { Ridge } from "./Ridge";
 
 export function Footer({ content, year }: { content: SiteContent; year: number }) {
   const { business, footer, nav, labels } = content;
@@ -33,12 +32,10 @@ export function Footer({ content, year }: { content: SiteContent; year: number }
 
   return (
     <footer className="site-footer bg-ink dots">
-      {/* Decorative ground: two soft static glows and the valley ridge, clipped to the footer. */}
+      {/* Decorative ground: two soft static glows, clipped to the footer. */}
       <div className="ft-decor" aria-hidden="true">
         <span className="ft-glow ft-glow-a" />
         <span className="ft-glow ft-glow-b" />
-        {/* The valley: a faint double mountain ridge rising behind the big name at the bottom. */}
-        <Ridge edge="bottom" fill="rgba(255, 255, 255, 0.06)" height={210} className="ft-ridge" />
       </div>
       <div className="wrap">
         <Reveal className="ft-top" y={20}>
@@ -165,7 +162,7 @@ export function Footer({ content, year }: { content: SiteContent; year: number }
           </Stagger>
         )}
 
-        {/* The business name, huge, as the footer's sign-off, in front of the valley ridge. Decorative: the logo
+        {/* The business name, huge, as the footer's sign-off. Decorative: the logo
             link above already names it. */}
         <div className="ft-word" aria-hidden="true">
           <Stagger className="ft-word-inner" gap={0.08}>

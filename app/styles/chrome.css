@@ -1,14 +1,14 @@
 /* Site chrome: header (components/Header.tsx, HeaderMobile.tsx), page nav (NavLinks.tsx) and footer
    (components/Footer.tsx), in the "Valley glass" language of app/globals.css: blue and white with orange only on
    the call-to-action buttons, glossy navy boxes, frosted panels and pills, rounded tiles and photos, condensed
-   display type, the mountain ridge, dot grids and soft static glows. Hover and tap feedback is CSS and animates
+   display type, dot grids and soft static glows. Hover and tap feedback is CSS and animates
    transform or opacity only (glow and hover layers fade in with opacity); the global prefers-reduced-motion rule in
    globals.css stops every transition here, and the transforms also sit in (prefers-reduced-motion: no-preference)
    blocks. Breakpoints: 1280px (logo size only), 1100px, 900px, 680px (phone). */
 
 /* ===================================================================== Header */
 /* In normal document flow: never fixed or sticky, so it can never cover the banner. A white-to-mist ground with a
-   thin glossy blue line along the top; behind the content, one clipped decorative layer (dot grid, glow, ridge).
+   thin glossy blue line along the top; behind the content, one clipped decorative layer (dot grid, glow).
    Static: nothing in the header lifts; hover only changes backgrounds (and nudges the small arrow chips). */
 .site-header {
   position: relative;
@@ -68,10 +68,6 @@
     rgba(11, 111, 196, 0.07) 55%,
     rgba(11, 111, 196, 0)
   );
-}
-/* The valley: a faint double mountain ridge along the bottom, behind the nav pill bar. */
-.site-header .hdr-ridge {
-  bottom: 0;
 }
 
 .hdr-main {
@@ -286,7 +282,7 @@
   }
 }
 
-/* ---- Page nav: a slim frosted pill bar on the ridge. The current page is a filled glossy blue pill with white
+/* ---- Page nav: a slim frosted pill bar. The current page is a filled glossy blue pill with white
    text; hover fades and scales in a light blue pill behind the link (::before, opacity and transform only). */
 .hdr-nav {
   position: relative;
@@ -1085,11 +1081,7 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   }
 }
 
-/* The sign-off: condensed black caps across the width, words rising in one after another, in front of the faint
-   double mountain ridge at the bottom of the footer (.ft-ridge in .ft-decor, the valley motif). */
-.site-footer .ft-ridge {
-  bottom: 0;
-}
+/* The sign-off: condensed black caps across the width, words rising in one after another. */
 .ft-word-inner {
   display: flex;
   flex-wrap: wrap;

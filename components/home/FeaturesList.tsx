@@ -11,7 +11,6 @@ import { Icon } from "@/components/Icon";
 import { Parallax } from "@/components/motion/Parallax";
 import { Reveal } from "@/components/motion/Reveal";
 import { Photo } from "@/components/Photo";
-import { Ridge } from "@/components/Ridge";
 import type { SiteContent } from "@/lib/content-schema";
 import { pickItems } from "./pickItems";
 import { PopGroup, PopItem } from "./Pop";
@@ -26,11 +25,9 @@ export function FeaturesList({ content, no }: { content: SiteContent; no: string
   const sharedHours = hours.length > 0 && hours[0] !== "" && hours.every((h) => h === hours[0]) ? hours[0] : "";
   const [photoItem] = pickItems(features.list, PHOTO_ITEM, 1);
   // The bottom ridge takes the colour of the next section: white reviews, or the navy closing band.
-  const nextFill = testimonials.items.length > 0 ? "var(--white)" : "url(#h-ridge-navy)";
 
   return (
     <section id="features" className="section bg-blue dots h-features" aria-labelledby="home-features-heading">
-      <Ridge edge="top" fill="var(--mist)" height={72} className="h-ridge" />
       <span className="glow-blob h-feat-blob" aria-hidden="true" />
       <div className="wrap h-layer">
         <div className="h-features-top">
@@ -83,18 +80,6 @@ export function FeaturesList({ content, no }: { content: SiteContent; no: string
           ))}
         </PopGroup>
       </div>
-      {/* Matches the top edge of the navy closing band (components/CtaBand.tsx, .bg-ink): its navy gradient with
-          the faint gloss in the middle. Zero-size (not display: none, which would switch the gradient off). */}
-      <svg className="h-defs" width="0" height="0" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="h-ridge-navy" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#144273" />
-            <stop offset="0.5" stopColor="#19436f" />
-            <stop offset="1" stopColor="#12395f" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <Ridge edge="bottom" fill={nextFill} height={72} className="h-ridge" />
     </section>
   );
 }

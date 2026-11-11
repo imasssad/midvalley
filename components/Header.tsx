@@ -5,7 +5,7 @@
 // "Valley glass" composition (static, never animated in, so it paints at once; normal document flow, never fixed
 // or sticky, so it can never cover the promo banner below):
 // - the ground: a soft white-to-mist gradient with a thin glossy blue line on top, a faint dot grid that fades out
-//   towards the logo, a soft blue glow behind the buttons and a faint double mountain ridge (the "valley" from the
+//   towards the logo, a soft blue glow behind the buttons (the
 //   logo) along the bottom. All decorative, in one aria-hidden layer that clips to the header;
 // - the logo on a rounded white plate with a soft blue glow;
 // - the two rows inside a rounded frosted "console" panel: each row label ends in a round blue chevron chip, the
@@ -26,7 +26,6 @@ import { HeaderMobile } from "./HeaderMobile";
 import { Icon } from "./Icon";
 import { NavLinks, NavLinksStatic } from "./NavLinks";
 import { NewTabNote } from "./NewTab";
-import { Ridge } from "./Ridge";
 
 /** One row: the label with a round chevron chip, then one navy box per location. Each box's link text repeats the
  *  row label for screen readers ("Make a payment: Visalia Noble, 15323 E. Noble Ave. (opens in a new tab)"), so
@@ -71,11 +70,10 @@ export function Header({ content }: { content: SiteContent }) {
 
   return (
     <header className="site-header">
-      {/* Decorative ground: dot grid, glow and the valley ridge. Clipped to the header, behind everything. */}
+      {/* Decorative ground: dot grid and glow. Clipped to the header, behind everything. */}
       <div className="hdr-decor" aria-hidden="true">
         <span className="hdr-dots dots" />
         <span className="hdr-glow" />
-        <Ridge edge="bottom" fill="rgba(0, 84, 151, 0.09)" height={64} className="hdr-ridge" />
       </div>
 
       <div className="wrap hdr-main">

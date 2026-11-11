@@ -12,7 +12,6 @@
 import type { Photo as PhotoData, SiteContent } from "@/lib/content-schema";
 import { Icon, type IconKey } from "./Icon";
 import { Photo } from "./Photo";
-import { Ridge } from "./Ridge";
 
 export type HeroChip = {
   icon: IconKey;
@@ -31,8 +30,6 @@ type Props = {
   chips?: HeroChip[];
   /** True when the chips only repeat what the page shows again below: then screen readers skip them. */
   chipsDecorative?: boolean;
-  /** Ground colour of the section after the hero: the ridge at the bottom is drawn in it. */
-  next?: string;
 };
 
 const order = (i: number) => ({ "--i": i }) as React.CSSProperties;
@@ -51,7 +48,6 @@ export function PageHero({
   id = "page-title",
   chips = [],
   chipsDecorative,
-  next = "var(--white)",
 }: Props) {
   return (
     <header className="ph" aria-labelledby={id}>
@@ -111,7 +107,6 @@ export function PageHero({
           )}
         </div>
       </div>
-      <Ridge edge="bottom" fill={next} height={72} className="pg-ridge" />
     </header>
   );
 }

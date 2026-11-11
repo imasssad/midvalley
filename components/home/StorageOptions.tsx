@@ -5,7 +5,7 @@
 // tablet: the first card wide on top, the other two side by side; phones: one column with the photo on top and
 // the text on a navy panel below it. A card without a photo is a plain navy card. Under the bento, the facility
 // photos as a row of four rounded thumbnails on a white glass strip (2x2 on phones) that open the lightbox
-// (components/home/Gallery.tsx). The mist ridge at the top of Facility Features continues this ground.
+// (components/home/Gallery.tsx).
 // Motion: heading rises in (Reveal); the cards rise in one after another (Stagger) while each photo is uncovered by
 // a navy sliding curtain (Curtain); on hover a card lifts onto a blue glow and its photo zooms to 1.06 (CSS); the
 // thumbnails rise in (Reveal) and get their own curtains (Gallery).

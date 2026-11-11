@@ -1,6 +1,6 @@
 // Contact Us (/contact, same URL as the old site), in the "Valley glass" look:
 // - Title block (PageHero) with each location's phone number as glass chips on the photo (decorative: the cards
-//   below repeat them, so screen readers skip the chips); a mist ridge leads into
+//   below repeat them, so screen readers skip the chips); then
 // - one mist section with a fading dot grid and soft glows. Desktop: two columns. Left: the glossy location cards
 //   (LocationCard), the Google Maps embed in a glossy rounded frame (focus ring on the frame) with a glass chip
 //   naming the location on its top edge, and "Follow Us" as a glossy blue tile with a dot texture and a big faint
@@ -40,7 +40,6 @@ export default async function ContactPage() {
           text: l.phone,
         }))}
         chipsDecorative
-        next="var(--mist)"
       />
 
       <div className="section bg-sand ct">

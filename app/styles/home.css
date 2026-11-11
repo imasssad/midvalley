@@ -1,12 +1,12 @@
 /* Homepage (app/page.tsx, components/home/*). Class prefix: h-. Only tokens and classes from app/globals.css.
    Art direction "Valley glass": rounded glossy cards and photos, frosted glass chips, soft blue glows, dot grids
-   and the mountain ridge between sections. Colours: blue/navy and their light tints on white; orange only on the
+   between sections. Colours: blue/navy and their light tints on white; orange only on the
    main call-to-action buttons (.btn-cta).
    Order and grounds: promo banner; action dock (white glass panel on a mist-to-white ground with a fading dot
    grid); value strip (navy glossy bar straddling the white/mist edge); 01 About (mist, the h1, layered photo with
-   glass chips; white ridge at the bottom); 02 Our Locations (white, glow + dots; mist ridge at the bottom);
+   glass chips); 02 Our Locations (white, glow + dots);
    03 Storage Options (mist, bento of photo cards + thumbnail strip); 04 Facility Features (glossy blue band with
-   dots, mist ridge on top, ridge into the next section at the bottom, cloud of glass pills); 05 reviews (white,
+   dots, cloud of glass pills); 05 reviews (white,
    only when there are some); closing band (navy, components/CtaBand.tsx).
    Motion here is CSS hover/tap feedback only (transform and opacity, inside prefers-reduced-motion:
    no-preference); scroll reveals, pops, curtains and parallax come from components/motion/* and
@@ -18,7 +18,7 @@
 /* ---- Shared helpers ---- */
 .h-layer {
   position: relative;
-  z-index: 1; /* above the ridge and the decorative layers */
+  z-index: 1; /* above the decorative layers */
 }
 .h-fill {
   position: absolute;
@@ -33,13 +33,13 @@
   height: 0;
   overflow: hidden;
 }
-/* Sections carrying glow blobs and ridges: their own stacking context, nothing spills out sideways. */
+/* Sections carrying glow blobs: their own stacking context, nothing spills out sideways. */
 .h-about,
 .h-locations,
 .h-options,
 .h-features,
 .h-reviews {
-  --ridge-pad: 56px;
+  --ridge-pad: 0px;
   position: relative;
   isolation: isolate;
   overflow-x: clip;
@@ -50,10 +50,7 @@
   .h-options,
   .h-features,
   .h-reviews {
-    --ridge-pad: 30px;
-  }
-  .h-ridge {
-    height: 40px !important; /* overrides the Ridge height prop on phones */
+    --ridge-pad: 0px;
   }
 }
 

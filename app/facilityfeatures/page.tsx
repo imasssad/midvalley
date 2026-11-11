@@ -1,9 +1,9 @@
 // Facility Features (/facilityfeatures, same URL as the old site), in the "Valley glass" look:
 // - Title block (PageHero) with the gate hours and a Facility Features list item as glass chips on the photo.
 // - "On this page": a frosted rounded tray of glass pill links (glossy number dot + title) that overlaps the
-//   hero's white ridge; wraps onto several lines on phones (no sideways scrolling).
+//   hero; wraps onto several lines on phones (no sideways scrolling).
 // - The features as full-width rows on alternating grounds, two rows per ground (white, mist, white, mist…), with a
-//   mountain ridge where the ground changes. Two compositions alternate:
+//   change of ground. Two compositions alternate:
 //     A) layered: a big rounded photo with the text on a glossy card overlapping its edge (below it on phones);
 //     B) editorial: the text beside the rounded photo, which sits on an offset dot-grid panel.
 //   Each photo carries a glossy blue number badge ("01" / "08", decorative) over its top edge.
@@ -20,7 +20,6 @@ import { Parallax } from "@/components/motion/Parallax";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { gateHoursChip, PageHero, type HeroChip } from "@/components/PageHero";
 import { Photo } from "@/components/Photo";
-import { Ridge } from "@/components/Ridge";
 import { getSiteContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 
@@ -70,7 +69,6 @@ export default async function FeaturesPage() {
         heading={features.heading}
         photo={features.heroPhoto}
         chips={chips}
-        next="var(--white)"
       />
 
       {items.length > 1 && (
@@ -99,7 +97,6 @@ export default async function FeaturesPage() {
           const layered = i % 2 === 0; // A rows: photo + overlapping card
           const ground = groundOf(i);
           const nextGround = i + 1 < items.length ? groundOf(i + 1) : null;
-          const ridge = nextGround && nextGround !== ground ? nextGround : null;
           const img = (
             <Photo
               photo={f.photo}
@@ -111,7 +108,6 @@ export default async function FeaturesPage() {
             "ff-row",
             layered ? "ff-row--a" : "ff-row--b",
             ground === "mist" ? "bg-sand" : "bg-bone",
-            ridge ? "has-ridge" : "",
             i === 0 ? "is-first" : "",
           ]
             .filter(Boolean)
@@ -169,14 +165,6 @@ export default async function FeaturesPage() {
                   </div>
                 </Reveal>
               </div>
-              {ridge && (
-                <Ridge
-                  edge="bottom"
-                  fill={ridge === "mist" ? "var(--mist)" : "var(--white)"}
-                  height={64}
-                  className="pg-ridge"
-                />
-              )}
             </section>
           );
         })}

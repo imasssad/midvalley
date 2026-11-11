@@ -1,13 +1,12 @@
 // Employee Portal (/employee, same URL as the old site): a placeholder for now, kept out of search engines
 // (noindex here, not in the sitemap; deliberately not blocked in app/robots.ts so crawlers can see the noindex).
 // Phase 3 adds the server-side password gate (password in an env var) and the Google Calendar embed.
-// "Valley glass": a centred glossy card on a dotted mist ground with soft glows and a blue-tint mountain ridge
+// "Valley glass": a centred glossy card on a dotted mist ground with soft glows
 // along the bottom. The card's glossy blue top band carries a round glossy key badge on its lower edge; below it the h1 in gradient
 // text and the placeholder line. Above the fold, so everything rises in with CSS (.enter-rise), one after another,
 // and the card's soft blue glow fades in.
 import type { Metadata } from "next";
 import { Icon } from "@/components/Icon";
-import { Ridge } from "@/components/Ridge";
 import { getSiteContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 
@@ -42,12 +41,6 @@ export default async function EmployeePage() {
           </div>
         </div>
       </div>
-      <Ridge
-        edge="bottom"
-        fill="var(--mist-2)"
-        height={110}
-        className="pg-ridge emp-ridge"
-      />
     </div>
   );
 }

@@ -2,13 +2,12 @@
 // linking to the real homepage (the old link pointed to http://home), plus each location's phone number so nobody
 // is stuck. A plain not-found.js can't export metadata in this Next version: the title comes from the root
 // layout's default (content.seo.notFound.title) and the description is a React 19 <meta>, hoisted into <head>.
-// "Valley glass": a white-to-mist ground with a dot grid, soft glows and a blue-tint mountain ridge. Left: a huge
+// "Valley glass": a white-to-mist ground with a dot grid, soft glows. Left: a huge
 // condensed "404" in gradient text on a soft blue shadow, over a faint glossy ring. Right: a glossy card whose
 // blue top band holds the text in white, then the home button and the phone numbers as glass chip links (location name above the
 // number). Everything rises in one after another with CSS (.enter-rise), so nothing waits for JavaScript.
 import Link from "next/link";
 import { Icon } from "@/components/Icon";
-import { Ridge } from "@/components/Ridge";
 import { getSiteContent } from "@/lib/content";
 import { phoneHref } from "@/lib/format";
 
@@ -64,12 +63,6 @@ export default async function NotFound() {
           </div>
         </div>
       </div>
-      <Ridge
-        edge="bottom"
-        fill="var(--mist-2)"
-        height={90}
-        className="pg-ridge nf-ridge"
-      />
     </div>
   );
 }

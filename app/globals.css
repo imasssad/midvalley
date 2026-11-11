@@ -611,25 +611,9 @@ html:not(.js) .curtain-cover {
 /* Placeholders the admin fills in later are marked in the code with "PLACEHOLDER". */
 
 /* ======================================================================================================
-   Signature details (shared by every part): the valley ridge divider, dot-grid and glow textures, glass
+   Signature details (shared by every part): dot-grid and glow textures, glass
    chips, gradient headline text and the section heading style.
    ====================================================================================================== */
-
-/* Ridge divider (components/Ridge.tsx). Parent must be position: relative. */
-.ridge {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
-.ridge-bottom {
-  bottom: -1px;
-}
-.ridge-top {
-  top: -1px;
-  transform: scaleY(-1);
-}
 
 /* Soft dot grid texture (static). Put on a section or a decorative element. */
 .dots {
