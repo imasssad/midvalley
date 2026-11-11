@@ -1,10 +1,13 @@
-// Contact Us (/contact, same URL as the old site): title band, then two columns on desktop: the location cards
-// (with the Google Maps embed under any location that has one: only Santa Fe on the old site) and the Instagram
-// link on the left, the message form on the right. Stacked on tablets and phones.
+// Contact Us (/contact, same URL as the old site): split title block, then two columns on desktop: on the left the
+// numbered location tickets stacked (with the Google Maps embed in a square frame under any location that has one:
+// only Santa Fe on the old site) and the Instagram link as a blue tile; on the right the message form in a white
+// card with an orange top rule. Tickets side by side on tablets with the form below; one column on phones.
+// Motion: the tickets, map and Instagram tile come in one after another; the form card rises in.
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
 import { Icon } from "@/components/Icon";
 import { LocationCard } from "@/components/LocationCard";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { NewTabNote } from "@/components/NewTab";
 import { PageHero } from "@/components/PageHero";
 import { getSiteContent } from "@/lib/content";
@@ -25,19 +28,14 @@ export default async function ContactPage() {
     <>
       <PageHero heading={contact.heading} photo={contact.heroPhoto} />
 
-      <div className="section section-cream ct">
+      <div className="section bg-sand ct">
         <div className="wrap ct-grid">
-          <div className="ct-info">
+          <Stagger className="ct-info" gap={0.12}>
             {locations.items.map((l, i) => (
-              <div
-                key={l.id}
-                className="ct-loc"
-                data-reveal
-                style={{ "--reveal-delay": `${Math.min(i, 3) * 100}ms` } as React.CSSProperties}
-              >
-                <LocationCard location={l} content={content} headingLevel="h2" />
+              <StaggerItem key={l.id} className="ct-loc">
+                <LocationCard location={l} content={content} headingLevel="h2" index={i} />
                 {l.mapEmbedUrl && (
-                  <div className="ct-map">
+                  <div className="ct-map frame frame-ink">
                     <iframe
                       src={l.mapEmbedUrl}
                       title={`Map of ${l.name}`}
@@ -46,32 +44,36 @@ export default async function ContactPage() {
                     />
                   </div>
                 )}
-              </div>
+              </StaggerItem>
             ))}
 
             {instagram && (
-              <section className="ct-follow" aria-labelledby="ct-follow-heading" data-reveal>
-                <h2 id="ct-follow-heading">{footer.followHeading}</h2>
-                <a className="ct-social" href={instagram} {...externalLinkProps(instagram)}>
-                  <Icon name="instagram" size={26} />
-                  <span>{labels.instagram}</span>
-                  {opensNewTab && <NewTabNote text={labels.newTab} />}
-                </a>
-              </section>
+              <StaggerItem className="ct-follow-item">
+                <section className="ct-follow bg-blue" aria-labelledby="ct-follow-heading">
+                  <h2 id="ct-follow-heading">{footer.followHeading}</h2>
+                  <a className="link-draw ct-social" href={instagram} {...externalLinkProps(instagram)}>
+                    <Icon name="instagram" size={28} />
+                    <span>{labels.instagram}</span>
+                    {opensNewTab && <NewTabNote text={labels.newTab} />}
+                  </a>
+                </section>
+              </StaggerItem>
             )}
-          </div>
+          </Stagger>
 
-          <section className="ct-form-card" aria-labelledby="ct-form-heading" data-reveal>
-            <h2 id="ct-form-heading">{contact.formHeading}</h2>
-            <ContactForm
-              locations={locations.items.map((l) => ({ name: l.name, phone: l.phone }))}
-              submitLabel={contact.submitLabel}
-              callWord={header.mobileCallWord}
-              fields={contact.fields}
-              messages={contact.messages}
-              requiredLabel={labels.required}
-            />
-          </section>
+          <Reveal className="ct-form-wrap" delay={0.1}>
+            <section className="ct-form card" aria-labelledby="ct-form-heading">
+              <h2 id="ct-form-heading">{contact.formHeading}</h2>
+              <ContactForm
+                locations={locations.items.map((l) => ({ name: l.name, phone: l.phone }))}
+                submitLabel={contact.submitLabel}
+                callWord={header.mobileCallWord}
+                fields={contact.fields}
+                messages={contact.messages}
+                requiredLabel={labels.required}
+              />
+            </section>
+          </Reveal>
         </div>
       </div>
     </>

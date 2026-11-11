@@ -216,7 +216,7 @@ export function ContactForm({ locations, submitLabel, callWord, fields, messages
       </div>
 
       <div className="cf-foot">
-        <button className="btn btn-orange cf-submit" type="submit" disabled={sending}>
+        <button className="btn btn-cta cf-submit" type="submit" disabled={sending}>
           {submitLabel}
           <Icon name="arrow" className="icon-arrow" />
         </button>
@@ -225,7 +225,7 @@ export function ContactForm({ locations, submitLabel, callWord, fields, messages
           {status.message}
         </p>
         {status.kind === "error" && !first(errors) && callPhone && (
-          <a className="btn btn-navy cf-call" href={phoneHref(callPhone)}>
+          <a className="btn btn-ink cf-call" href={phoneHref(callPhone)}>
             <Icon name="phone" />
             {callWord} {callPhone}
           </a>

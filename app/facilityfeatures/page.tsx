@@ -1,9 +1,15 @@
-// Facility Features (/facilityfeatures, same URL as the old site): title band, a short in-page index made of the
-// feature titles (wraps onto several lines on phones, no sideways scrolling), then each feature as heading + text +
-// photo in alternating rows (side by side down to tablets, stacked with the photo first on phones), and the
-// closing "Reserve at <location>" band. Every word and photo comes from content.features.
+// Facility Features (/facilityfeatures, same URL as the old site): split title block, an "On this page" index of
+// square chips (wraps onto several lines on phones, no sideways scrolling), then each feature as a full-width
+// editorial row between hairline rules: a big running number, the h2 title, the text and the photo on an offset
+// colour block. Photos alternate sides from 681px up and sit first, stacked, on phones. Then the closing
+// "Reserve at <location>" band. Every word and photo comes from content.features.
+// Motion: the chips come in one after another; in each row the text slides in from the side opposite the photo,
+// and the photo moves with parallax (odd rows) or is uncovered by a sliding curtain (even rows).
 import type { Metadata } from "next";
 import { CtaBand } from "@/components/CtaBand";
+import { Curtain } from "@/components/motion/Curtain";
+import { Parallax } from "@/components/motion/Parallax";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { PageHero } from "@/components/PageHero";
 import { Photo } from "@/components/Photo";
 import { getSiteContent } from "@/lib/content";
@@ -29,6 +35,8 @@ function anchorIds(titles: string[]): string[] {
   });
 }
 
+const SIZES = "(max-width: 680px) 92vw, (max-width: 1380px) 52vw, 720px";
+
 export default async function FeaturesPage() {
   const content = await getSiteContent();
   const { features, labels } = content;
@@ -42,38 +50,52 @@ export default async function FeaturesPage() {
       {features.items.length > 1 && (
         <nav className="ff-index" aria-label={labels.onThisPage}>
           <div className="wrap">
-            <ul className="ff-index-list">
+            <Stagger as="ul" className="ff-chips" gap={0.045}>
               {features.items.map((f, i) => (
-                <li key={ids[i]}>
-                  <a href={`#${ids[i]}`}>{f.title}</a>
-                </li>
+                <StaggerItem as="li" key={ids[i]}>
+                  <a className="ff-chip" href={`#${ids[i]}`}>
+                    <span className="ff-chip-no" aria-hidden="true">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {f.title}
+                  </a>
+                </StaggerItem>
               ))}
-            </ul>
+            </Stagger>
           </div>
         </nav>
       )}
 
-      <div className="section ff-list">
+      <div className="ff-list">
         <div className="wrap">
-          {features.items.map((f, i) => (
-            <section key={ids[i]} id={ids[i]} className="ff-item" aria-labelledby={`${ids[i]}-heading`}>
-              <div className="ff-media" data-reveal>
-                <Photo
-                  photo={f.photo}
-                  className="ff-photo"
-                  sizes="(max-width: 680px) 92vw, (max-width: 1380px) 48vw, 660px"
-                />
-              </div>
-              <div className="ff-text" data-reveal style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
-                {/* Decorative running number ("03 / 08"), generated from the list, not copy. */}
-                <p className="ff-num" aria-hidden="true">
-                  {String(i + 1).padStart(2, "0")} <span>/ {total}</span>
-                </p>
-                <h2 id={`${ids[i]}-heading`}>{f.title}</h2>
-                <p>{f.text}</p>
-              </div>
-            </section>
-          ))}
+          {features.items.map((f, i) => {
+            const odd = i % 2 === 0; // 1st, 3rd, 5th… row: photo on the left
+            const img = <Photo photo={f.photo} className="ff-ph" sizes={SIZES} />;
+            return (
+              <section key={ids[i]} id={ids[i]} className="ff-row" aria-labelledby={`${ids[i]}-heading`}>
+                <div className={odd ? "ff-media frame" : "ff-media frame frame-orange"}>
+                  {odd ? (
+                    <Parallax className="ff-pic" strength={0.08}>
+                      {img}
+                    </Parallax>
+                  ) : (
+                    <Curtain className="ff-pic" color="sand">
+                      {img}
+                    </Curtain>
+                  )}
+                </div>
+                <Reveal className="ff-text" from={odd ? "right" : "left"} y={40} delay={0.08}>
+                  {/* Decorative running number ("03 / 08"), generated from the list, not copy. */}
+                  <p className="ff-no" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                    <span className="ff-of">/ {total}</span>
+                  </p>
+                  <h2 id={`${ids[i]}-heading`}>{f.title}</h2>
+                  <p className="ff-body">{f.text}</p>
+                </Reveal>
+              </section>
+            );
+          })}
         </div>
       </div>
 
