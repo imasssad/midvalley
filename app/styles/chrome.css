@@ -1,63 +1,128 @@
-/* Site chrome: header (components/Header.tsx, HeaderMobile.tsx), page nav row (NavLinks.tsx) and footer
-   (components/Footer.tsx), in the rounded, glossy language of app/globals.css: blue and white with orange only on
-   the call-to-action buttons, glossy navy boxes, rounded tiles and photos, condensed display type. Hover and tap
-   feedback is CSS and animates transform or opacity only (glow and hover layers fade in with opacity); the global
-   prefers-reduced-motion rule in globals.css stops every transition here, and the transforms also sit in
-   (prefers-reduced-motion: no-preference) blocks. Breakpoints: 1100px, 900px, 680px (phone). */
+/* Site chrome: header (components/Header.tsx, HeaderMobile.tsx), page nav (NavLinks.tsx) and footer
+   (components/Footer.tsx), in the "Valley glass" language of app/globals.css: blue and white with orange only on
+   the call-to-action buttons, glossy navy boxes, frosted panels and pills, rounded tiles and photos, condensed
+   display type, the mountain ridge, dot grids and soft static glows. Hover and tap feedback is CSS and animates
+   transform or opacity only (glow and hover layers fade in with opacity); the global prefers-reduced-motion rule in
+   globals.css stops every transition here, and the transforms also sit in (prefers-reduced-motion: no-preference)
+   blocks. Breakpoints: 1280px (logo size only), 1100px, 900px, 680px (phone). */
 
 /* ===================================================================== Header */
-/* In normal document flow: never fixed or sticky, so it can never cover the banner. White ground with a thin
-   glossy blue line along the top (the logo's blue), then the slim nav row on mist. Static: nothing in the
-   header lifts or glows; hover only changes backgrounds. */
+/* In normal document flow: never fixed or sticky, so it can never cover the banner. A white-to-mist ground with a
+   thin glossy blue line along the top; behind the content, one clipped decorative layer (dot grid, glow, ridge).
+   Static: nothing in the header lifts; hover only changes backgrounds (and nudges the small arrow chips). */
 .site-header {
   position: relative;
+  isolation: isolate;
   padding-top: 4px; /* room for the top line */
-  background: var(--white);
-  /* Row label column and box columns, adjusted per breakpoint below. */
-  --hdr-label-w: 10rem;
-  --hdr-box-w: clamp(200px, 16.5vw, 240px);
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 30%, var(--mist) 100%);
+  /* Logo, row label column, box columns and gaps, adjusted per breakpoint below. */
+  --hdr-logo-w: 200px;
+  --hdr-label-w: 10.5rem;
+  --hdr-box-w: clamp(220px, 17vw, 240px);
   --hdr-gap: 0.5rem;
 }
 .site-header::before {
   content: "";
   position: absolute;
   inset: 0 0 auto;
+  z-index: 1;
   height: 4px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 70%),
     linear-gradient(90deg, var(--blue-bright) 0%, var(--blue) 50%, var(--navy) 100%);
 }
+
+/* Decorative ground (aria-hidden), clipped to the header and painted behind its content. */
+.hdr-decor {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+/* Dot grid: strongest behind the buttons, fading out towards the logo and the bottom. */
+.hdr-dots {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, transparent 28%, #000 72%),
+    linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent 0%, transparent 28%, #000 72%),
+    linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+  mask-composite: intersect;
+}
+/* Soft blue light behind the button console. */
+.hdr-glow {
+  position: absolute;
+  top: -55%;
+  right: max(0px, calc(50% - 760px));
+  width: 760px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(11, 111, 196, 0.2),
+    rgba(11, 111, 196, 0.07) 55%,
+    rgba(11, 111, 196, 0)
+  );
+}
+/* The valley: a faint double mountain ridge along the bottom, behind the nav pill bar. */
+.site-header .hdr-ridge {
+  bottom: 0;
+}
+
 .hdr-main {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: clamp(1rem, 0.5rem + 2vw, 2.5rem);
-  padding-block: clamp(0.9rem, 0.6rem + 0.8vw, 1.4rem);
+  padding-block: clamp(0.9rem, 0.6rem + 0.8vw, 1.4rem) clamp(0.7rem, 0.5rem + 0.5vw, 1rem);
 }
 
-/* Logo. Sized so it holds its own next to the two rows: 200px at 1280px and up, 170 / 150 / 130 below
-   (see the media queries). Width check at the narrowest end of each range, content = viewport - 2 x gutter:
-   1280: 1178 >= 200 logo + 34 gap + 598 rows (160 label + 2 x 211 boxes + 2 x 8 gaps) = 832.
-   1101: 1013 >= 170 + 30 + 576 (160 + 2 x 200 + 2 x 8) = 776.
-   1100: 1012 >= 150 + 30 + 565 (156 + 2 x 198 + 2 x 6.4) = 745 (boxes 198 here, 200 just above: never larger).
-    901:  829 >= 150 + 26 + 549 (156 + 2 x 190 + 2 x 6.4) = 725.
-    681:  627 >= 130 + 16 + 2 x 237 boxes + 6.4 = 626.4 (boxes shrink, max 240 each). */
+/* Logo on a rounded white plate with a soft halo ring and a blue glow under it (static).
+   Width check at the narrowest end of each range, content = viewport - 2 x gutter; plate = logo + 34 (padding and
+   border); console = 2 x 12 padding + 2 border + label + 2 x box + 2 x gap:
+   1280: 1177 >= 238 plate + 34 gap + 660 console (168 label + 2 x 220 + 16 + 26) = 932.
+   1101: 1013 >= 208 + 30 + 660 = 898.
+   1100: 1012 >= 168 + 30 + 590 (156 + 2 x 200 + 12.8 + 21) = 788.
+    901:  829 >= 168 + 26 + 590 = 784.
+    681:  627 >= 143 plate + 16 gap + console 18 + 2 x 221 boxes + 6.4 (boxes shrink, max 240 each). */
 .hdr-logo {
   flex: none;
   display: block;
-  width: 200px;
-  border-radius: var(--radius);
+  width: calc(var(--hdr-logo-w) + 2rem + 2px);
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(0, 84, 151, 0.12);
+  border-radius: var(--radius-card);
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 0 0 6px rgba(255, 255, 255, 0.55),
+    0 22px 40px -26px rgba(0, 84, 151, 0.6);
 }
 .hdr-logo img {
   width: 100%;
   height: auto;
 }
 
-/* The two rows. One fixed label column, then one equal box column per location (--hdr-cols, set inline). */
+/* The console: a rounded frosted panel holding the two rows. One fixed label column, then one equal box column
+   per location (--hdr-cols, set inline). */
 .hdr-rows {
+  position: relative;
   display: grid;
   gap: var(--hdr-gap);
   min-width: 0;
+  padding: 0.75rem;
+  border: 1px solid rgba(0, 84, 151, 0.14);
+  border-radius: var(--radius-card);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(243, 246, 249, 0.94) 100%);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 2px 6px -2px rgba(15, 34, 54, 0.06),
+    0 28px 50px -30px rgba(0, 62, 112, 0.55);
 }
 .hdr-row {
   display: grid;
@@ -65,15 +130,16 @@
   align-items: center;
   gap: var(--hdr-gap);
 }
-/* Row labels: the display face in normal case (the visible text must match the spec exactly), ink with a blue
-   chevron. Hidden from screen readers (aria-hidden): every box link already starts with the label in sr-only text. */
+/* Row labels: the display face in normal case (the visible text must match the spec exactly), ink, ending in a
+   round glossy blue chevron chip. Hidden from screen readers (aria-hidden): every box link already starts with
+   the label in sr-only text. */
 .hdr-label {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.25rem;
+  gap: 0.5rem;
   margin: 0;
-  padding-right: 0.35rem;
+  padding-right: 0.3rem;
   color: var(--ink);
   font-family: var(--font-display);
   font-stretch: 82%;
@@ -85,16 +151,25 @@
 }
 /* Beside the boxes (above 900px) the two labels always stay on one line, in one even column. */
 @media (min-width: 901px) {
-  .hdr-label {
+  .hdr-label-text {
     white-space: nowrap;
   }
 }
-.hdr-label .icon {
+.hdr-label-chip {
   flex: none;
-  color: var(--blue);
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--grad-blue);
+  box-shadow:
+    var(--gloss),
+    0 0 0 3px rgba(0, 84, 151, 0.1);
+  color: #fff;
 }
 
-/* Navy boxes (fixed spec): the glossy navy face (navy gradient, white gloss line, faint white edge), rounded.
+/* Navy boxes (fixed spec): a glossy navy face (navy gradient, white top edge, sheen over the top half), rounded.
    Text is white in every state: set on the link in all states and inherited by every inner span. Hover only
    changes the background a little: a slightly lighter navy layer fades in (opacity). No lift, no glow. */
 .site-header a.hdr-box,
@@ -110,37 +185,44 @@
   isolation: isolate;
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.6rem;
   min-width: 0;
   height: 100%;
-  min-height: 3.1rem;
-  padding: 0.55rem 0.85rem;
+  min-height: 3.4rem;
+  padding: 0.55rem 0.6rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius);
   background: var(--grad-navy);
   box-shadow:
-    var(--gloss),
-    0 8px 18px -12px rgba(10, 46, 85, 0.6);
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 10px 20px -14px rgba(10, 46, 85, 0.8);
   font-family: var(--font-text);
   line-height: 1.2;
   text-align: left;
 }
-/* The hover layer: the same face, a little lighter, with its own gloss line. */
-.hdr-box::before {
+/* The hover layer: the same face, a little lighter. */
+.hdr-box::before,
+.hdr-box::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   border-radius: inherit;
+  pointer-events: none;
+}
+.hdr-box::before {
   background: linear-gradient(
     160deg,
     color-mix(in srgb, var(--blue) 45%, var(--navy-3)) 0%,
     var(--navy-3) 55%,
     var(--navy) 100%
   );
-  box-shadow: var(--gloss);
   opacity: 0;
   transition: opacity 0.2s ease;
+}
+/* Static sheen over the top half (above the hover layer). */
+.hdr-box::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0) 52%);
 }
 .hdr-box:hover::before {
   opacity: 1;
@@ -149,12 +231,22 @@
   outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
-.hdr-box .icon {
+/* Icon in a small rounded glass square. */
+.hdr-box-icon {
   flex: none;
-  color: var(--on-dark-muted);
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 9px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 .hdr-box-text {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   min-width: 0;
   color: inherit;
@@ -166,7 +258,7 @@
   font-size: 0.9375rem;
   font-weight: 700;
   overflow-wrap: anywhere;
-  /* When a name wraps it splits evenly ("Mid Valley Storage / Santa Fe"), never one word alone on a line. */
+  /* When a name wraps it splits evenly ("Mid Valley / Storage Santa Fe"), never one word alone on a line. */
   text-wrap: balance;
 }
 .hdr-box-sub {
@@ -176,23 +268,51 @@
   font-weight: 500;
   overflow-wrap: anywhere;
 }
-/* ---- Slim page nav row: small letter-spaced caps on mist between two hairlines. The current page (and the
-   hovered link) gets a rounded blue bar that grows out from the centre and sits on the bottom rule (scaleX only). */
+/* Small arrow chip on the right; it nudges right on hover (transform). */
+.hdr-box-go {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.13);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s var(--ease);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .hdr-box:hover .hdr-box-go {
+    transform: translateX(3px);
+  }
+}
+
+/* ---- Page nav: a slim frosted pill bar on the ridge. The current page is a filled glossy blue pill with white
+   text; hover fades and scales in a light blue pill behind the link (::before, opacity and transform only). */
 .hdr-nav {
-  background: var(--mist);
-  border-block: 1px solid var(--line);
+  position: relative;
+  padding-bottom: clamp(0.9rem, 0.6rem + 0.7vw, 1.3rem);
 }
 .hdr-nav-list {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
-  gap: 0 clamp(1.25rem, 0.6rem + 1.8vw, 2.75rem);
+  gap: 0.2rem;
+  padding: 0.3rem;
+  border: 1px solid rgba(0, 84, 151, 0.14);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffffff 0%, rgba(243, 246, 249, 0.95) 100%);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 14px 30px -22px rgba(0, 62, 112, 0.6);
   list-style: none;
 }
 .hdr-nav-list a {
   position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
-  min-height: 2.75rem;
+  min-height: 2.5rem;
+  padding: 0 1.1rem;
+  border-radius: 999px;
   color: var(--ink);
   font-size: 0.75rem;
   font-weight: 700;
@@ -201,26 +321,39 @@
   text-decoration: none;
   text-transform: uppercase;
 }
-.hdr-nav-list a::after {
+.hdr-nav-list a::before {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px; /* on the row's bottom rule */
-  height: 3px;
-  border-radius: 3px 3px 0 0;
-  background: var(--blue);
-  transform: scaleX(0);
-  transition: transform 0.35s var(--ease);
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--mist-2);
+  box-shadow: inset 0 0 0 1px rgba(0, 84, 151, 0.1);
+  opacity: 0;
+  transform: scale(0.82);
+  transition:
+    opacity 0.25s ease,
+    transform 0.35s var(--ease);
 }
 .hdr-nav-list a:hover,
-.hdr-nav-list a[aria-current="page"] {
-  color: var(--blue);
+.hdr-nav-list a:visited {
+  color: var(--ink);
 }
-.hdr-nav-list a:hover::after,
-.hdr-nav-list a:focus-visible::after,
-.hdr-nav-list a[aria-current="page"]::after {
-  transform: scaleX(1);
+.hdr-nav-list a:hover::before {
+  opacity: 1;
+  transform: none;
+}
+.hdr-nav-list a[aria-current="page"],
+.hdr-nav-list a[aria-current="page"]:hover {
+  color: #fff;
+}
+.hdr-nav-list a[aria-current="page"]::before {
+  background: var(--grad-blue);
+  box-shadow:
+    var(--gloss),
+    0 8px 16px -10px rgba(0, 84, 151, 0.9);
+  opacity: 1;
+  transform: none;
 }
 .hdr-nav-list a:focus-visible {
   outline-offset: 2px;
@@ -232,34 +365,51 @@
 }
 
 @media (max-width: 1279px) {
-  .hdr-logo {
-    width: 170px;
+  .site-header {
+    --hdr-logo-w: 170px;
   }
 }
 
-/* Small desktop */
+/* Small desktop: a little smaller everywhere. */
 @media (max-width: 1100px) {
   .site-header {
-    /* Wide enough for "Make a payment" plus its chevron on one line. Boxes: 198px at 1100 (just under the 200px
-       above 1100, so they never grow when crossing the breakpoint), down to 190px at 1056 and below. */
+    --hdr-logo-w: 140px;
+    /* Wide enough for "Make a payment" plus its chip on one line. */
     --hdr-label-w: 9.75rem;
-    --hdr-box-w: clamp(190px, 18vw, 198px);
+    --hdr-box-w: 200px;
     --hdr-gap: 0.4rem;
   }
   .hdr-logo {
-    width: 150px;
+    width: calc(var(--hdr-logo-w) + 1.6rem + 2px);
+    padding: 0.6rem 0.8rem;
+  }
+  .hdr-rows {
+    padding: 0.6rem;
   }
   .hdr-label {
     font-size: 1rem;
   }
+  .hdr-label-chip {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
   .hdr-box {
     gap: 0.5rem;
-    min-height: 2.9rem;
-    padding: 0.5rem 0.7rem;
+    min-height: 3.1rem;
+    padding: 0.5rem;
   }
-  .hdr-box .icon {
-    width: 20px;
-    height: 20px;
+  .hdr-box-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 8px;
+  }
+  .hdr-box-icon .icon {
+    width: 16px;
+    height: 16px;
+  }
+  .hdr-box-go {
+    width: 1.15rem;
+    height: 1.15rem;
   }
   .hdr-box-title {
     font-size: 0.875rem;
@@ -269,48 +419,65 @@
   }
 }
 
-/* Tablet: each label sits above its boxes, right aligned, so the rows fit beside a smaller logo. */
+/* Tablet: each label sits above its boxes, right aligned, so the rows fit beside a smaller logo. The console
+   shrink-wraps the boxes and sits on the right. */
 @media (max-width: 900px) {
+  .site-header {
+    --hdr-logo-w: 120px;
+  }
   .hdr-main {
     align-items: flex-start;
     gap: 1rem;
   }
   .hdr-logo {
-    width: 130px;
+    width: calc(var(--hdr-logo-w) + 1.3rem + 2px);
+    padding: 0.5rem 0.65rem;
     margin-top: 0.25rem;
   }
   .hdr-rows {
-    flex: 1 1 auto;
-    gap: 0.6rem;
+    flex: 0 1 auto;
+    gap: 0.5rem;
+    padding: 0.5rem 0.5rem 0.55rem;
+    border-radius: 18px;
   }
   .hdr-row {
     /* Equal columns that shrink with the screen, at most 240px each, kept on the right. */
     grid-template-columns: repeat(var(--hdr-cols, 2), minmax(0, 240px));
     justify-content: end;
-    row-gap: 0.25rem;
+    row-gap: 0.3rem;
   }
   .hdr-label {
     grid-column: 1 / -1;
-    padding-right: 0;
-  }
-  /* Slimmer padding so "Mid Valley Storage Santa Fe" fits on one line in a 233px+ box (190px of text). */
-  .hdr-box {
-    gap: 0.4rem;
-    padding-inline: 0.55rem;
+    padding-right: 0.15rem;
   }
 }
 
-/* Phone: logo centered on top, then the big stacked buttons. No desktop rows, no nav row. */
+/* Phone: logo centered on top (glow behind it), then the big stacked buttons. No desktop rows, no nav. */
 @media (max-width: 680px) {
+  .site-header {
+    --hdr-logo-w: 140px;
+  }
+  .hdr-glow {
+    top: -170px;
+    right: auto;
+    left: 50%;
+    width: 440px;
+    margin-left: -220px;
+  }
+  .hdr-dots {
+    -webkit-mask-image: radial-gradient(70% 55% at 50% 22%, #000 0%, transparent 100%);
+    mask-image: radial-gradient(70% 55% at 50% 22%, #000 0%, transparent 100%);
+  }
   .hdr-main {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.9rem;
-    padding-block: 0.9rem 1rem;
+    gap: 1rem;
+    padding-block: 1rem 1.25rem;
   }
   .hdr-logo {
     align-self: center;
-    width: 150px;
+    width: calc(var(--hdr-logo-w) + 1.6rem + 2px);
+    padding: 0.55rem 0.8rem;
     margin-top: 0;
   }
   .hdr-rows,
@@ -320,7 +487,7 @@
   /* Full-width buttons at every phone width (the spec), inside the page's side gutters (.wrap). */
   .hdr-mobile {
     display: grid;
-    gap: 0.5rem;
+    gap: 0.55rem;
     width: 100%;
   }
 }
@@ -329,8 +496,8 @@
 .hm-item {
   display: grid;
 }
-/* Shared by the navy panel buttons and the orange call buttons (which are also .btn .btn-cta: this keeps the
-   .btn press/lift mechanics but sets the header's own type: display face in normal case, left aligned). */
+/* Shared by the navy panel button and the orange call buttons (which are also .btn .btn-cta: this keeps the
+   .btn press mechanics but sets the header's own type: display face in normal case, left aligned). */
 .hm-btn {
   position: relative;
   isolation: isolate;
@@ -339,8 +506,8 @@
   justify-content: flex-start;
   gap: 0.75rem;
   width: 100%;
-  min-height: 3.5rem;
-  padding: 0.75rem 1.1rem;
+  min-height: 3.6rem;
+  padding: 0.55rem 1rem 0.55rem 0.55rem;
   border: 0;
   border-radius: var(--radius);
   font-family: var(--font-display);
@@ -362,6 +529,25 @@
 .hm-btn .icon {
   flex: none;
 }
+/* The icon in a small rounded glass square (white glass on navy, lighter glass on orange). */
+.hm-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+.hm-btn-call .hm-icon {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.16) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
 
 /* Glossy navy (fixed spec), like the desktop boxes: white text; hover / open fade in a slightly lighter navy
    layer (opacity); a quick press on tap. */
@@ -369,33 +555,40 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: var(--grad-navy);
   box-shadow:
-    var(--gloss),
-    0 8px 18px -12px rgba(10, 46, 85, 0.6);
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 12px 22px -14px rgba(10, 46, 85, 0.75);
   color: #fff;
   transition: transform 0.2s var(--ease);
 }
-.hm-btn-navy::before {
+.hm-btn-navy::before,
+.hm-btn-navy::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   border-radius: inherit;
+  pointer-events: none;
+}
+.hm-btn-navy::before {
   background: linear-gradient(
     160deg,
     color-mix(in srgb, var(--blue) 45%, var(--navy-3)) 0%,
     var(--navy-3) 55%,
     var(--navy) 100%
   );
-  box-shadow: var(--gloss);
   opacity: 0;
   transition: opacity 0.2s ease;
+}
+.hm-btn-navy::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0) 52%);
 }
 .hm-btn-navy:hover::before,
 .hm-btn-navy[aria-expanded="true"]::before {
   opacity: 1;
 }
-.hm-btn-navy > .icon:first-child {
-  color: var(--on-dark-muted);
+.hm-btn-navy,
+.hm-btn-navy:hover {
+  color: #fff;
 }
 @media (prefers-reduced-motion: no-preference) {
   .hm-btn-navy:active {
@@ -403,11 +596,17 @@
     transition-duration: 0.08s;
   }
 }
-/* Chevron: Motion turns it 180deg (HeaderMobile.tsx). */
+/* Chevron in a small round chip: Motion turns it 180deg (HeaderMobile.tsx). */
 .hm-chev {
-  display: inline-flex;
+  display: inline-grid;
+  place-items: center;
   flex: none;
+  width: 2rem;
+  height: 2rem;
   margin-left: auto;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* Orange call buttons (.btn .btn-cta, the call to action): ink text on the glossy orange face. The header is
@@ -455,17 +654,20 @@
 .hm-panel {
   overflow: hidden;
 }
-/* A rounded glossy navy card just under its button. The gap is a margin on the inner box (the clipped outer box
-   is a block formatting context, so it stays inside and closes with the height). */
+/* A rounded glossy navy card just under its button, with a faint dot grid. The gap is a margin on the inner box
+   (the clipped outer box is a block formatting context, so it stays inside and closes with the height). */
 .hm-panel-inner {
-  margin-top: 0.4rem;
+  margin-top: 0.45rem;
   padding: 0.6rem; /* room for the links' focus outline inside the clipped box */
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-card);
   background:
-    radial-gradient(120% 80% at 50% -20%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%),
+    radial-gradient(rgba(255, 255, 255, 0.09) 1.2px, transparent 1.3px) 0 0 / 22px 22px,
+    radial-gradient(120% 80% at 50% -20%, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 60%),
     var(--grad-navy);
-  box-shadow: var(--gloss);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 16px 30px -20px rgba(10, 46, 85, 0.8);
 }
 /* No JavaScript (or not hydrated yet when the boot script gave up): the panel shows under a button that cannot
    open or close it, so the button's chevron is hidden. Once hydrated (data-ready) the normal styling applies
@@ -475,7 +677,7 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
 }
 .hm-links {
   display: grid;
-  gap: 0.4rem;
+  gap: 0.45rem;
   list-style: none;
 }
 .hm-link {
@@ -483,8 +685,8 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  min-height: 3.25rem;
-  padding: 0.6rem 0.9rem;
+  min-height: 3.4rem;
+  padding: 0.6rem 0.6rem 0.6rem 0.95rem;
   border-radius: var(--radius);
   background: linear-gradient(180deg, #ffffff 0%, var(--mist) 100%);
   box-shadow:
@@ -508,14 +710,22 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   outline: 3px solid #fff;
   outline-offset: 2px;
 }
-.hm-link .icon {
+/* Round glossy blue arrow chip; it nudges right on hover (transform). */
+.hm-link-go {
   flex: none;
-  color: var(--blue);
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--grad-blue);
+  box-shadow: var(--gloss);
+  color: #fff;
   transition: transform 0.3s var(--ease);
 }
 @media (prefers-reduced-motion: no-preference) {
-  .hm-link:hover .icon {
-    transform: translateX(4px);
+  .hm-link:hover .hm-link-go {
+    transform: translateX(3px);
   }
   .hm-link:active {
     transform: scale(0.98);
@@ -537,16 +747,47 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
 }
 
 /* ===================================================================== Footer */
-/* The deep navy glossy band (the .bg-ink look), on a ground a little darker than the CTA band above it (which is
-   also navy) and under a 1px light rule, so the two read as separate blocks.
+/* The deep navy glossy band (the .bg-ink look) with the dot grid, on a ground a little darker than the CTA band
+   above it (which is also navy) and under a 1px light rule, so the two read as separate blocks. Two soft static
+   glows in a clipped decorative layer.
    Contrast on --navy-deep / --navy: white 15:1+ / 13:1, --on-dark-muted 11:1+ / 9:1. */
-.site-footer.bg-ink {
+.site-footer.bg-ink,
+.site-footer.bg-ink.dots {
+  position: relative;
+  isolation: isolate;
   border-top: 1px solid var(--dark-line);
-  background:
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.08) 1.2px, transparent 1.3px),
     radial-gradient(120% 60% at 50% -10%, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 60%),
     linear-gradient(175deg, var(--navy-deep) 0%, var(--navy) 55%, var(--navy-deep) 100%);
+  background-size:
+    22px 22px,
+    auto,
+    auto;
   color: var(--on-dark-muted);
   font-size: var(--text-sm);
+}
+.ft-decor {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ft-glow {
+  position: absolute;
+  width: 820px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(11, 111, 196, 0.28), rgba(11, 111, 196, 0));
+}
+.ft-glow-a {
+  top: -360px;
+  left: -260px;
+}
+.ft-glow-b {
+  right: -300px;
+  bottom: -220px;
 }
 .site-footer a:not(.btn),
 .site-footer a:not(.btn):visited,
@@ -554,20 +795,28 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   color: #fff;
 }
 
-/* Top row: the logo in white and the Contact button (orange, the call to action), over a 1px rule. */
+/* Top: a rounded glass bar: the logo in white, the page links as pills and the Contact button (orange, the call
+   to action). Source order (logo, links, button) is the visual order at every width:
+   above 1100px one row; 1100px and below the logo on top, then the links and the button; phones one column. */
 .ft-top {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "logo nav cta";
   align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem 2rem;
-  padding-block: clamp(2.5rem, 1.8rem + 2.5vw, 4rem) clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);
-  border-bottom: 1px solid var(--dark-line);
+  gap: 1.25rem clamp(1.25rem, 0.5rem + 2vw, 2.5rem);
+  margin-top: clamp(2.5rem, 1.8rem + 2.5vw, 4rem);
+  padding: clamp(1rem, 0.8rem + 0.8vw, 1.5rem) clamp(1.1rem, 0.8rem + 1.2vw, 2rem);
+  border: 1px solid var(--dark-line);
+  border-radius: var(--radius-card);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 24px 48px -30px rgba(0, 0, 0, 0.6);
 }
 .ft-logo {
+  grid-area: logo;
   display: block;
-  flex: none;
-  width: 180px;
+  width: 170px;
   border-radius: var(--radius);
 }
 .ft-logo img {
@@ -576,12 +825,21 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   filter: brightness(0) invert(1); /* static: the two-colour logo as one white mark */
 }
 
-/* Columns. The location and Follow / Employee columns are rounded glassy tiles (like the CTA band's groups). */
+.ft-nav {
+  grid-area: nav;
+  justify-self: center;
+  min-width: 0;
+}
+.ft-contact {
+  grid-area: cta;
+}
+
+/* Tiles: one per location, then Follow / Employee. */
 .ft-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 1.15fr) minmax(0, 1fr);
-  gap: clamp(1.25rem, 0.6rem + 1.8vw, 2.5rem);
-  padding-block: clamp(2.5rem, 1.8rem + 2.5vw, 4rem);
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(1rem, 0.5rem + 1.4vw, 1.75rem);
+  padding-block: clamp(2rem, 1.5rem + 2vw, 3.25rem);
 }
 .ft-col {
   display: grid;
@@ -590,83 +848,119 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
 }
 .ft-loc,
 .ft-more {
-  padding: clamp(1.1rem, 0.9rem + 0.8vw, 1.5rem);
   border: 1px solid var(--dark-line);
   border-radius: var(--radius-card);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 24px 44px -32px rgba(0, 0, 0, 0.7);
+}
+.ft-more {
+  padding: clamp(1.1rem, 0.9rem + 0.8vw, 1.5rem);
 }
 
-/* Page links: big condensed caps; a white bar grows under the hovered and the current link (scaleX). */
+/* Page links: condensed caps as pills. Hover fades and scales in a glass pill behind the link (::before, opacity
+   and transform only); the current page is a filled glossy blue pill. */
 .ft-nav-list {
-  display: grid;
-  gap: 0.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem;
   list-style: none;
 }
 .site-footer .ft-nav-list a {
   position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
+  padding: 0.35rem 1.05rem;
+  border-radius: 999px;
   font-family: var(--font-display);
   font-stretch: var(--condensed);
-  font-size: var(--display-s);
+  font-size: clamp(1.1rem, 1rem + 0.35vw, 1.35rem);
   font-weight: 800;
   line-height: 1;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   text-decoration: none;
   text-transform: uppercase;
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.25s var(--ease);
+  transition: transform 0.2s var(--ease);
 }
-.site-footer .ft-nav-list a::after {
+.site-footer .ft-nav-list a::before {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0.3rem;
-  height: 2px;
-  border-radius: 2px;
-  background: #fff;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s var(--ease);
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  opacity: 0;
+  transform: scale(0.82);
+  transition:
+    opacity 0.25s ease,
+    transform 0.35s var(--ease);
 }
-.site-footer .ft-nav-list a:hover::after,
-.site-footer .ft-nav-list a:focus-visible::after,
-.site-footer .ft-nav-list a[aria-current="page"]::after {
-  transform: scaleX(1);
+.site-footer .ft-nav-list a:hover::before {
+  opacity: 1;
+  transform: none;
 }
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .site-footer .ft-nav-list a:hover {
-    transform: translateX(6px);
-  }
+.site-footer .ft-nav-list a[aria-current="page"]::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 55%), var(--grad-blue);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 10px 20px -12px rgba(0, 0, 0, 0.6);
+  opacity: 1;
+  transform: none;
 }
 
-/* Locations: a number on a rule, the name in display caps, then the facts. */
-.ft-no {
+/* Locations: a glossy blue band (like the location cards) with a glass number chip and the name in display caps,
+   then the facts. */
+.ft-loc {
+  gap: 0;
+}
+.ft-loc-head {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  color: var(--on-dark-muted);
+  gap: 0.75rem;
+  margin: -1px -1px 0; /* over the tile's border */
+  padding: 1rem clamp(1.1rem, 0.9rem + 0.8vw, 1.5rem);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.03) 55%, rgba(255, 255, 255, 0) 100%),
+    var(--grad-blue);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.ft-no {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: rgba(7, 31, 58, 0.28);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  color: #fff;
   font-family: var(--font-display);
   font-stretch: var(--condensed);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   line-height: 1;
-}
-.ft-no::after {
-  content: "";
-  flex: 1;
-  height: 2px;
-  border-radius: 2px;
-  background: currentColor;
-  opacity: 0.35;
 }
 .site-footer .ft-loc-name {
   color: #fff;
   font-size: var(--display-s);
+}
+.ft-loc-body {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1.1rem clamp(1.1rem, 0.9rem + 0.8vw, 1.5rem) clamp(1.1rem, 0.9rem + 0.8vw, 1.5rem);
 }
 .ft-loc address {
   display: grid;
@@ -741,8 +1035,8 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   }
 }
 
-/* Photo strip: six rounded square thumbnails (not links). On hover the photo grows a little inside its clipped,
-   rounded box (.photo clips). */
+/* Photo strip: six rounded square thumbnails (not links). On hover the photo rises a little onto a soft blue glow
+   that fades in (opacity), and the image grows inside its clipped, rounded box (.photo clips). */
 .ft-strip {
   padding-bottom: clamp(2.5rem, 1.8rem + 2.5vw, 4rem);
 }
@@ -752,24 +1046,50 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   gap: clamp(0.4rem, 0.2rem + 0.6vw, 0.85rem);
   list-style: none;
 }
+.ft-gallery-item {
+  position: relative;
+  isolation: isolate;
+}
+.ft-gallery-item::before {
+  content: "";
+  position: absolute;
+  inset: 14% 10% -6%;
+  z-index: -1;
+  border-radius: var(--radius-photo);
+  background: rgba(11, 111, 196, 0.6);
+  filter: blur(20px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
 .ft-thumb {
   aspect-ratio: 1;
-  border-radius: var(--radius);
+  border-radius: var(--radius-photo);
   background: var(--navy);
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.12),
     0 12px 24px -16px rgba(7, 31, 58, 0.8);
+  transition: transform 0.45s var(--ease);
 }
 .ft-thumb img {
   transition: transform 0.7s var(--ease);
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .ft-gallery-item:hover::before {
+    opacity: 1;
+  }
+  .ft-gallery-item:hover .ft-thumb {
+    transform: translateY(-5px);
+  }
   .ft-gallery-item:hover .ft-thumb img {
     transform: scale(1.06);
   }
 }
 
-/* The big name: condensed black caps across the width, words rising in one after another. */
+/* The sign-off: condensed black caps across the width, words rising in one after another, in front of the faint
+   double mountain ridge at the bottom of the footer (.ft-ridge in .ft-decor, the valley motif). */
+.site-footer .ft-ridge {
+  bottom: 0;
+}
 .ft-word-inner {
   display: flex;
   flex-wrap: wrap;
@@ -783,6 +1103,7 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   line-height: 0.82;
   letter-spacing: -0.01em;
   text-transform: uppercase;
+  text-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
 }
 .ft-word-part {
   display: inline-block;
@@ -797,31 +1118,46 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   letter-spacing: 0.04em;
 }
 
-/* Tablet: two columns (links | first location, second location | Follow / Employee); the strip stays six wide. */
+/* Tablet: the top bar in two rows (logo / links + button); the location tiles side by side and the Follow /
+   Employee tile across both columns, its two blocks side by side; the strip stays six wide. */
 @media (max-width: 1100px) {
+  .ft-top {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "logo logo"
+      "nav cta";
+  }
+  .ft-nav {
+    justify-self: start;
+  }
+  .ft-nav-list {
+    justify-content: flex-start;
+  }
   .ft-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ft-more {
+    grid-column: 1 / -1;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* Phone: one column, in reading order. The page links come first (they are the phone's main navigation) as
-   big rounded glassy tap tiles, two per row; a quick press on tap. */
-@media (max-width: 680px) {
+/* Small tablet: the top bar in three rows (logo / links as four glassy tiles across / button on the right), so
+   the links never wrap awkwardly. */
+@media (max-width: 900px) {
   .ft-top {
-    gap: 1rem;
-  }
-  .ft-logo {
-    width: 140px;
-  }
-  .ft-grid {
     grid-template-columns: minmax(0, 1fr);
-    gap: 1.5rem;
+    grid-template-areas:
+      "logo"
+      "nav"
+      "cta";
   }
-  .ft-col-nav {
-    margin-bottom: 1rem;
+  .ft-nav {
+    justify-self: stretch;
   }
   .ft-nav-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.5rem;
   }
   .site-footer .ft-nav-list a {
@@ -829,19 +1165,47 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
     width: 100%;
     min-height: 3.25rem;
     padding: 0.55rem 0.9rem;
-    border: 1px solid var(--dark-line);
     border-radius: var(--radius);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.03) 100%);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    font-size: 1.15rem;
+  }
+  /* Tiles at rest (not only on hover). */
+  .site-footer .ft-nav-list a::before {
+    opacity: 1;
+    transform: none;
+  }
+  .ft-contact {
+    justify-self: end;
+  }
+}
+
+/* Phone: one column, in reading order. The page links come right after the logo (they are the phone's main
+   navigation) as big rounded glassy tap tiles, two per row, the current page a filled glossy blue tile; then the
+   Contact button across the bar; a quick press on tap. */
+@media (max-width: 680px) {
+  .ft-top {
+    gap: 1rem;
+    padding: 1.1rem;
+  }
+  .ft-logo {
+    width: 130px;
+  }
+  .ft-nav-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .site-footer .ft-nav-list a {
     font-size: 1.3rem;
   }
-  .site-footer .ft-nav-list a::after {
-    left: 0.9rem;
-    right: 0.9rem;
-    bottom: 0.55rem;
+  .ft-contact {
+    justify-self: stretch;
+    width: 100%;
   }
-  .site-footer .ft-nav-list a[aria-current="page"] {
-    border-color: rgba(255, 255, 255, 0.6);
+  .ft-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+  .ft-more {
+    grid-column: auto;
+    grid-template-columns: minmax(0, 1fr);
   }
   .ft-gallery {
     grid-template-columns: repeat(3, minmax(0, 1fr));

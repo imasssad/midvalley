@@ -1,8 +1,9 @@
 "use client";
 
 // Phone header actions (680px and below): a glossy navy "Make a Payment" button that opens a rounded navy panel
-// with one white link tile per location, then a "Call <location> <phone>" button per location. No hamburger menu. (Rent Online was left out
-// of the header at the client's request; it stays on the location cards and the closing band.)
+// with one white link tile per location, then a glossy orange "Call <location> <phone>" button per location. Each
+// button's icon sits in a small rounded glass square. No hamburger menu. (Rent Online was left out of the header
+// at the client's request; it stays on the location cards and the closing band.)
 //
 // Motion (motion/react, m.* only): the panels open and close with a smooth height + opacity transition (0.3s)
 // and the chevron turns 180deg (transform). With prefers-reduced-motion the duration is 0, so the panels just
@@ -28,7 +29,11 @@ import { NewTabNote } from "./NewTab";
 
 type PanelKey = "pay";
 /** newTabLabel: content.labels.newTab. */
-type Props = { header: SiteContent["header"]; locations: Location[]; newTabLabel: string };
+type Props = {
+  header: SiteContent["header"];
+  locations: Location[];
+  newTabLabel: string;
+};
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const DURATION = 0.3;
@@ -36,7 +41,17 @@ const panelId = (key: PanelKey) => `hdr-m-${key}`;
 
 /** One panel. Before hydration: a plain div (visible without JS, hidden by CSS under html.js). After: an m.div
  *  whose height and opacity animate between 0 and "auto", and which is `hidden` once fully closed. */
-function Panel({ id, open, ready, children }: { id: string; open: boolean; ready: boolean; children: React.ReactNode }) {
+function Panel({
+  id,
+  open,
+  ready,
+  children,
+}: {
+  id: string;
+  open: boolean;
+  ready: boolean;
+  children: React.ReactNode;
+}) {
   const reduce = useReducedMotion();
   // Shown while open or while the close animation runs. Derived during render (React's documented pattern):
   // opening shows it at once; with reduced motion closing hides it at once too.
@@ -60,7 +75,10 @@ function Panel({ id, open, ready, children }: { id: string; open: boolean; ready
       hidden={!visible}
       initial={false}
       animate={open ? "open" : "closed"}
-      variants={{ open: { height: "auto", opacity: 1 }, closed: { height: 0, opacity: 0 } }}
+      variants={{
+        open: { height: "auto", opacity: 1 },
+        closed: { height: 0, opacity: 0 },
+      }}
       transition={{ duration: reduce ? 0 : DURATION, ease: EASE }}
       onAnimationComplete={(def) => {
         if (def === "closed") setVisible(false);
@@ -109,7 +127,9 @@ export function HeaderMobile({ header, locations, newTabLabel }: Props) {
         buttons.current[key] = el;
       }}
     >
-      <Icon name={icon} size={22} />
+      <span className="hm-icon">
+        <Icon name={icon} size={20} />
+      </span>
       <span className="hm-btn-label">{label}</span>
       {/* Chevron turns 180deg when the panel opens (transform). */}
       <m.span
@@ -142,7 +162,9 @@ export function HeaderMobile({ header, locations, newTabLabel }: Props) {
                       <span className="hm-link-sub">{l.address.street}</span>
                       {ext.target && <NewTabNote text={newTabLabel} />}
                     </span>
-                    <Icon name="arrow" size={20} />
+                    <span className="hm-link-go">
+                      <Icon name="arrow" size={16} />
+                    </span>
                   </a>
                 </li>
               );
@@ -155,7 +177,9 @@ export function HeaderMobile({ header, locations, newTabLabel }: Props) {
           tap; on hover only the face brightens (the header is static: no lift, no glow). */}
       {locations.map((l) => (
         <a key={l.id} className="btn btn-cta hm-btn hm-btn-call" href={phoneHref(l.phone)}>
-          <Icon name="phone" size={22} />
+          <span className="hm-icon">
+            <Icon name="phone" size={20} />
+          </span>
           <span className="hm-btn-label">
             {header.mobileCallWord} {l.shortName} <span className="hm-phone">{l.phone}</span>
           </span>
