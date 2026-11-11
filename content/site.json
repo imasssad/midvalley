@@ -1,68 +1,486 @@
 {
-  "_about": "Site-wide data scraped from https://midvalleystorage.com on 2026-11-11. Text is copied exactly as the live site shows it. null means the live site has nothing for it (see content/inventory.json > missing).",
-  "name": "Mid Valley Storage",
-  "homeTitle": "Mid Valley Storage – Visalia’s best choice for convenient, safe, and affordable self storage",
-  "metaDescription": null,
-  "logo": { "src": "/images/logo.svg", "alt": "Mid Valley Storage", "href": "/", "colors": { "blue": "#005497", "grey": "#999999" } },
-  "siteIcon": "/images/site-icon.png",
-  "locations": [
-    {
-      "id": "noble",
-      "name": "Visalia Noble",
-      "headerCallLabel": "Mid Valley Storage Noble",
-      "mobileCallLabel": "Call Noble — (559) 734-7368",
-      "address": { "street": "15323 E. Noble Ave.", "city": "Visalia", "state": "CA", "zip": "93292" },
-      "addressAsWrittenOnContactPage": "15323 E. Noble Ave\nVisalia, CA 93292",
-      "phone": { "display": "(559) 734-7368", "tel": "5597347368", "asWrittenOnContactPage": "559-734-7368" },
-      "mapsUrl": "https://goo.gl/maps/LrHat5624ZYiJjnb6",
-      "paymentUrl": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=e398d43a-ce49-4691-b9af-8157e3883811#/login",
-      "rentOnlineUrl": null,
-      "reserveUrl": null,
-      "oldReserveUrlOnLiveSite": "https://ecom.quikstor.com/midvalleystorage/Account/Login"
+  "version": 1,
+  "business": {
+    "name": "Mid Valley Storage",
+    "logo": {
+      "src": "/images/logo.svg",
+      "alt": "Mid Valley Storage",
+      "focus": "50% 50%"
     },
-    {
-      "id": "santa-fe",
-      "name": "Visalia Santa Fe",
-      "headerCallLabel": "Mid Valley Storage Santa Fe",
-      "mobileCallLabel": "Call Santa Fe — (559) 608-5301",
-      "address": { "street": "2410 S. Santa Fe St.", "city": "Visalia", "state": "CA", "zip": "93292" },
-      "addressAsWrittenOnContactPage": "2410 S. Santa Fe.\nVisalia CA 93292",
-      "phone": { "display": "(559) 608-5301", "tel": "5596085301", "asWrittenOnContactPage": "559-608-5301" },
-      "mapsUrl": "https://goo.gl/maps/omapQu9VBfuuR1Tc9",
-      "mapEmbedUrl": "https://maps.google.com/maps?q=2410%20S%20Santa%20Fe%20St%2C%20Visalia%2C%20CA%2093292%2C%20USA&t=m&z=10&output=embed&iwloc=near",
-      "paymentUrl": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=165a4ac4-3327-4405-9927-412c59c08e0e#/login",
-      "rentOnlineUrl": null,
-      "reserveUrl": null,
-      "oldReserveUrlOnLiveSite": "https://ecom.quikstor.com/midvalleystorage_sf/Account/Login"
-    }
-  ],
-  "header": {
-    "paymentRowLabel": "Make a payment",
-    "callRowLabel": "Make a Call",
-    "mobilePaymentButton": "Make a Payment",
-    "_note": "Live header: logo left; row 1 = payment boxes (credit-card icon, location name + street), row 2 = call boxes (phone icon). Mobile: 'Make a Payment' toggle that opens both payment links, then two call buttons. Icons are Font Awesome 6.5.1 (fa-credit-card, fa-phone, fa-chevron-right, fa-chevron-down). The live header has no nav menu; nav links are only in the footer."
+    "instagramUrl": "https://www.instagram.com/midvalleystorage/"
   },
-  "nav": [
-    { "label": "Home", "href": "/" },
-    { "label": "About Us", "href": "/about-us/" },
-    { "label": "Facility Features", "href": "/facilityfeatures/" },
-    { "label": "Contact", "href": "/contact/" }
-  ],
-  "social": [{ "network": "Instagram", "url": "https://www.instagram.com/midvalleystorage/" }],
+  "locations": {
+    "items": [
+      {
+        "id": "noble",
+        "name": "Visalia Noble",
+        "shortName": "Noble",
+        "address": {
+          "street": "15323 E. Noble Ave.",
+          "city": "Visalia",
+          "state": "CA",
+          "zip": "93292"
+        },
+        "phone": "(559) 734-7368",
+        "brandName": "Mid Valley Storage Noble",
+        "paymentUrl": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=e398d43a-ce49-4691-b9af-8157e3883811#/login",
+        "rentOnlineUrl": "https://ecom.quikstor.com/midvalleystorage/Account/Login",
+        "rentOnlineConfirmed": false,
+        "mapsUrl": "https://goo.gl/maps/LrHat5624ZYiJjnb6",
+        "mapEmbedUrl": "",
+        "gateHours": "6AM to 8PM",
+        "officeHours": ""
+      },
+      {
+        "id": "santa-fe",
+        "name": "Visalia Santa Fe",
+        "shortName": "Santa Fe",
+        "address": {
+          "street": "2410 S. Santa Fe St.",
+          "city": "Visalia",
+          "state": "CA",
+          "zip": "93292"
+        },
+        "phone": "(559) 608-5301",
+        "brandName": "Mid Valley Storage Santa Fe",
+        "paymentUrl": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=165a4ac4-3327-4405-9927-412c59c08e0e#/login",
+        "rentOnlineUrl": "https://ecom.quikstor.com/midvalleystorage_sf/Account/Login",
+        "rentOnlineConfirmed": false,
+        "mapsUrl": "https://goo.gl/maps/omapQu9VBfuuR1Tc9",
+        "mapEmbedUrl": "https://maps.google.com/maps?q=2410%20S%20Santa%20Fe%20St%2C%20Visalia%2C%20CA%2093292%2C%20USA&t=m&z=10&output=embed&iwloc=near",
+        "gateHours": "6AM to 8PM",
+        "officeHours": ""
+      }
+    ]
+  },
+  "header": {
+    "paymentLabel": "Make a payment",
+    "callLabel": "Make a Call",
+    "rentLabel": "Rent Online",
+    "mobilePaymentLabel": "Make a Payment",
+    "mobileRentLabel": "Rent Online",
+    "mobileCallWord": "Call"
+  },
+  "nav": {
+    "items": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "About Us",
+        "href": "/about-us"
+      },
+      {
+        "label": "Facility Features",
+        "href": "/facilityfeatures"
+      },
+      {
+        "label": "Contact",
+        "href": "/contact"
+      }
+    ]
+  },
+  "hero": {
+    "mode": "image",
+    "banner": {
+      "desktop": {
+        "src": "/images/hero-promo-desktop.png",
+        "alt": "",
+        "focus": "50% 50%"
+      },
+      "tablet": {
+        "src": "/images/hero-promo-tablet.png",
+        "alt": "",
+        "focus": "50% 50%"
+      },
+      "mobile": {
+        "src": "/images/hero-promo-mobile.png",
+        "alt": "",
+        "focus": "50% 50%"
+      },
+      "alt": "Sunsets, Summer, and Storage Specials. More space. More value. Right when you need it. 5x10 units $29.99 per month, 10x10 units $59.99 per month. Safe and secure, convenient location, month-to-month, clean and well maintained. Call us today at (559) 734-7368. Limited time only, while supplies last."
+    },
+    "disclaimer": "*Valid at Noble location only. New customers only. Please visit office for full details.",
+    "video": {
+      "src": "/video/hero-original.mp4",
+      "poster": {
+        "src": "/images/facility-7cc08783.jpg",
+        "alt": "Large drive-up storage buildings at dusk with pickup trucks parked in the wide yard",
+        "focus": "50% 50%"
+      }
+    }
+  },
+  "valueStrip": {
+    "enabled": true,
+    "items": [
+      {
+        "icon": "tag",
+        "text": "Upfront, flat rate"
+      },
+      {
+        "icon": "pin",
+        "text": "Convenient locations"
+      },
+      {
+        "icon": "people",
+        "text": "Friendly, professional customer service"
+      },
+      {
+        "icon": "shield",
+        "text": "State of the art security"
+      }
+    ]
+  },
+  "home": {
+    "about": {
+      "eyebrow": "About Mid Valley Storage",
+      "heading": "Visalia’s best choice for convenient, safe, and affordable self storage",
+      "paragraphs": [
+        "Welcome to Mid Valley Storage, Visalia’s best choice for convenient, safe, and affordable self storage. We pride ourselves with our friendly and professional customer service, state of the art security, and convenient locations.",
+        "We aim to become Visalia area’s premier and feature rich self storage facility. Whether you’re looking for a place to store your boat or RV after a camping or lake trip or looking to organize items from around the home or office, Mid Valley Storage does it all. Attentive detail without compromise can be seen throughout the facility from the moment the gate keypad recognizes your name and unit number, to the sophisticated temperature controlled units, well lit and video monitored RV and boat parking, and complete moving supply center in the office. Features aside, Mid Valley Storage has only one focus: the complete 110% satisfaction of its customers."
+      ],
+      "photo": {
+        "src": "/images/lobby.jpg",
+        "alt": "Mid Valley Storage office lobby with the service counter, a wall of security camera screens and moving supplies",
+        "focus": "50% 50%"
+      }
+    },
+    "storageOptions": {
+      "heading": "Storage Options",
+      "items": [
+        {
+          "title": "Conventional Storage",
+          "text": "Exterior drive-up units, interior drive-up units, small units, big, units – Mid Valley Storage has them all! With sizes from 5×5 to 20×50, we’ve got the perfect space just for you! It’s the perfect spot to store you extra items and get your garage back. Call us today and our professional staff can help you find the perfect size just for you."
+        },
+        {
+          "title": "Temperature Controlled Storage",
+          "text": "Scorching hot summers and cold foggy winters are no problem for our interior temperature controlled units. Cool air conditioning in the summer and warm heat in the winter – all in a interior dust free environment. Perfect for electronics, music equipment, antiques, documents, and so much more!"
+        },
+        {
+          "title": "RV/Boat/Auto Parking",
+          "text": "With three National Parks nearby, numerous lakes, and the beach a few hours away – we know how great it is to hit the road in your RV, boat, or trailer. We have indoor, privately enclosed units with oversized doors perfect for your toys! All oversized units have the option of adding power and lights, perfect for keeping your battery charged before your next trip!"
+        }
+      ],
+      "gallery": [
+        {
+          "src": "/images/facility-7cc08763-hdr.jpg",
+          "alt": "Modern storage building with a lit gray louvered facade at dusk",
+          "focus": "50% 50%"
+        },
+        {
+          "src": "/images/facility-7cc08783.jpg",
+          "alt": "Large drive-up storage buildings at dusk with pickup trucks parked in the wide yard",
+          "focus": "50% 50%"
+        },
+        {
+          "src": "/images/aerial-dji-0050.jpg",
+          "alt": "Aerial view at sunset of the storage buildings and the outdoor RV and trailer parking lot",
+          "focus": "50% 50%"
+        },
+        {
+          "src": "/images/facility-img-2020.jpg",
+          "alt": "Indoor drive-through aisle lined with white roll-up storage doors under a high, skylit roof",
+          "focus": "50% 50%"
+        }
+      ]
+    },
+    "features": {
+      "heading": "Facility Features",
+      "intro": "Whether you need to store your holiday decorations in the off season or store your entire house during a move, our goal is to exceed your expectations! We provide secure, convenient, and spotlessly clean storage units from small 5×5 to large 20×50 in RV units. Call us today to speak with one of our friendly professional managers who can assist in choosing the perfect storage size just for you",
+      "list": [
+        "Access to your storage 7 Days a Week",
+        "Huge Variety of Sizes",
+        "Ground Floor Drive-Up Accessible Units",
+        "Indoor private RV/Boat storage with individual lights and power",
+        "Modern Construction & Thoughtful Design",
+        "No Deposits Required",
+        "Month-to-Month Rentals",
+        "State-Of-The-Art Security",
+        "Computerized Access",
+        "Video Surveillance",
+        "Moving Supplies",
+        "Convenience"
+      ],
+      "photo": {
+        "src": "/images/facility-features.jpg",
+        "alt": "Pickup truck backing a covered boat into a large drive-up storage unit",
+        "focus": "55% 60%"
+      }
+    },
+    "locations": {
+      "heading": "Our Locations"
+    },
+    "cta": {
+      "heading": "Ready to get started?"
+    }
+  },
+  "testimonials": {
+    "heading": "What Our Customers Say",
+    "items": []
+  },
+  "about": {
+    "heading": "About Mid Valley Storage",
+    "heroPhoto": {
+      "src": "/images/facility-7cc08783.jpg",
+      "alt": "Large drive-up storage buildings at dusk with pickup trucks parked in the wide yard",
+      "focus": "50% 50%"
+    },
+    "storyHeading": "Our Story",
+    "story": [
+      "Mid Valley Storage has deep roots in the beautiful Central Valley. Starting in 2004, it’s parent company began operating a property management company for residential real estate. Just a few years later as the company grew, they began their first ground-up construction project building a self storage and retail complex in East Visalia in 2009. Thousands of happy customers later, an expansion was made to Tulare with the extensive remodel of another self storage facility, Rapid Self Storage. In the following years, the property management component of the company grew to include additional residential and commercial rentals. Beginning in late 2018, a new site was chosen for another self-storage facility in Central Visalia and construction began. It’s newest site on Santa Fe features individual RV storage and drive-up self-storage. Today, Mid Valley Storage has all types of storage to fit your needs. Temperature controlled storage, drive-up self storage, indoor RV/boat storage, and a full moving center and free moving truck to make your storage experience as easy as possible."
+    ],
+    "photos": [
+      {
+        "src": "/images/facility-img-20200518.jpg",
+        "alt": "Storage facility office building behind black iron fencing, with an American flag",
+        "focus": "50% 50%"
+      },
+      {
+        "src": "/images/office-elevation.jpg",
+        "alt": "Two-story tan stucco office building with a tile roof at the storage facility entrance",
+        "focus": "40% 55%"
+      },
+      {
+        "src": "/images/night-full-elevation.jpg",
+        "alt": "Storage facility office and buildings lit up at night",
+        "focus": "50% 50%"
+      },
+      {
+        "src": "/images/rss.jpg",
+        "alt": "Wide view of a storage facility across the road",
+        "focus": "50% 50%"
+      }
+    ],
+    "historyHeading": "Our History",
+    "timeline": [
+      {
+        "year": "2009",
+        "text": "Mid Valley Storage opens its first facility located in East Visalia. Drive-up units, temperature controlled, and outdoor parking."
+      },
+      {
+        "year": "2012",
+        "text": "Mid Valley Storage's parent company purchases and fully remodels a self-storage facility in Tulare, CA - Rapid Self Storage"
+      },
+      {
+        "year": "2018",
+        "text": "Mid Valley Storage acquires property in central Visalia and begins construction to build the area's premier self storage."
+      },
+      {
+        "year": "2020",
+        "text": "Mid Valley Storage opens it's new newest facility on Santa Fe Rd and K Rd. Featuring indoor RV storage and conventional units."
+      }
+    ],
+    "cta": {
+      "heading": "Ready to get started?"
+    },
+    "reserveWord": "Reserve at"
+  },
+  "features": {
+    "heading": "Facility Features",
+    "heroPhoto": {
+      "src": "/images/facility-7cc08763-hdr.jpg",
+      "alt": "Modern storage building with a lit gray louvered facade at dusk",
+      "focus": "50% 50%"
+    },
+    "items": [
+      {
+        "title": "Temperature Controlled Storage",
+        "text": "Did you know the inside of regular storage units in the peak of summer can reach over 120 degrees? Self Storage units act like miniature ovens and are often much warmer then the outside air. At Mid Valley Storage, we have perfected inside temperature controlled storage. It’s comfortably air conditioned in the summer and heated in the winter. And, even better, it’s in a interior dust free environment – perfect for your precious belongings. Electronics, wood furniture, paper files, instruments, and antiques are perfect items for temperature controlled storage.",
+        "photo": {
+          "src": "/images/temperature-controlled.jpg",
+          "alt": "Long indoor hallway of white temperature controlled storage unit doors",
+          "focus": "50% 50%"
+        }
+      },
+      {
+        "title": "Individual Enclosed RV Storage",
+        "text": "Mid Valley Storage has some of the largest storage units around! We feature units up to 20’x50′ many with oversized doors up to 12’x14′. All oversize units have the option of interior lights and 20AMP power – perfect to keep your batteries charged! These large units were strategically placed to give plenty of room to drive into and out without tight turns. Each unit is has fire sprinklers and ceiling insulation for peace of mind and comfort. Call us today to learn more!",
+        "photo": {
+          "src": "/images/rv-storage-img-4031.jpg",
+          "alt": "Motorhome parked inside an enclosed RV storage unit",
+          "focus": "50% 55%"
+        }
+      },
+      {
+        "title": "Individual Keycode Access",
+        "text": "We know moving can be exhausting but we’re here to help and make it as easy and secure as possible. At Mid Valley Storage we offer private, secure, and individual keycode access specific to your unit. We constantly review gate records against live security footage to ensure safe and secure access.",
+        "photo": {
+          "src": "/images/keycode-access.jpg",
+          "alt": "Driver reaching out of a car window to enter a code on the gate keypad",
+          "focus": "40% 55%"
+        }
+      },
+      {
+        "title": "Outside Storage",
+        "text": "In addition to our private enclosed RV and boat storage, we also offer outside parking. Our parking stalls are on DG (decomposed granite) to reduce dust and feature 24/7 security recording and great lighting to help with night visits.",
+        "photo": {
+          "src": "/images/outside-storage.jpg",
+          "alt": "Fifth-wheel travel trailer parked in an outdoor parking stall",
+          "focus": "50% 50%"
+        }
+      },
+      {
+        "title": "Friendly Staff",
+        "text": "Our friendly and professional staff is on-site and ready to help you six days a week. We like to call ourselves professional Tetris players and we can assist in choosing the perfect sized storage unit that fits your needs. Call us today, we can’t wait to hear from you!",
+        "photo": {
+          "src": "/images/friendly-staff.jpg",
+          "alt": "Two Mid Valley Storage staff members holding branded moving boxes in the moving supply center",
+          "focus": "50% 45%"
+        }
+      },
+      {
+        "title": "Easy accessibility",
+        "text": "Moving is tough, storage shouldn’t be. Our drive aisles are some of the largest around making your move as simple as possible. We can handle the biggest moving trucks on the road and can even assist with the coordination national moving companies. Most facilities have 20′ wide drive aisles while Mid Valley has between 25-45′ wide drive aisles. Plenty of room to unload, pack, and maneuver those big moving trucks!",
+        "photo": {
+          "src": "/images/drive-aisles-7cc08785.jpg",
+          "alt": "Wide paved drive aisle between tall storage buildings, lit at dusk",
+          "focus": "50% 50%"
+        }
+      },
+      {
+        "title": "Convenient Access",
+        "text": "We know your busy and it can be hard to get to your storage unit during the work day so we offer computerized gate access 365 days a year. For the early birds, our gate hours open at 6AM and for the night owls, are gates are open until 8PM. We can even offer extended gate hours for business customers or special events. Call us today for more information. We also offer convenient online payments, auto-payments, and no long term contracts.",
+        "photo": {
+          "src": "/images/gate-access.jpg",
+          "alt": "Wide indoor aisle between rows of white roll-up storage doors",
+          "focus": "50% 50%"
+        }
+      },
+      {
+        "title": "Security",
+        "text": "Mid Valley Storage takes its security very seriously. We feature the highest resolution and most modern security cameras that monitor and protect our facilities, customers, and staff. We issue unique gate codes to each tenant that log the entry and exit of all gate activity. Our Noble location features an on-site resident for extra peace of mind. We know your items are important and they’re important to us too.",
+        "photo": {
+          "src": "/images/security.jpg",
+          "alt": "Office service desk below a wall of security camera monitors",
+          "focus": "50% 50%"
+        }
+      }
+    ],
+    "cta": {
+      "heading": "Ready to get started?"
+    }
+  },
+  "contact": {
+    "heading": "Contact Us",
+    "heroPhoto": {
+      "src": "/images/facility-7cc08763-hdr.jpg",
+      "alt": "Modern storage building with a lit gray louvered facade at dusk",
+      "focus": "50% 50%"
+    },
+    "formHeading": "Send us a message",
+    "submitLabel": "Send",
+    "fields": {
+      "name": "Full Name",
+      "phone": "Phone",
+      "email": "Email",
+      "location": "Location",
+      "message": "Message"
+    },
+    "messages": {
+      "nameMissing": "Enter your full name.",
+      "emailMissing": "Enter your email address.",
+      "emailInvalid": "Enter a valid email address, like name@example.com.",
+      "locationMissing": "Choose a location.",
+      "fixErrors": "Please fix the errors above.",
+      "sending": "Sending…",
+      "sent": "Thanks, your message was sent.",
+      "failed": "The message didn't go through. Please call us instead.",
+      "offline": "The message didn't go through. Check your connection or call us instead."
+    }
+  },
   "footer": {
     "gallery": [
-      { "src": "/images/large-storage-units.jpg", "alt": "dover-large-storage-units" },
-      { "src": "/images/friendly-staff.jpg", "alt": "Service Final" },
-      { "src": "/images/temperature-controlled.jpg", "alt": "Temperature Controlled11" },
-      { "src": "/images/facility-img-20200518.jpg", "alt": "IMG_20200518_110511" },
-      { "src": "/images/rv-storage-img-4031.jpg", "alt": "IMG_4031" },
-      { "src": "/images/free-truck.jpg", "alt": "freetruck" }
+      {
+        "src": "/images/large-storage-units.jpg",
+        "alt": "Inside an empty, extra-large storage unit with a tall roll-up door",
+        "focus": "50% 50%"
+      },
+      {
+        "src": "/images/friendly-staff.jpg",
+        "alt": "Two Mid Valley Storage staff members holding branded moving boxes in the moving supply center",
+        "focus": "50% 45%"
+      },
+      {
+        "src": "/images/temperature-controlled.jpg",
+        "alt": "Long indoor hallway of white temperature controlled storage unit doors",
+        "focus": "50% 50%"
+      },
+      {
+        "src": "/images/facility-img-20200518.jpg",
+        "alt": "Storage facility office building behind black iron fencing, with an American flag",
+        "focus": "50% 50%"
+      },
+      {
+        "src": "/images/rv-storage-img-4031.jpg",
+        "alt": "Motorhome parked inside an enclosed RV storage unit",
+        "focus": "50% 55%"
+      },
+      {
+        "src": "/images/free-truck.jpg",
+        "alt": "Mid Valley Storage box truck with a sign that reads Rent This Truck Free",
+        "focus": "60% 55%"
+      }
     ],
-    "galleryNote": "Opens each photo full size in a lightbox. Alt texts are the WordPress file names, not descriptions.",
-    "contactButton": { "label": "Contact Us", "href": "http://www.midvalleystorage.com/contact" },
+    "contactButtonLabel": "Contact Us",
     "followHeading": "Follow Us",
-    "employeePortal": { "heading": "Employee Portal", "headingHref": "http://www.midvalleystorage.com/employee", "button": "Click here to login", "buttonHref": "http://www.midvalleystorage.com/employee", "buttonTarget": "_blank" },
-    "copyright": "Mid Valley Storage © 2026"
+    "employeeHeading": "Employee Portal",
+    "employeeLinkLabel": "Click here to login",
+    "copyright": "Mid Valley Storage © {year}"
   },
-  "tracking": { "googleTagManagerId": "GTM-TBHW45PH" }
+  "employee": {
+    "heading": "Employee Portal",
+    "placeholder": "Employee page coming soon"
+  },
+  "labels": {
+    "directions": "Get directions",
+    "gateHours": "Gate hours",
+    "officeHours": "Office hours",
+    "galleryOpen": "Open photo",
+    "newTab": "(opens in a new tab)",
+    "instagram": "Instagram",
+    "required": "Required",
+    "skipToContent": "Skip to content",
+    "close": "Close",
+    "previousPhoto": "Previous photo",
+    "nextPhoto": "Next photo",
+    "photoCount": "{current} of {total}",
+    "onThisPage": "On this page"
+  },
+  "notFound": {
+    "heading": "404",
+    "text": "page not found",
+    "linkLabel": "Go Home Page"
+  },
+  "seo": {
+    "home": {
+      "title": "Mid Valley Storage | Self Storage in Visalia, CA",
+      "description": "Self storage in Visalia, CA at two locations: Noble Ave. and Santa Fe St. Drive-up, temperature controlled and indoor RV/boat storage. Pay or rent online."
+    },
+    "about": {
+      "title": "About Us | Mid Valley Storage, Visalia",
+      "description": "Mid Valley Storage has served Visalia since 2009. Read our story and history, from our first East Visalia facility to our newest site on Santa Fe."
+    },
+    "features": {
+      "title": "Facility Features | Mid Valley Storage, Visalia",
+      "description": "Temperature controlled storage, enclosed RV storage, keycode gate access, outside parking, wide drive aisles and modern security in Visalia, CA."
+    },
+    "contact": {
+      "title": "Contact Us | Mid Valley Storage, Visalia",
+      "description": "Call, visit or message Mid Valley Storage. Visalia Noble: 15323 E. Noble Ave., (559) 734-7368. Visalia Santa Fe: 2410 S. Santa Fe St., (559) 608-5301."
+    },
+    "employee": {
+      "title": "Employee Portal | Mid Valley Storage",
+      "description": "Employee portal for Mid Valley Storage staff."
+    },
+    "notFound": {
+      "title": "Page not found | Mid Valley Storage",
+      "description": "This page could not be found. Visit the Mid Valley Storage homepage for our two Visalia locations."
+    },
+    "shareImage": {
+      "src": "/images/share.jpg",
+      "alt": "Mid Valley Storage summer storage specials banner",
+      "focus": "50% 50%"
+    }
+  }
 }

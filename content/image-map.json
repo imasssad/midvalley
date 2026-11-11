@@ -131,12 +131,15 @@
   },
   {
     "local": "/images/temperature-controlled.jpg",
-    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/Temperature-Controlled11.jpg",
-    "also_seen_as": [],
+    "downloaded_from": "https://midvalleystorage.com/wp-content/uploads/2020/06/Temperature-Controlled.jpg",
+    "also_seen_as": [
+      "https://midvalleystorage.com/wp-content/uploads/2020/06/Temperature-Controlled11.jpg"
+    ],
     "used_on": [
       "footer gallery",
       "facilityfeatures: Temperature Controlled Storage"
-    ]
+    ],
+    "note": "The live site shows a 528x396 copy (Temperature-Controlled11.jpg). This is the original upload of the same photo from the media library (3072x2304), swapped in during Phase 2 so it stays sharp."
   },
   {
     "local": "/images/facility-img-20200518.jpg",
@@ -248,6 +251,14 @@
     ],
     "used_on": [
       "facilityfeatures: Security"
+    ]
+  },
+  {
+    "local": "/images/share.jpg",
+    "derived_from": "/images/hero-promo-desktop.png",
+    "note": "1200x630 JPEG made from the desktop promo banner for link previews (Open Graph). Phase 2.",
+    "used_on": [
+      "og:image / twitter:image"
     ]
   }
 ]
