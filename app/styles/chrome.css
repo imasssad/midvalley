@@ -1,20 +1,31 @@
 /* Site chrome: header (components/Header.tsx, HeaderMobile.tsx), page nav row (NavLinks.tsx) and footer
-   (components/Footer.tsx), in the "valley poster" language of app/globals.css: square corners, condensed display
-   type, hairline rules, charcoal grounds. Hover and tap feedback is CSS and animates transform or opacity only;
-   the global prefers-reduced-motion rule in globals.css stops every transition here, and the transforms also sit
-   in (prefers-reduced-motion: no-preference) blocks. Breakpoints: 1100px, 900px, 680px (phone). */
+   (components/Footer.tsx), in the rounded, glossy language of app/globals.css: blue and white with orange only on
+   the call-to-action buttons, glossy navy boxes, rounded tiles and photos, condensed display type. Hover and tap
+   feedback is CSS and animates transform or opacity only (glow and hover layers fade in with opacity); the global
+   prefers-reduced-motion rule in globals.css stops every transition here, and the transforms also sit in
+   (prefers-reduced-motion: no-preference) blocks. Breakpoints: 1100px, 900px, 680px (phone). */
 
 /* ===================================================================== Header */
-/* In normal document flow: never fixed or sticky, so it can never cover the banner. White ground with a blue
-   rule along the top (the logo's blue), then the slim nav row on bone. */
+/* In normal document flow: never fixed or sticky, so it can never cover the banner. White ground with a thin
+   glossy blue line along the top (the logo's blue), then the slim nav row on mist. Static: nothing in the
+   header lifts or glows; hover only changes backgrounds. */
 .site-header {
   position: relative;
-  background: #fff;
-  border-top: 5px solid var(--blue);
+  padding-top: 4px; /* room for the top line */
+  background: var(--white);
   /* Row label column and box columns, adjusted per breakpoint below. */
   --hdr-label-w: 10rem;
   --hdr-box-w: clamp(200px, 16.5vw, 240px);
   --hdr-gap: 0.5rem;
+}
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(90deg, var(--blue-bright) 0%, var(--blue) 50%, var(--navy) 100%);
 }
 .hdr-main {
   display: flex;
@@ -24,10 +35,11 @@
   padding-block: clamp(0.9rem, 0.6rem + 0.8vw, 1.4rem);
 }
 
-/* Logo. Sized so it holds its own next to the three rows: 200px at 1280px and up, 170 / 150 / 130 below
+/* Logo. Sized so it holds its own next to the two rows: 200px at 1280px and up, 170 / 150 / 130 below
    (see the media queries). Width check at the narrowest end of each range, content = viewport - 2 x gutter:
    1280: 1178 >= 200 logo + 34 gap + 598 rows (160 label + 2 x 211 boxes + 2 x 8 gaps) = 832.
-   1101: 1013 >= 170 + 30 + 576 (156 + 2 x 200 + 2 x 6.4) = 769.
+   1101: 1013 >= 170 + 30 + 576 (160 + 2 x 200 + 2 x 8) = 776.
+   1100: 1012 >= 150 + 30 + 565 (156 + 2 x 198 + 2 x 6.4) = 745 (boxes 198 here, 200 just above: never larger).
     901:  829 >= 150 + 26 + 549 (156 + 2 x 190 + 2 x 6.4) = 725.
     681:  627 >= 130 + 16 + 2 x 237 boxes + 6.4 = 626.4 (boxes shrink, max 240 each). */
 .hdr-logo {
@@ -41,7 +53,7 @@
   height: auto;
 }
 
-/* The three rows. One fixed label column, then one equal box column per location (--hdr-cols, set inline). */
+/* The two rows. One fixed label column, then one equal box column per location (--hdr-cols, set inline). */
 .hdr-rows {
   display: grid;
   gap: var(--hdr-gap);
@@ -53,7 +65,8 @@
   align-items: center;
   gap: var(--hdr-gap);
 }
-/* Row labels: the display face in normal case (the visible text must match the spec exactly). */
+/* Row labels: the display face in normal case (the visible text must match the spec exactly), ink with a blue
+   chevron. Hidden from screen readers (aria-hidden): every box link already starts with the label in sr-only text. */
 .hdr-label {
   display: flex;
   align-items: center;
@@ -70,7 +83,7 @@
   line-height: 1.15;
   text-align: right;
 }
-/* Beside the boxes (above 900px) the three labels always stay on one line, in one even column. */
+/* Beside the boxes (above 900px) the two labels always stay on one line, in one even column. */
 @media (min-width: 901px) {
   .hdr-label {
     white-space: nowrap;
@@ -78,11 +91,12 @@
 }
 .hdr-label .icon {
   flex: none;
-  color: var(--orange-ink);
+  color: var(--blue);
 }
 
-/* Navy boxes (fixed spec). Text is white in every state: set on the link in all states and inherited by every
-   inner span. Hover only deepens the background a little: a --navy-3 layer fades in (opacity), no lift. */
+/* Navy boxes (fixed spec): the glossy navy face (navy gradient, white gloss line, faint white edge), rounded.
+   Text is white in every state: set on the link in all states and inherited by every inner span. Hover only
+   changes the background a little: a slightly lighter navy layer fades in (opacity). No lift, no glow. */
 .site-header a.hdr-box,
 .site-header a.hdr-box:visited,
 .site-header a.hdr-box:hover,
@@ -101,19 +115,30 @@
   height: 100%;
   min-height: 3.1rem;
   padding: 0.55rem 0.85rem;
-  background: var(--navy);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius);
+  background: var(--grad-navy);
+  box-shadow:
+    var(--gloss),
+    0 8px 18px -12px rgba(10, 46, 85, 0.6);
   font-family: var(--font-text);
   line-height: 1.2;
   text-align: left;
 }
+/* The hover layer: the same face, a little lighter, with its own gloss line. */
 .hdr-box::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  background: var(--navy-3);
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--blue) 45%, var(--navy-3)) 0%,
+    var(--navy-3) 55%,
+    var(--navy) 100%
+  );
+  box-shadow: var(--gloss);
   opacity: 0;
   transition: opacity 0.2s ease;
 }
@@ -126,7 +151,7 @@
 }
 .hdr-box .icon {
   flex: none;
-  color: var(--orange-hover);
+  color: var(--on-dark-muted);
 }
 .hdr-box-text {
   display: flex;
@@ -151,10 +176,10 @@
   font-weight: 500;
   overflow-wrap: anywhere;
 }
-/* ---- Slim page nav row: small letter-spaced caps on bone between two hairlines. The current page (and the
-   hovered link) gets a blue bar that grows out from the centre and sits on the bottom rule (scaleX only). */
+/* ---- Slim page nav row: small letter-spaced caps on mist between two hairlines. The current page (and the
+   hovered link) gets a rounded blue bar that grows out from the centre and sits on the bottom rule (scaleX only). */
 .hdr-nav {
-  background: var(--bone);
+  background: var(--mist);
   border-block: 1px solid var(--line);
 }
 .hdr-nav-list {
@@ -183,6 +208,7 @@
   right: 0;
   bottom: -1px; /* on the row's bottom rule */
   height: 3px;
+  border-radius: 3px 3px 0 0;
   background: var(--blue);
   transform: scaleX(0);
   transition: transform 0.35s var(--ease);
@@ -214,9 +240,10 @@
 /* Small desktop */
 @media (max-width: 1100px) {
   .site-header {
-    /* Wide enough for "Make a payment" plus its chevron on one line. */
+    /* Wide enough for "Make a payment" plus its chevron on one line. Boxes: 198px at 1100 (just under the 200px
+       above 1100, so they never grow when crossing the breakpoint), down to 190px at 1056 and below. */
     --hdr-label-w: 9.75rem;
-    --hdr-box-w: clamp(190px, 18.5vw, 205px);
+    --hdr-box-w: clamp(190px, 18vw, 198px);
     --hdr-gap: 0.4rem;
   }
   .hdr-logo {
@@ -273,7 +300,7 @@
   }
 }
 
-/* Phone: logo centered on top, then four big stacked buttons. No desktop rows, no nav row. */
+/* Phone: logo centered on top, then the big stacked buttons. No desktop rows, no nav row. */
 @media (max-width: 680px) {
   .hdr-main {
     flex-direction: column;
@@ -290,13 +317,11 @@
   .hdr-nav {
     display: none;
   }
-  /* Capped and centered, so the buttons don't stretch across a large phone or small tablet (541-680px). */
+  /* Full-width buttons at every phone width (the spec), inside the page's side gutters (.wrap). */
   .hdr-mobile {
     display: grid;
     gap: 0.5rem;
     width: 100%;
-    max-width: 30rem;
-    margin-inline: auto;
   }
 }
 
@@ -338,9 +363,14 @@
   flex: none;
 }
 
-/* Navy (fixed spec): white text; hover / open fade in a --navy-3 layer (opacity); a quick press on tap. */
+/* Glossy navy (fixed spec), like the desktop boxes: white text; hover / open fade in a slightly lighter navy
+   layer (opacity); a quick press on tap. */
 .hm-btn-navy {
-  background: var(--navy);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--grad-navy);
+  box-shadow:
+    var(--gloss),
+    0 8px 18px -12px rgba(10, 46, 85, 0.6);
   color: #fff;
   transition: transform 0.2s var(--ease);
 }
@@ -350,7 +380,13 @@
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  background: var(--navy-3);
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--blue) 45%, var(--navy-3)) 0%,
+    var(--navy-3) 55%,
+    var(--navy) 100%
+  );
+  box-shadow: var(--gloss);
   opacity: 0;
   transition: opacity 0.2s ease;
 }
@@ -359,7 +395,7 @@
   opacity: 1;
 }
 .hm-btn-navy > .icon:first-child {
-  color: var(--orange-hover);
+  color: var(--on-dark-muted);
 }
 @media (prefers-reduced-motion: no-preference) {
   .hm-btn-navy:active {
@@ -374,9 +410,36 @@
   margin-left: auto;
 }
 
-/* Orange call buttons: ink text on orange (5.8:1). */
+/* Orange call buttons (.btn .btn-cta, the call to action): ink text on the glossy orange face. The header is
+   static, so unlike other .btn they never lift and show no glow on hover: the glow layer (::before) becomes a
+   white sheen over the face (::after) that fades in, so hover only brightens the background. The tap press stays. */
 .hm-btn-call .icon {
   color: var(--ink);
+}
+.hdr-mobile .hm-btn-call::after {
+  z-index: -2;
+}
+.hdr-mobile .hm-btn-call::before {
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.08) 100%);
+  filter: none;
+  opacity: 0;
+  transform: none;
+  transition: opacity 0.2s ease;
+}
+.hdr-mobile .hm-btn-call:hover {
+  transform: none;
+}
+.hdr-mobile .hm-btn-call:hover::before {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hdr-mobile .hm-btn-call:active {
+    transform: scale(0.98);
+    transition-duration: 0.08s;
+  }
 }
 .hm-phone {
   white-space: nowrap;
@@ -392,16 +455,21 @@
 .hm-panel {
   overflow: hidden;
 }
+/* A rounded glossy navy card just under its button. The gap is a margin on the inner box (the clipped outer box
+   is a block formatting context, so it stays inside and closes with the height). */
 .hm-panel-inner {
-  padding: 0.5rem; /* room for the links' focus outline inside the clipped box */
-  background: var(--navy);
+  margin-top: 0.4rem;
+  padding: 0.6rem; /* room for the links' focus outline inside the clipped box */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(120% 80% at 50% -20%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%),
+    var(--grad-navy);
+  box-shadow: var(--gloss);
 }
 /* No JavaScript (or not hydrated yet when the boot script gave up): the panel shows under a button that cannot
-   open or close it, so it gets a small gap and the button's chevron is hidden. Once hydrated (data-ready) the
-   normal styling applies even if html.js was removed. */
-html:not(.js) .hm-panel:not([data-ready]) {
-  margin-top: 0.25rem;
-}
+   open or close it, so the button's chevron is hidden. Once hydrated (data-ready) the normal styling applies
+   even if html.js was removed. */
 html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   visibility: hidden;
 }
@@ -417,8 +485,11 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   gap: 0.75rem;
   min-height: 3.25rem;
   padding: 0.6rem 0.9rem;
-  background: #fff;
   border-radius: var(--radius);
+  background: linear-gradient(180deg, #ffffff 0%, var(--mist) 100%);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 6px 14px -10px rgba(7, 31, 58, 0.6);
   color: var(--ink);
   line-height: 1.25;
   text-decoration: none;
@@ -432,8 +503,9 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
 .hm-link:hover .hm-link-title {
   text-decoration: underline;
 }
+/* White ring: the tiles sit on the navy panel. */
 .hm-link:focus-visible {
-  outline: 3px solid var(--orange-hover);
+  outline: 3px solid #fff;
   outline-offset: 2px;
 }
 .hm-link .icon {
@@ -465,11 +537,14 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
 }
 
 /* ===================================================================== Footer */
-/* A deeper ink than the CTA band above it, plus a hairline, so the two read as separate blocks.
-   Contrast on #101215: white 18.9:1, --on-dark-muted 10.2:1, --orange-hover 7.6:1. */
+/* The deep navy glossy band (the .bg-ink look), on a ground a little darker than the CTA band above it (which is
+   also navy) and under a 1px light rule, so the two read as separate blocks.
+   Contrast on --navy-deep / --navy: white 15:1+ / 13:1, --on-dark-muted 11:1+ / 9:1. */
 .site-footer.bg-ink {
-  background: #101215;
   border-top: 1px solid var(--dark-line);
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 60%),
+    linear-gradient(175deg, var(--navy-deep) 0%, var(--navy) 55%, var(--navy-deep) 100%);
   color: var(--on-dark-muted);
   font-size: var(--text-sm);
 }
@@ -479,7 +554,7 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   color: #fff;
 }
 
-/* Top row: the logo in white and the Contact button, over a 2px rule. */
+/* Top row: the logo in white and the Contact button (orange, the call to action), over a 1px rule. */
 .ft-top {
   display: flex;
   flex-wrap: wrap;
@@ -487,7 +562,7 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   justify-content: space-between;
   gap: 1.25rem 2rem;
   padding-block: clamp(2.5rem, 1.8rem + 2.5vw, 4rem) clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);
-  border-bottom: 2px solid var(--dark-line);
+  border-bottom: 1px solid var(--dark-line);
 }
 .ft-logo {
   display: block;
@@ -500,16 +575,12 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   height: auto;
   filter: brightness(0) invert(1); /* static: the two-colour logo as one white mark */
 }
-/* On charcoal the orange button's offset block is white, so the lift shows. */
-.site-footer .ft-contact {
-  --btn-shadow: #fff;
-}
 
-/* Columns */
+/* Columns. The location and Follow / Employee columns are rounded glassy tiles (like the CTA band's groups). */
 .ft-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 1.15fr) minmax(0, 1fr);
-  gap: clamp(2rem, 1rem + 2.5vw, 3.5rem);
+  gap: clamp(1.25rem, 0.6rem + 1.8vw, 2.5rem);
   padding-block: clamp(2.5rem, 1.8rem + 2.5vw, 4rem);
 }
 .ft-col {
@@ -517,8 +588,16 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   align-content: start;
   gap: 0.9rem;
 }
+.ft-loc,
+.ft-more {
+  padding: clamp(1.1rem, 0.9rem + 0.8vw, 1.5rem);
+  border: 1px solid var(--dark-line);
+  border-radius: var(--radius-card);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
 
-/* Page links: big condensed caps; an orange bar grows under the hovered and the current link (scaleX). */
+/* Page links: big condensed caps; a white bar grows under the hovered and the current link (scaleX). */
 .ft-nav-list {
   display: grid;
   gap: 0.1rem;
@@ -547,7 +626,8 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   right: 0;
   bottom: 0.3rem;
   height: 2px;
-  background: var(--orange-hover);
+  border-radius: 2px;
+  background: #fff;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.35s var(--ease);
@@ -568,7 +648,7 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   display: flex;
   align-items: center;
   gap: 0.85rem;
-  color: var(--orange-hover);
+  color: var(--on-dark-muted);
   font-family: var(--font-display);
   font-stretch: var(--condensed);
   font-size: 1rem;
@@ -580,6 +660,7 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   content: "";
   flex: 1;
   height: 2px;
+  border-radius: 2px;
   background: currentColor;
   opacity: 0.35;
 }
@@ -602,7 +683,7 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
 .ft-line .icon {
   flex: none;
   margin-top: 0.15rem;
-  color: var(--orange-hover);
+  color: var(--on-dark-muted);
 }
 .site-footer a.ft-addr {
   text-decoration: none;
@@ -660,7 +741,8 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   }
 }
 
-/* Photo strip: six square thumbnails (not links). On hover the photo grows a little inside its clipped box. */
+/* Photo strip: six rounded square thumbnails (not links). On hover the photo grows a little inside its clipped,
+   rounded box (.photo clips). */
 .ft-strip {
   padding-bottom: clamp(2.5rem, 1.8rem + 2.5vw, 4rem);
 }
@@ -673,7 +755,10 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
 .ft-thumb {
   aspect-ratio: 1;
   border-radius: var(--radius);
-  background: var(--ink-2);
+  background: var(--navy);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 12px 24px -16px rgba(7, 31, 58, 0.8);
 }
 .ft-thumb img {
   transition: transform 0.7s var(--ease);
@@ -720,7 +805,7 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
 }
 
 /* Phone: one column, in reading order. The page links come first (they are the phone's main navigation) as
-   big boxed tap targets, two per row; a quick press on tap. */
+   big rounded glassy tap tiles, two per row; a quick press on tap. */
 @media (max-width: 680px) {
   .ft-top {
     gap: 1rem;
@@ -730,7 +815,10 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   }
   .ft-grid {
     grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
+    gap: 1.5rem;
+  }
+  .ft-col-nav {
+    margin-bottom: 1rem;
   }
   .ft-nav-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -743,6 +831,8 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
     padding: 0.55rem 0.9rem;
     border: 1px solid var(--dark-line);
     border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.03) 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
     font-size: 1.3rem;
   }
   .site-footer .ft-nav-list a::after {
@@ -751,7 +841,7 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
     bottom: 0.55rem;
   }
   .site-footer .ft-nav-list a[aria-current="page"] {
-    border-color: var(--orange-hover);
+    border-color: rgba(255, 255, 255, 0.6);
   }
   .ft-gallery {
     grid-template-columns: repeat(3, minmax(0, 1fr));

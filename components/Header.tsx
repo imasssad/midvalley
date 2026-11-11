@@ -1,9 +1,10 @@
 // Site header (layout fixed by the client): logo on the left and, on the right, two rows that take visitors
 // straight to payment and phone for each location (as on the old site; the client asked to leave Rent Online
-// out of the header, it stays on the location cards and the closing band). Below it, a slim page nav row with an
-// underline that grows from the centre (transform only). In normal document flow (never fixed or sticky) and
+// out of the header, it stays on the location cards and the closing band). The boxes are glossy navy, rounded,
+// with white text; hover only lightens their background a little (no lift). Below it, a slim page nav row with a
+// blue bar that grows from the centre (transform only). In normal document flow (never fixed or sticky) and
 // never animated in, so it paints at once. On phones the two rows and the nav row are hidden and HeaderMobile
-// shows three big buttons instead (both are in the HTML; CSS shows one or the other with display: none).
+// shows big stacked buttons instead (both are in the HTML; CSS shows one or the other with display: none).
 // Styles: app/styles/chrome.css (hdr-, hm-, nav-).
 import Image from "next/image";
 import Link from "next/link";
@@ -18,11 +19,12 @@ import { NewTabNote } from "./NewTab";
 
 /** One row: the label with a ">" chevron, then one navy box per location. Each box's link text repeats the row
  *  label for screen readers ("Make a payment: Visalia Noble, 15323 E. Noble Ave. (opens in a new tab)"), so the
- *  links make sense on their own, for example in a screen reader's list of links. */
+ *  links make sense on their own, for example in a screen reader's list of links. The visible label is therefore
+ *  aria-hidden, so it is not read twice. */
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="hdr-row">
-      <p className="hdr-label">
+      <p className="hdr-label" aria-hidden="true">
         {label}
         <Icon name="chevron" size={18} />
       </p>

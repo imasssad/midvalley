@@ -1,7 +1,7 @@
 "use client";
 
-// Phone header actions (680px and below): a "Make a Payment" button that opens a small panel with one link per
-// location, then a "Call <location> <phone>" button per location. No hamburger menu. (Rent Online was left out
+// Phone header actions (680px and below): a glossy navy "Make a Payment" button that opens a rounded navy panel
+// with one white link tile per location, then a "Call <location> <phone>" button per location. No hamburger menu. (Rent Online was left out
 // of the header at the client's request; it stays on the location cards and the closing band.)
 //
 // Motion (motion/react, m.* only): the panels open and close with a smooth height + opacity transition (0.3s)
@@ -151,7 +151,8 @@ export function HeaderMobile({ header, locations, newTabLabel }: Props) {
         </Panel>
       </div>
 
-      {/* Call buttons: orange square buttons (.btn .btn-cta: press on tap, lift on hover), in normal case. */}
+      {/* Call buttons: glossy orange rounded buttons (.btn .btn-cta, the call to action), in normal case. Press on
+          tap; on hover only the face brightens (the header is static: no lift, no glow). */}
       {locations.map((l) => (
         <a key={l.id} className="btn btn-cta hm-btn hm-btn-call" href={phoneHref(l.phone)}>
           <Icon name="phone" size={22} />

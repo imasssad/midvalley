@@ -1,8 +1,9 @@
-// Site footer on a charcoal "poster" ground (a deeper ink than the CTA band above, with a rule between them):
+// Site footer on the deep navy glossy band (a little darker than the navy CTA band above, with a rule between them):
 // - top row: the logo in white and the Contact button;
 // - columns: the page links (on phones these are the main navigation, so they come first, as big tap targets),
-//   one numbered column per location (address -> maps, phone, hours), then Follow Us / Employee Portal;
-// - a strip of six square photos (hover: the photo grows a little inside its box);
+//   one numbered column per location (address -> maps, phone, hours), then Follow Us / Employee Portal, the
+//   location and Follow / Employee columns as rounded glassy tiles;
+// - a strip of six rounded square photos (hover: the photo grows a little inside its box);
 // - the business name set huge in condensed caps (decorative: hidden from screen readers, the logo carries it);
 // - the copyright line.
 // Columns, photos and the big name rise in one after another as they scroll into view (Stagger, transform and
@@ -28,7 +29,7 @@ export function Footer({ content, year }: { content: SiteContent; year: number }
     <footer className="site-footer bg-ink">
       <div className="wrap">
         <Reveal className="ft-top" y={20}>
-          {/* The real logo, turned white with a CSS filter so it reads on charcoal. */}
+          {/* The real logo, turned white with a CSS filter so it reads on navy. */}
           <Link href="/" className="ft-logo">
             <Image src={business.logo.src} alt={business.logo.alt || business.name} width={166} height={96} unoptimized />
           </Link>
