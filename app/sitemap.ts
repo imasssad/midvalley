@@ -1,4 +1,6 @@
-// /sitemap.xml: the public pages, at the same URLs as the old site. The Employee Portal is left out on purpose.
+// /sitemap.xml: the four public pages, at the same URLs as the old site (absolute, on SITE_URL: the bare domain
+// https://midvalleystorage.com unless NEXT_PUBLIC_SITE_URL says otherwise). The Employee Portal and the admin
+// panel are left out on purpose (also disallowed in app/robots.ts).
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/links";
 
