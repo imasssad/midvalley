@@ -173,6 +173,7 @@ export const contactSchema = z.object({
     sent: required(200),
     failed: required(200),
     offline: required(200),
+    tooMany: required(200),
   }),
 });
 
@@ -220,7 +221,19 @@ export const labelsSchema = z.object({
 /** The not-found page (the old site's 404 words). */
 export const notFoundSchema = z.object({ heading: required(40), text: required(120), linkLabel: required(40) });
 
-export const employeeSchema = z.object({ heading: required(60), placeholder: required(200) });
+export const employeeSchema = z.object({
+  heading: required(60),
+  /** Shown only when the portal isn't set up yet (no password or calendar in the environment). */
+  placeholder: required(200),
+  /** The Google Calendar's title (iframe title for screen readers). */
+  calendarTitle: required(100),
+  passwordLabel: required(40),
+  submitLabel: required(30),
+  logoutLabel: required(30),
+  wrongPassword: required(160),
+  /** "{minutes}" becomes the number of minutes to wait. */
+  tooManyTries: required(160),
+})
 
 export const sectionSchemas = {
   business: businessSchema,

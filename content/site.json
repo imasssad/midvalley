@@ -400,7 +400,8 @@
       "sending": "Sending…",
       "sent": "Thanks, your message was sent.",
       "failed": "The message didn't go through. Please call us instead.",
-      "offline": "The message didn't go through. Check your connection or call us instead."
+      "offline": "The message didn't go through. Check your connection or call us instead.",
+      "tooMany": "Too many messages were sent from this connection. Please try again later, or call us."
     }
   },
   "footer": {
@@ -444,7 +445,13 @@
   },
   "employee": {
     "heading": "Employee Portal",
-    "placeholder": "Employee page coming soon"
+    "placeholder": "Employee page coming soon",
+    "calendarTitle": "Mid Valley Noble Employee Schedule",
+    "passwordLabel": "Password",
+    "submitLabel": "Log in",
+    "logoutLabel": "Log out",
+    "wrongPassword": "That password isn't right. Please try again.",
+    "tooManyTries": "Too many tries. Please wait {minutes} minutes and try again."
   },
   "labels": {
     "directions": "Get directions",
