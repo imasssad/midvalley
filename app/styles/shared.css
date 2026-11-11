@@ -1,0 +1,143 @@
+/* Shared parts: location cards (components/LocationCard.tsx) and the closing CTA band (components/CtaBand.tsx). */
+
+/* Location card */
+.loc-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  height: 100%;
+  padding: clamp(1.4rem, 1rem + 1.6vw, 2.25rem);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  /* Accent bar drawn inside the card so it follows the rounded corners. */
+  box-shadow:
+    inset 0 5px 0 var(--blue),
+    var(--shadow-sm);
+}
+.loc-name {
+  font-size: var(--h3);
+}
+.loc-facts {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+}
+.loc-facts > div {
+  display: grid;
+  gap: 0.15rem;
+}
+.loc-facts dt {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  font-weight: 650;
+}
+.loc-facts dd {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin: 0;
+  color: var(--ink);
+}
+.loc-facts dd > .icon {
+  flex: none;
+  margin-top: 0.2rem;
+  color: var(--blue);
+}
+.loc-facts dd.loc-hours {
+  padding-left: calc(20px + 0.6rem);
+  font-weight: 600;
+}
+.loc-facts dt .icon {
+  color: var(--blue);
+}
+.loc-facts a {
+  color: var(--ink);
+  text-decoration: none;
+}
+.loc-facts a:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+.loc-phone {
+  font-weight: 700;
+  font-size: var(--text-lg);
+}
+/* Phone: 44px tall tap areas without changing the type. */
+@media (max-width: 680px) {
+  .loc-facts a,
+  .loc-actions .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .loc-facts dd > .icon {
+    margin-top: 0.75rem;
+  }
+}
+.loc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.75rem 1rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+.loc-actions .btn {
+  /* Side by side when both fit on one line each; otherwise stacked full width (never a two-line pill). */
+  flex: 1 1 13.5rem;
+  white-space: nowrap;
+}
+.loc-actions .link-arrow {
+  flex-basis: 100%;
+}
+
+/* Closing CTA band */
+.cta-band {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(3.5rem, 2.4rem + 4.5vw, 6.5rem) clamp(2.75rem, 1.9rem + 3vw, 4.5rem);
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(0, 84, 151, 0.55) 0%, rgba(0, 84, 151, 0) 60%),
+    var(--navy);
+}
+.cta-inner {
+  display: grid;
+  gap: clamp(1.75rem, 1.2rem + 2vw, 3rem);
+}
+.cta-band h2 {
+  max-width: 22ch;
+}
+@media (min-width: 1101px) {
+  .cta-inner {
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 2fr);
+    align-items: center;
+  }
+}
+.cta-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: 1rem;
+}
+.cta-group {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border: 1px solid var(--navy-line);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.04);
+}
+.cta-loc {
+  margin: 0;
+  color: var(--white);
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-size: var(--text-lg);
+  font-weight: 750;
+}
+.cta-group .btn {
+  width: 100%;
+}

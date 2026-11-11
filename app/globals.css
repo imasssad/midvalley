@@ -1,0 +1,367 @@
+/* Mid Valley Storage. Bold and clean: deep navy and the logo blue as the base, white and warm off-white
+   grounds, and the promo orange ONLY on call-to-action buttons and small accents (so the site sits well next to
+   whatever banner is up that month). Display type is Archivo (slightly expanded, heavy); text is Inter.
+   Part styles live next to this file in app/styles/*.css and use only these tokens.
+   Breakpoints used everywhere: 1100px (desktop → small desktop), 900px (tablet), 680px (phone). */
+:root {
+  /* Colour */
+  --navy: #0b2340;
+  --navy-2: #102c50;
+  --navy-3: #173a66;
+  --blue: #005497; /* logo blue */
+  --blue-2: #0a64ad;
+  --blue-tint: #e6eff7;
+  --orange: #e8720c; /* CTA buttons and small accents only; text on it is navy (5.1:1) */
+  --orange-hover: #f08a2e;
+  --orange-ink: #b85a05; /* orange text on light grounds (4.6:1) */
+  --white: #ffffff;
+  --cream: #f7f4ee; /* warm off-white section ground */
+  --cream-2: #efe9df;
+  --ink: #0b2340;
+  --text: #24364d;
+  --muted: #5b6b80; /* 5.4:1 on white, 5:1 on cream */
+  --line: #e3e0d8;
+  --line-cool: #dde4ec;
+  --on-navy: #f4f7fb;
+  --on-navy-muted: #b9c6d8;
+  --navy-line: rgba(255, 255, 255, 0.14);
+  --focus: #0a64ad;
+
+  /* Type */
+  --font-display: var(--font-archivo), "Arial Narrow", Arial, sans-serif;
+  --font-text: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  --display-stretch: 108%;
+  --text-xs: 0.8125rem;
+  --text-sm: clamp(0.875rem, 0.86rem + 0.08vw, 0.9375rem);
+  --text-base: clamp(1rem, 0.97rem + 0.14vw, 1.0625rem);
+  --text-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --h1: clamp(2.35rem, 1.45rem + 3.6vw, 4.6rem);
+  --h2: clamp(1.9rem, 1.3rem + 2.3vw, 3.4rem);
+  --h3: clamp(1.2rem, 1.08rem + 0.5vw, 1.55rem);
+  --eyebrow: 0.8125rem;
+
+  /* Space and shape */
+  --gutter: clamp(16px, 4vw, 48px);
+  --wrap: 1400px; /* same as the header, so every left edge lines up */
+  --wrap-wide: 1400px;
+  --space-section: clamp(3.75rem, 2.4rem + 5.2vw, 7.5rem);
+  --space-block: clamp(1.5rem, 1.1rem + 1.6vw, 2.75rem);
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: clamp(16px, 0.8rem + 1vw, 26px);
+  --shadow-sm: 0 1px 2px rgba(11, 35, 64, 0.07), 0 1px 1px rgba(11, 35, 64, 0.04);
+  --shadow-md: 0 18px 40px -20px rgba(11, 35, 64, 0.32), 0 2px 6px -2px rgba(11, 35, 64, 0.08);
+  --shadow-lg: 0 40px 80px -36px rgba(11, 35, 64, 0.5);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  color-scheme: light;
+}
+
+/* Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 1rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--text);
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+img {
+  height: auto;
+}
+[hidden] {
+  display: none !important;
+}
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+h1 {
+  font-size: var(--h1);
+}
+h2 {
+  font-size: var(--h2);
+}
+h3 {
+  font-size: var(--h3);
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+}
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+p + p {
+  margin-top: 1em;
+}
+a {
+  color: var(--blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+a:hover {
+  color: var(--blue-2);
+}
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+::selection {
+  background: var(--blue);
+  color: var(--white);
+}
+
+/* Visible focus everywhere (keyboard only). */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.on-navy :focus-visible,
+.on-navy:focus-visible {
+  outline-color: var(--orange-hover);
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100;
+  padding: 0.75rem 1.1rem;
+  background: var(--navy);
+  color: var(--white);
+  border-radius: var(--radius-sm);
+  font-weight: 650;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 1rem;
+  color: var(--white);
+}
+
+/* Layout helpers */
+.wrap {
+  width: 100%;
+  max-width: calc(var(--wrap) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.wrap-wide {
+  width: 100%;
+  max-width: calc(var(--wrap-wide) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.section {
+  padding-block: var(--space-section);
+}
+.section-cream {
+  background: var(--cream);
+}
+.section-navy {
+  background: var(--navy);
+  color: var(--on-navy);
+}
+.section-navy h2,
+.section-navy h3 {
+  color: var(--white);
+}
+
+/* Small uppercase label above a heading. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1rem;
+  color: var(--orange-ink);
+  font-family: var(--font-text);
+  font-size: var(--eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--orange);
+}
+.section-navy .eyebrow {
+  color: var(--orange-hover);
+}
+.lede {
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  color: var(--text);
+}
+.muted {
+  color: var(--muted);
+}
+
+/* Buttons. Orange = the main action (rent, call). Navy and outline = everything else. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.4rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s var(--ease-out),
+    box-shadow 0.18s ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-orange,
+.btn-orange:visited {
+  background: var(--orange);
+  color: var(--navy);
+}
+.btn-orange:hover,
+.btn-orange:focus-visible {
+  background: var(--orange-hover);
+  color: var(--navy);
+}
+.btn-navy,
+.btn-navy:visited {
+  background: var(--navy);
+  color: var(--white);
+}
+.btn-navy:hover,
+.btn-navy:focus-visible {
+  background: var(--navy-3);
+  color: var(--white);
+}
+.btn-outline,
+.btn-outline:visited {
+  background: transparent;
+  border-color: currentColor;
+  color: var(--navy);
+}
+.btn-outline:hover,
+.btn-outline:focus-visible {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+.section-navy .btn-outline,
+.section-navy .btn-outline:visited {
+  color: var(--white);
+}
+.section-navy .btn-outline:hover,
+.section-navy .btn-outline:focus-visible {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--navy);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn:hover .icon-arrow {
+    transform: translateX(3px);
+  }
+}
+.icon-arrow {
+  transition: transform 0.18s var(--ease-out);
+}
+
+/* Text link with an arrow */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.link-arrow:hover {
+  text-decoration: underline;
+}
+
+/* Photos (components/Photo.tsx): the box sets the shape; the image covers it. */
+.photo {
+  position: relative;
+  overflow: hidden;
+  background: var(--cream-2);
+}
+
+/* Fade-up on scroll (components/Motion.tsx). Hidden only when JS runs and motion is allowed. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 0.7s var(--ease-out),
+      transform 0.7s var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Placeholders the admin can fill in later are marked in the code with "PLACEHOLDER". */
