@@ -1,0 +1,495 @@
+/* Homepage sections (app/page.tsx, components/home/*). Only the tokens from app/globals.css.
+   Section rhythm: cream banner, blue value strip, white About, navy Storage Options, cream Facility Features,
+   light blue Our Locations, (white reviews), navy closing band. Breakpoints: 1100px, 900px, 680px. */
+
+/* Section headings on the homepage */
+.home-heading {
+  margin-bottom: var(--space-block);
+  max-width: 20ch;
+}
+
+/* ---- 1. Promo banner (components/home/HeroBanner.tsx) ---- */
+.hero-promo {
+  background: var(--cream);
+  border-bottom: 1px solid var(--line);
+}
+/* Edge to edge up to the banner's own width (1774px), then centred on cream. Never cropped. */
+.hero-banner {
+  display: block;
+  max-width: 1774px;
+  margin-inline: auto;
+}
+.hero-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.hero-disclaimer {
+  max-width: 1774px;
+  margin-inline: auto;
+  padding: 0.7rem var(--gutter) 0.85rem;
+  color: var(--muted); /* 5:1 on cream */
+  font-size: var(--text-sm); /* 14px and up */
+  line-height: 1.45;
+  text-align: center;
+}
+
+/* Hero "video" mode (components/home/HeroVideo.tsx): a wide decorative band. */
+.hero-video {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 7;
+  max-height: 80vh;
+  background: var(--navy);
+}
+.hero-video-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 680px) {
+  .hero-video {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ---- 2. Value strip (components/home/ValueStrip.tsx) ---- */
+.value-strip {
+  background: var(--blue);
+  color: var(--white); /* 7.3:1 */
+}
+/* The 1px gap shows the list's background as thin dividers between the items. */
+.value-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.18);
+}
+.value-item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: clamp(1.1rem, 0.9rem + 0.6vw, 1.5rem) clamp(1rem, 0.6rem + 1vw, 1.75rem);
+  background: var(--blue);
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-size: var(--text-lg);
+  font-weight: 750;
+  line-height: 1.25;
+}
+.value-text {
+  text-wrap: balance; /* two even lines, not one long line and an orphan */
+}
+.value-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--orange-hover);
+}
+/* 1101-1300px: four narrow columns. Slightly smaller type, padding and icon keep the longest item
+   ("Friendly, professional customer service") to two lines instead of three. */
+@media (min-width: 1101px) and (max-width: 1300px) {
+  .value-item {
+    gap: 0.7rem;
+    padding-inline: 1rem;
+    font-size: var(--text-base);
+  }
+  .value-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+}
+@media (max-width: 1100px) {
+  .value-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 680px) {
+  .value-strip .wrap-wide {
+    padding-inline: 0;
+  }
+  .value-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 1rem var(--gutter);
+    font-size: var(--text-base);
+  }
+  .value-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+}
+
+/* ---- 3. About intro (components/home/AboutIntro.tsx) ---- */
+.about-head h1 {
+  max-width: 21ch;
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(2rem, 1rem + 4vw, 5rem);
+  align-items: start;
+  margin-top: clamp(2rem, 1.4rem + 2.4vw, 3.5rem);
+}
+.about-text p:not(.lede) {
+  color: var(--text);
+}
+.about-text .lede {
+  color: var(--ink);
+  font-weight: 500;
+}
+/* A small orange block peeks out behind the photo's corner. */
+.about-media {
+  position: relative;
+  isolation: isolate;
+}
+.about-media::after {
+  content: "";
+  position: absolute;
+  right: -12px;
+  bottom: -12px;
+  z-index: -1;
+  width: 42%;
+  height: 46%;
+  border-radius: var(--radius-lg);
+  background: var(--orange);
+}
+.about-photo {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .about-media {
+    margin-right: 12px; /* room for the orange corner inside the gutter */
+  }
+}
+
+/* ---- 4. Storage options (components/home/StorageOptions.tsx, Gallery.tsx) ---- */
+.home-options {
+  background:
+    radial-gradient(90% 70% at 100% 0%, rgba(0, 84, 151, 0.45) 0%, rgba(0, 84, 151, 0) 65%),
+    var(--navy);
+}
+.options-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 0.6rem + 1vw, 1.5rem);
+}
+.option-card {
+  padding: clamp(1.4rem, 1rem + 1.4vw, 2.25rem);
+  background: var(--navy-2);
+  border: 1px solid var(--navy-line);
+  border-radius: var(--radius-lg);
+}
+.option-card::before {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 4px;
+  margin-bottom: 1.25rem;
+  border-radius: 2px;
+  background: var(--orange);
+}
+.option-card h3 {
+  margin-bottom: 0.75rem;
+}
+.option-card p {
+  color: var(--on-navy-muted); /* 8:1 on navy-2 */
+}
+@media (max-width: 900px) {
+  .options-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Gallery thumbnails */
+.options-gallery {
+  margin-top: clamp(2rem, 1.4rem + 2.4vw, 3.5rem);
+}
+.gallery-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.6rem, 0.4rem + 0.6vw, 1rem);
+}
+.gallery-thumb {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: none;
+  cursor: zoom-in;
+}
+.gallery-thumb:focus-visible {
+  border-radius: var(--radius);
+}
+.gallery-photo {
+  aspect-ratio: 4 / 3;
+}
+.gallery-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--navy);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.gallery-thumb:hover .gallery-photo::after {
+  opacity: 0.18;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .gallery-photo img {
+    transition: transform 0.6s var(--ease-out);
+  }
+  .gallery-thumb:hover .gallery-photo img,
+  .gallery-thumb:focus-visible .gallery-photo img {
+    transform: scale(1.05);
+  }
+}
+@media (max-width: 680px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Lightbox (native <dialog>): full screen, photo shown whole (contain), never stretched. */
+html:has(.lightbox[open]) {
+  overflow: hidden;
+}
+.lightbox {
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgb(6, 20, 38); /* solid: no page text shows through */
+  color: var(--on-navy);
+}
+.lightbox::backdrop {
+  background: rgba(5, 15, 30, 0.92);
+}
+.lightbox-figure {
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0.9rem;
+  height: 100%;
+  margin: 0;
+  padding: 4.5rem clamp(4.5rem, 3rem + 4vw, 7rem) 1.25rem;
+}
+.lightbox-stage {
+  position: relative;
+  min-height: 0;
+}
+.lightbox-caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 1rem;
+  color: var(--on-navy-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+.lightbox-count {
+  color: var(--white);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.lightbox-btn {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: rgba(11, 35, 64, 0.75);
+  color: var(--white);
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease;
+}
+.lightbox-btn:hover {
+  background: var(--white);
+  color: var(--navy);
+}
+.lightbox-btn:focus-visible {
+  border-radius: 50%;
+}
+.lightbox-close {
+  top: 1rem;
+  right: 1rem;
+}
+.lightbox-prev,
+.lightbox-next {
+  top: 50%;
+  translate: 0 -50%;
+}
+.lightbox-prev {
+  left: 1rem;
+}
+.lightbox-next {
+  right: 1rem;
+}
+.lightbox-prev .icon {
+  transform: scaleX(-1);
+}
+@media (max-width: 680px) {
+  /* Phone: a 4:3 photo area with the counter and caption directly under it, centred as one block between the
+     close button (top) and the previous/next buttons (bottom). */
+  .lightbox-figure {
+    grid-template-rows: min(100%, calc((100vw - 2 * var(--gutter)) * 0.75)) auto;
+    align-content: center;
+    padding: 4.5rem var(--gutter) 5.5rem;
+  }
+  .lightbox-prev,
+  .lightbox-next {
+    top: auto;
+    bottom: 1rem;
+    translate: none;
+  }
+  .lightbox-prev {
+    left: var(--gutter);
+  }
+  .lightbox-next {
+    right: var(--gutter);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox[open] {
+    animation: lightbox-in 0.22s ease-out;
+  }
+  @keyframes lightbox-in {
+    from {
+      opacity: 0;
+    }
+  }
+}
+
+/* ---- 5. Facility features (components/home/FeaturesList.tsx) ---- */
+.features-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 1rem + 4vw, 5rem);
+  align-items: stretch;
+}
+.features-media {
+  order: -1; /* photo on the left on desktop; text first in the HTML */
+}
+.features-photo {
+  height: 100%;
+  min-height: 28rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.checklist {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem 1.75rem;
+  margin-top: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+}
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  color: var(--ink);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.check-mark {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: -0.05rem;
+  border-radius: 50%;
+  background: var(--orange);
+  color: var(--navy);
+}
+.check-mark .icon {
+  stroke-width: 2.6;
+}
+@media (max-width: 900px) {
+  .features-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .features-media {
+    order: 0;
+  }
+  .features-photo {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 10; /* tablet: wide, so the section stays short */
+  }
+}
+@media (max-width: 680px) {
+  .features-photo {
+    aspect-ratio: 5 / 4;
+  }
+}
+@media (max-width: 680px) {
+  .checklist {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---- 6. Our locations (components/home/HomeLocations.tsx; cards in app/styles/shared.css) ---- */
+.home-locations {
+  background: var(--blue-tint);
+}
+.locations-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 0.5rem + 1.5vw, 2rem);
+}
+@media (max-width: 680px) {
+  .locations-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---- 7. Reviews (components/home/Testimonials.tsx): shown only once the admin adds some ---- */
+.testimonials-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: clamp(1rem, 0.6rem + 1vw, 1.5rem);
+}
+.testimonial {
+  height: 100%;
+  margin: 0;
+  padding: clamp(1.4rem, 1rem + 1.4vw, 2.25rem);
+  background: var(--cream);
+  border-left: 4px solid var(--orange);
+  border-radius: var(--radius-lg);
+}
+.testimonial blockquote {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--text-lg);
+  line-height: 1.55;
+}
+.testimonial figcaption {
+  margin-top: 1rem;
+  color: var(--muted);
+  font-weight: 700;
+}
