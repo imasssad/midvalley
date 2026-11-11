@@ -1,33 +1,53 @@
 // The one schema for everything editable on the website (same approach as rapidselfstorage). It gives the
-// TypeScript types, and it validates the defaults in content/site.json and anything the admin panel saves.
-// Every section is read (and, from Phase 3, saved) on its own, so one bad section never blanks the page.
+// TypeScript types, and it validates the defaults in content/site.json and anything the admin panel saves (in the
+// browser before saving, and again on the server). Messages are written for the site owner, not for developers.
+// Every section is read and saved on its own, so one bad section never blanks the page.
 import { z } from "zod";
 import { phoneDigits } from "./phone";
 
-const text = (max: number) => z.string().trim().max(max, `Keep this under ${max} characters.`);
+/**
+ * Cleans admin text before it is checked: drops control characters (keeping line breaks) and anything that looks
+ * like an HTML tag. React escapes everything it prints anyway; this keeps stray markup out of the stored content.
+ */
+export function cleanText(v: string): string {
+  return v
+    .replace(/\r\n?/g, "\n")
+    .replace(/\t/g, " ")
+    .replace(/[\u0000-\u0009\u000B-\u001F\u007F]/g, "")
+    .replace(/<[^>]*>/g, "");
+}
+
+const text = (max: number) => z.string().overwrite(cleanText).trim().max(max, `Keep this under ${max} characters.`);
 const required = (max: number) => text(max).min(1, "This can't be empty.");
 
-/** A full https:// link. Empty is allowed where the field is optional. */
+/** A full https:// link (no spaces, quotes or angle brackets). Empty is allowed where the field is optional. */
+export const LINK_PATTERN = /^https:\/\/[^\s<>"'`]+$/i;
 const link = z
   .string()
   .trim()
   .max(500, "This link is too long.")
-  .refine((v) => /^https:\/\/\S+$/i.test(v), "Use a full link that starts with https://");
+  .refine((v) => LINK_PATTERN.test(v), "Use a full link that starts with https://");
 const optionalLink = z.union([z.literal(""), link]);
 
-/** A page on this website ("/contact") or a full link. */
+/** A page on this website ("/contact") or a full https:// link. */
 const href = z
   .string()
   .trim()
-  .max(500)
-  .refine((v) => /^(\/[^\s]*|https:\/\/\S+)$/i.test(v), "Use a page like /contact or a full https:// link.");
+  .max(500, "This link is too long.")
+  .refine((v) => /^\/[^\s<>"'`]*$/.test(v) || LINK_PATTERN.test(v), "Use a page like /contact or a full link that starts with https://");
+
+/** Files shipped with the site (/images) or uploaded in the admin panel (/media). */
+export const PHOTO_SRC = /^\/(images|media)\/[\w./-]+$/;
+const photoSrc = z
+  .string()
+  .trim()
+  .refine((v) => PHOTO_SRC.test(v) && !v.includes(".."), "Pick a photo.");
+/** Pixel size of an uploaded photo (measured when it was optimised), so pages reserve the right space. */
+const pixels = z.number().int().positive().max(20000).optional();
 
 /** A photo: a file under /images (shipped with the site) or /media (uploaded in the admin panel). */
 export const photoSchema = z.object({
-  src: z
-    .string()
-    .trim()
-    .refine((v) => /^\/(images|media)\/[\w./-]+$/.test(v), "Pick a photo."),
+  src: photoSrc,
   alt: text(250),
   /** CSS object-position, e.g. "50% 40%": which part of the photo stays in view when it is cropped. */
   focus: z
@@ -35,15 +55,32 @@ export const photoSchema = z.object({
     .trim()
     .regex(/^\d{1,3}% \d{1,3}%$/)
     .default("50% 50%"),
+  /** Uploaded photos only: the optimised file's width and height in pixels. */
+  width: pixels,
+  height: pixels,
+  /** Uploaded photos only: the file as it was uploaded (src is the optimised WebP made from it). */
+  original: z
+    .string()
+    .trim()
+    .regex(/^\/media\/[\w.-]+$/)
+    .optional(),
 });
 export type Photo = z.infer<typeof photoSchema>;
+
+/** A photo that may be left empty (src ""), for example the banner's optional tablet and phone versions. */
+export const optionalPhotoSchema = photoSchema.extend({
+  src: z
+    .string()
+    .trim()
+    .refine((v) => v === "" || (PHOTO_SRC.test(v) && !v.includes("..")), "Pick a photo, or leave it empty."),
+});
 
 export const iconNames = ["card", "phone", "key", "tag", "pin", "people", "shield", "clock", "chevron", "instagram", "map", "mail"] as const;
 export type IconName = (typeof iconNames)[number];
 
 export { phoneDigits };
 
-const phone = required(30).refine((v) => phoneDigits(v) !== null, "Enter a 10-digit phone number, like (559) 734-7368.");
+const phone = required(30).refine((v) => phoneDigits(v) !== null, "Enter a 10-digit US phone number, like (559) 734-7368.");
 
 // ---- Sections ----
 
@@ -74,7 +111,7 @@ export type Location = z.infer<typeof locationSchema>;
 
 export const businessSchema = z.object({
   name: required(60),
-  logo: photoSchema.extend({ src: z.string().trim().refine((v) => /^\/(images|media)\/[\w./-]+$/.test(v)) }),
+  logo: photoSchema,
   instagramUrl: optionalLink,
 });
 
@@ -95,20 +132,34 @@ export const navSchema = z.object({
   items: z.array(z.object({ label: required(30), href })).min(1).max(8),
 });
 
+const bannerSchema = z.object({
+  /** Required: shown on computers, and on tablets and phones when their own version is empty. */
+  desktop: photoSchema,
+  /** Optional (src ""): empty uses the desktop file. */
+  tablet: optionalPhotoSchema,
+  /** Optional (src ""): empty uses the desktop file. */
+  mobile: optionalPhotoSchema,
+  /** Describes the whole banner, including its text, for people who can't see it. */
+  alt: required(400),
+});
+export type Banner = z.infer<typeof bannerSchema>;
+
 export const heroSchema = z.object({
   /** "image": the promo banner. "video": the original header video. */
   mode: z.enum(["image", "video"]),
-  banner: z.object({
-    desktop: photoSchema,
-    tablet: photoSchema,
-    mobile: photoSchema,
-    /** Describes the whole banner, including its text, for people who can't see it. */
-    alt: required(400),
-  }),
+  banner: bannerSchema,
+  /** Small print under the banner. Empty hides it. */
   disclaimer: text(300),
   video: z.object({ src: z.string().trim().regex(/^\/(video|media)\/[\w./-]+\.mp4$/), poster: photoSchema }),
+  /**
+   * The banner as it was before the last save that changed it (set by the server, never typed), so the admin
+   * panel's "Restore previous banner" can swap it back in one click. Null until the banner has been changed.
+   */
+  previousBanner: z
+    .object({ banner: bannerSchema, disclaimer: text(300), replacedAt: z.string().max(40).default("") })
+    .nullable()
+    .default(null),
 });
-
 export const valueStripSchema = z.object({
   enabled: z.boolean(),
   items: z.array(z.object({ icon: z.enum(iconNames), text: required(60) })).max(6),
@@ -174,6 +225,8 @@ export const contactSchema = z.object({
     failed: required(200),
     offline: required(200),
     tooMany: required(200),
+    /** The button on the "sent" panel that brings back an empty form. */
+    sendAnother: required(60),
   }),
 });
 
@@ -233,7 +286,7 @@ export const employeeSchema = z.object({
   wrongPassword: required(160),
   /** "{minutes}" becomes the number of minutes to wait. */
   tooManyTries: required(160),
-})
+});
 
 export const sectionSchemas = {
   business: businessSchema,
@@ -258,3 +311,13 @@ export const sectionKeys = Object.keys(sectionSchemas) as SectionKey[];
 
 export const siteContentSchema = z.object({ version: z.literal(1), ...sectionSchemas });
 export type SiteContent = z.infer<typeof siteContentSchema>;
+
+/** Zod issues as { "path.to.field": "message" } (first message per field), for showing next to each field. */
+export function fieldErrors(error: z.ZodError): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const issue of error.issues) {
+    const key = issue.path.join(".");
+    if (!(key in out)) out[key] = issue.message;
+  }
+  return out;
+}

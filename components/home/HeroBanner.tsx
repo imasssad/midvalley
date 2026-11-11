@@ -25,8 +25,9 @@ const KNOWN_SIZES: Record<string, Size> = {
   "/images/hero-promo-mobile.png": { width: 864, height: 1821 },
 };
 
-/** Banners uploaded in the admin panel aren't measured yet: assume the usual shape for each slot (2:1, 3:2, tall
- *  portrait). The CSS (height: auto) still shows the real file uncropped; only the reserved space may differ. */
+/** Banners uploaded in the admin panel carry their measured size (width/height, saved when the upload was
+ *  optimised). Anything else unmeasured falls back to the usual shape for each slot (2:1, 3:2, tall portrait). The
+ *  CSS (height: auto) still shows the real file uncropped; only the reserved space may differ. */
 const SLOT_SIZES: Record<Slot, Size> = {
   desktop: { width: 1774, height: 887 },
   tablet: { width: 1536, height: 1024 },
@@ -34,7 +35,9 @@ const SLOT_SIZES: Record<Slot, Size> = {
 };
 
 function bannerSize(photo: Photo, slot: Slot): Size {
-  return KNOWN_SIZES[photo.src] ?? SLOT_SIZES[slot];
+  if (KNOWN_SIZES[photo.src]) return KNOWN_SIZES[photo.src];
+  if (photo.width && photo.height) return { width: photo.width, height: photo.height };
+  return SLOT_SIZES[slot];
 }
 
 const rise = (i: number) => ({ "--i": i }) as React.CSSProperties;
@@ -108,9 +111,15 @@ export function HeroBanner({ content }: { content: SiteContent }) {
   }
 
   const { banner } = hero;
+  // The tablet and phone versions are optional: when one is left empty, that screen size shows the desktop file
+  // (with the desktop file's own size, so the reserved space matches it).
+  const tabletPhoto = banner.tablet.src ? banner.tablet : banner.desktop;
+  const mobilePhoto = banner.mobile.src ? banner.mobile : banner.desktop;
+  const tabletSlot: Slot = banner.tablet.src ? "tablet" : "desktop";
+  const mobileSlot: Slot = banner.mobile.src ? "mobile" : "desktop";
   const common = { alt: banner.alt, sizes: "100vw", quality: 85 } as const;
-  const mobile = getImageProps({ ...common, src: banner.mobile.src, ...bannerSize(banner.mobile, "mobile") }).props;
-  const tablet = getImageProps({ ...common, src: banner.tablet.src, ...bannerSize(banner.tablet, "tablet") }).props;
+  const mobile = getImageProps({ ...common, src: mobilePhoto.src, ...bannerSize(mobilePhoto, mobileSlot) }).props;
+  const tablet = getImageProps({ ...common, src: tabletPhoto.src, ...bannerSize(tabletPhoto, tabletSlot) }).props;
   // The desktop file is the <img> itself (and the fallback). It is the LCP element: load it first, right away.
   // No `preload` here: a preload link can't follow the <picture> media queries and would fetch the wrong file.
   const desktop = getImageProps({

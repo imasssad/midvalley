@@ -38,3 +38,12 @@ export function sniffPhotoType(bytes: Uint8Array): PhotoType | null {
   if (ascii(0, 4) === "RIFF" && ascii(8, 12) === "WEBP") return "image/webp";
   return null;
 }
+
+/** Banners narrower than this look soft on large screens: the admin panel warns (it never blocks). */
+export const MIN_BANNER_WIDTH = 1600;
+/** Uploaded photos are also saved as a WebP at most this wide (lib/images.ts); the original file is kept. */
+export const OPTIMIZED_MAX_WIDTH = 2560;
+export const OPTIMIZED_QUALITY = 82;
+
+/** What the server returns after optimising an upload: src is the WebP the website shows. */
+export type OptimizedPhoto = { src: string; original: string; width: number; height: number };

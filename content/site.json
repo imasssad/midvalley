@@ -401,7 +401,8 @@
       "sent": "Thanks, your message was sent.",
       "failed": "The message didn't go through. Please call us instead.",
       "offline": "The message didn't go through. Check your connection or call us instead.",
-      "tooMany": "Too many messages were sent from this connection. Please try again later, or call us."
+      "tooMany": "Too many messages were sent from this connection. Please try again later, or call us.",
+      "sendAnother": "Send another message"
     }
   },
   "footer": {
