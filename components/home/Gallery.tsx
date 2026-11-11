@@ -1,7 +1,7 @@
 "use client";
 
-// Facility photo gallery: a 2x2 grid of square thumbnail buttons that open a lightbox (native <dialog>, no
-// library). The dialog gives focus trapping and Escape for free; arrow keys and the buttons step through the
+// Facility photo gallery: a row of four rounded thumbnail buttons on a white glass strip (2x2 on phones) that
+// open a lightbox (native <dialog>, no library). The dialog gives focus trapping and Escape for free; arrow keys and the buttons step through the
 // photos, and closing returns focus to the thumbnail of the photo last shown.
 // Thumbnails are rounded (--radius-photo) on a soft blue glow; the lightbox is a rounded glassy panel on navy with
 // rounded glossy buttons. The photo description is read once (the img alt); the visible caption is aria-hidden
@@ -66,7 +66,7 @@ export function Gallery({ photos, labels, dialogLabel }: Props) {
               onClick={() => setIndex(i)}
             >
               <Curtain className="h-thumb-media" delay={i * 0.1}>
-                <Photo photo={p} className="h-thumb-photo" sizes="(max-width: 680px) 46vw, (max-width: 1100px) 24vw, 330px" />
+                <Photo photo={p} className="h-thumb-photo" sizes="(max-width: 680px) 44vw, (max-width: 1100px) 22vw, 320px" />
               </Curtain>
             </button>
           </li>

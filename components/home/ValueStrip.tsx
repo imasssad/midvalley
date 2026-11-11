@@ -1,10 +1,13 @@
-// The four short selling points under the promo ("Upfront, flat rate", ...): four glossy rounded tiles (.card;
-// 4 across, 2x2 on tablet and phone), each with its icon in a blue chip (like the location cards), a small blue
-// decorative number and the text in condensed caps. A plain list, not headings. Hidden when the admin turns it off or empties it.
-// Motion: the cells fade and rise in one after another when the strip scrolls into view (Stagger).
+// The four short selling points under the promo ("Upfront, flat rate", ...) as one glossy NAVY rounded bar inside
+// the page width (dot texture, inner gloss): each item has a glowing round white icon chip (blue icon) and the
+// text in white condensed caps, with soft glowing lines between items. 4 across; 2x2 on tablet; a stacked list on
+// phones. The bar straddles the white/mist edge into About (the strip's ground is half white, half mist). A plain
+// list, not headings. Hidden when the admin turns it off or empties it.
+// Motion: the items pop in one after another when the bar scrolls into view (PopGroup/PopItem: scale .9 -> 1 and
+// opacity, spring); the icon chips' glow brightens on hover (CSS).
 import { Icon } from "@/components/Icon";
-import { Stagger, StaggerItem } from "@/components/motion/Reveal";
 import type { SiteContent } from "@/lib/content-schema";
+import { PopGroup, PopItem } from "./Pop";
 
 export function ValueStrip({ content }: { content: SiteContent }) {
   const { valueStrip } = content;
@@ -12,22 +15,18 @@ export function ValueStrip({ content }: { content: SiteContent }) {
   return (
     <div className="h-values">
       <div className="wrap">
-        <Stagger as="ul" className="h-values-list" gap={0.1}>
-          {valueStrip.items.map((item, i) => (
-            <StaggerItem as="li" className="h-value-item" key={`${i}-${item.text}`}>
-              {/* The card face sits inside the animated item: Motion owns the item's transform. */}
-              <span className="h-value card">
-                <span className="h-value-top" aria-hidden="true">
-                  <span className="h-value-chip">
-                    <Icon name={item.icon} size={22} />
-                  </span>
-                  <span className="h-value-no">{String(i + 1).padStart(2, "0")}</span>
+        <div className="h-values-bar bg-ink dots">
+          <PopGroup as="ul" className="h-values-list" gap={0.1}>
+            {valueStrip.items.map((item, i) => (
+              <PopItem as="li" className="h-value-item" key={`${i}-${item.text}`}>
+                <span className="h-value-chip" aria-hidden="true">
+                  <Icon name={item.icon} size={22} />
                 </span>
                 <span className="h-value-text">{item.text}</span>
-              </span>
-            </StaggerItem>
-          ))}
-        </Stagger>
+              </PopItem>
+            ))}
+          </PopGroup>
+        </div>
       </div>
     </div>
   );

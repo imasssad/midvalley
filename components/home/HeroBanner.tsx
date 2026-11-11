@@ -1,11 +1,12 @@
 // Top of the homepage, directly under the header: the monthly promo banner (the page's most important element),
 // or, when the admin switches the hero to "video", the original header video. The banner is a real image that
 // is never cropped: one file per screen size (art direction with <picture>), always width 100% / height auto.
-// Under it: the disclaimer and a quick-actions row (Rent Online + Call for each location), so renting or calling
-// is one tap away from the promo.
+// Under it, on a white ground with a soft dot grid and glow: the disclaimer and the "action dock" (a rounded white
+// glass panel with Rent Online + Call for each location), so renting or calling is one tap away from the promo.
 // Entrance (CSS, starts on first paint, no JavaScript): the banner fades in and settles from 96.5% to full size
-// (.enter-banner, it only ever scales DOWN and nothing around it clips, so it always shows in full); then the
-// four action buttons rise in one after another (.enter-rise with --i 0..3). Off with prefers-reduced-motion.
+// (.enter-banner, it only ever scales DOWN and nothing around it clips, so it always shows in full); then the dock
+// panel rises in (.enter-rise --i 0) and its four buttons follow one after another (--i 1..4). Off with
+// prefers-reduced-motion.
 import { getImageProps } from "next/image";
 import { Icon } from "@/components/Icon";
 import { NewTabNote } from "@/components/NewTab";
@@ -38,40 +39,48 @@ function bannerSize(photo: Photo, slot: Slot): Size {
 
 const rise = (i: number) => ({ "--i": i }) as React.CSSProperties;
 
-/** Rent Online + Call for each location, rising in one after another. Shown in image and video mode. */
+/** The "action dock": a rounded white glass panel holding, per location, a small label (number pill + location
+ *  name) and its orange Rent Online and white Call buttons. The panel rises in first, then the buttons one after
+ *  another (.enter-rise with --i). Shown in image and video mode, always below the banner (never over it). */
 function QuickActions({ content }: { content: SiteContent }) {
   const { locations, header, labels } = content;
-  let n = 0;
+  let n = 1;
   return (
-    <div className="h-quick-groups">
-      {locations.items.map((l) => (
-        <div className="h-quick-group" key={l.id}>
-          {/* PLACEHOLDER (to confirm): rentOnlineUrl is the old QuikStor reserve link until the client confirms it. */}
-          {l.rentOnlineUrl && (
-            <a
-              className="btn btn-cta h-quick-btn enter-rise"
-              style={rise(n++)}
-              href={l.rentOnlineUrl}
-              {...externalLinkProps(l.rentOnlineUrl)}
-            >
-              <Icon name="key" />
-              <span className="h-quick-label">
-                {header.rentLabel}
-                <span className="h-quick-loc">
-                  <span className="sr-only">: </span>
-                  {l.name}
-                </span>
+    <div className="h-dock card enter-rise" style={rise(0)}>
+      <div className="h-dock-groups">
+        {locations.items.map((l, i) => (
+          <div className="h-dock-group" key={l.id}>
+            <p className="h-dock-loc">
+              <span className="h-dock-no" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
               </span>
-              <NewTabNote text={labels.newTab} />
-            </a>
-          )}
-          <a className="btn btn-line h-quick-btn enter-rise" style={rise(n++)} href={phoneHref(l.phone)}>
-            <Icon name="phone" />
-            {header.mobileCallWord} {l.phone}
-            <span className="sr-only">: {l.name}</span>
-          </a>
-        </div>
-      ))}
+              <Icon name="pin" size={16} className="h-dock-pin" />
+              {l.name}
+            </p>
+            <div className="h-quick-group">
+              {/* PLACEHOLDER (to confirm): rentOnlineUrl is the old QuikStor reserve link until the client confirms it. */}
+              {l.rentOnlineUrl && (
+                <a
+                  className="btn btn-cta h-quick-btn enter-rise"
+                  style={rise(n++)}
+                  href={l.rentOnlineUrl}
+                  {...externalLinkProps(l.rentOnlineUrl)}
+                >
+                  <Icon name="key" />
+                  {header.rentLabel}
+                  <span className="sr-only">: {l.name}</span>
+                  <NewTabNote text={labels.newTab} />
+                </a>
+              )}
+              <a className="btn btn-line h-quick-btn enter-rise" style={rise(n++)} href={phoneHref(l.phone)}>
+                <Icon name="phone" />
+                {header.mobileCallWord} {l.phone}
+                <span className="sr-only">: {l.name}</span>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

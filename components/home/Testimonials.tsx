@@ -1,6 +1,7 @@
 // Customer reviews. Hidden until the admin adds reviews (the old site's section was empty, and we never invent
 // any): renders nothing while content.testimonials.items is empty. When there are reviews: section number and
-// heading, then glossy rounded cards (.card, 3 across, 1 on phones) that lift onto a blue glow on hover.
+// heading (navy-to-blue gradient text), then glossy rounded cards (.card, 3 across, 1 on phones) over a soft glow
+// blob, each with a big glossy blue quote chip, the quote and the name; they lift onto a blue glow on hover.
 // Motion: heading rises in (Reveal), the cards come in one after another (Stagger).
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import type { SiteContent } from "@/lib/content-schema";
@@ -10,12 +11,13 @@ export function Testimonials({ content, no }: { content: SiteContent; no: string
   if (testimonials.items.length === 0) return null;
   return (
     <section className="section bg-bone h-reviews" aria-labelledby="home-testimonials-heading">
-      <div className="wrap">
+      <span className="glow-blob h-reviews-blob" aria-hidden="true" />
+      <div className="wrap h-layer">
         <Reveal className="sec-head">
           <span className="sec-no" aria-hidden="true">
             {no}
           </span>
-          <h2 id="home-testimonials-heading">{testimonials.heading}</h2>
+          <h2 id="home-testimonials-heading" className="grad-text">{testimonials.heading}</h2>
         </Reveal>
         <Stagger as="ul" className="h-reviews-grid" gap={0.1}>
           {testimonials.items.map((t, i) => (
