@@ -1,0 +1,96 @@
+{
+  "_about": "Phase 1 inventory of https://midvalleystorage.com, scraped 2026-11-11. No content was invented: anything not on the live site is listed under missing.",
+  "sources_checked": {
+    "/sitemap.xml": "200, WordPress core sitemap index (same as /wp-sitemap.xml): page, jet-popup, service and users sitemaps",
+    "/wp-sitemap.xml": "200, same index as above",
+    "/sitemap_index.xml": "404 (no Yoast/RankMath sitemap)",
+    "/robots.txt": "200",
+    "/wp-json/wp/v2/pages?per_page=100": "200, 6 pages (IDs 14, 73, 79, 87, 90, 813)",
+    "/wp-json/wp/v2/media?per_page=100": "200, 92 items (most are theme-demo assets)",
+    "/wp-json/wp/v2/posts?per_page=100": "200, empty (no blog posts)",
+    "/wp-json/wp/v2/pages/<id>/revisions": "401 'Sorry, you are not allowed to view revisions of this post.' for pages 14, 73, 79, 87. Needs a WordPress login; not attempted further."
+  },
+  "pages": [
+    { "url": "https://midvalleystorage.com/", "id": 14, "file": "content/pages/home.json", "keep": true },
+    { "url": "https://midvalleystorage.com/about-us/", "id": 73, "file": "content/pages/about-us.json", "keep": true },
+    { "url": "https://midvalleystorage.com/facilityfeatures/", "id": 79, "file": "content/pages/facilityfeatures.json", "keep": true },
+    { "url": "https://midvalleystorage.com/contact/", "id": 87, "file": "content/pages/contact.json", "keep": true },
+    { "url": "https://midvalleystorage.com/employee/", "id": 813, "file": "content/pages/employee.json", "keep": true, "note": "Password protected. Not scraped." },
+    { "url": "https://midvalleystorage.com/404-2/", "id": 90, "file": "content/pages/404.json", "keep": false, "note": "Theme 404 page. The rebuild will have its own not-found page." }
+  ],
+  "leftovers_not_rebuilt": [
+    { "url": "https://midvalleystorage.com/jet-popup/request-popup/", "note": "Theme demo popup 'Request an appoinment'. Not opened from any page." },
+    { "url": "https://midvalleystorage.com/service/drain-cleaning-repairs/", "note": "Plumbing theme demo post" },
+    { "url": "https://midvalleystorage.com/service/heating-cooling/", "note": "Plumbing theme demo post" },
+    { "url": "https://midvalleystorage.com/service/drain-cleaning-repairs-2/", "note": "Plumbing theme demo post" },
+    { "url": "https://midvalleystorage.com/service/water-treatment-system/", "note": "Plumbing theme demo post" },
+    { "url": "https://midvalleystorage.com/service/heating-cooling-2/", "note": "Plumbing theme demo post" },
+    { "url": "https://midvalleystorage.com/service/commercial-plumbing/", "note": "Plumbing theme demo post" },
+    { "url": "https://midvalleystorage.com/author/Forrest/", "note": "WordPress author archive" }
+  ],
+  "phones": [
+    { "location": "Visalia Noble", "display": "(559) 734-7368", "tel": "5597347368", "seen_as": ["tel:5597347368 (header, every page)", "tel:559-734-7368 (contact page)", "(559) 734-7368 (inside the hero promo image)"] },
+    { "location": "Visalia Santa Fe", "display": "(559) 608-5301", "tel": "5596085301", "seen_as": ["tel:5596085301 (header, every page)", "tel:559-608-5301 (contact page)"] }
+  ],
+  "addresses": [
+    { "location": "Visalia Noble", "header": "15323 E. Noble Ave.", "contact_page": "15323 E. Noble Ave, Visalia, CA 93292", "matches_brief": true },
+    { "location": "Visalia Santa Fe", "header": "2410 S. Santa Fe St.", "contact_page": "2410 S. Santa Fe., Visalia CA 93292", "matches_brief": true }
+  ],
+  "external_links": [
+    { "href": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=e398d43a-ce49-4691-b9af-8157e3883811#/login", "text": "Visalia Noble 15323 E. Noble Ave.", "purpose": "Storedge payment portal, Noble", "where": "header (desktop and mobile), every page", "target": "_blank" },
+    { "href": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=165a4ac4-3327-4405-9927-412c59c08e0e#/login", "text": "Visalia Santa Fe 2410 S. Santa Fe St.", "purpose": "Storedge payment portal, Santa Fe", "where": "header (desktop and mobile), every page", "target": "_blank" },
+    { "href": "https://ecom.quikstor.com/midvalleystorage/Account/Login", "text": "Reserve at Visalia Noble", "purpose": "OLD QuikStor reserve link", "where": "about-us, facilityfeatures", "target": "_blank" },
+    { "href": "https://ecom.quikstor.com/midvalleystorage/Account/Login", "text": "Reserve at Visalia Santa Fe", "purpose": "OLD QuikStor link. On about-us the Santa Fe button points to the NOBLE QuikStor account.", "where": "about-us", "target": "_blank" },
+    { "href": "https://ecom.quikstor.com/midvalleystorage_sf/Account/Login", "text": "Reserve at Visalia Santa Fe", "purpose": "OLD QuikStor reserve link", "where": "facilityfeatures", "target": "_blank" },
+    { "href": "https://goo.gl/maps/LrHat5624ZYiJjnb6", "text": "Visalia Noble / address", "purpose": "Google Maps, Noble", "where": "contact", "target": "_blank" },
+    { "href": "https://goo.gl/maps/omapQu9VBfuuR1Tc9", "text": "Visalia Santa Fe / address", "purpose": "Google Maps, Santa Fe", "where": "contact", "target": "_blank" },
+    { "href": "https://www.instagram.com/midvalleystorage/", "text": "Instagram", "purpose": "Social", "where": "footer (every page), contact", "target": "_blank" },
+    { "href": "http://home", "text": "Go Home Page", "purpose": "Broken link", "where": "404-2" }
+  ],
+  "internal_links": [
+    { "href": "https://midvalleystorage.com/", "text": "Home", "where": "footer nav, logo" },
+    { "href": "https://midvalleystorage.com/about-us/", "text": "About Us", "where": "footer nav" },
+    { "href": "https://midvalleystorage.com/facilityfeatures/", "text": "Facility Features", "where": "footer nav" },
+    { "href": "https://midvalleystorage.com/contact/", "text": "Contact", "where": "footer nav" },
+    { "href": "http://www.midvalleystorage.com/contact", "text": "Contact Us", "where": "footer button" },
+    { "href": "http://www.midvalleystorage.com/employee", "text": "Employee Portal / Click here to login", "where": "footer" },
+    { "href": "tel:5597347368", "text": "Mid Valley Storage Noble / Call Noble — (559) 734-7368", "where": "header" },
+    { "href": "tel:5596085301", "text": "Mid Valley Storage Santa Fe / Call Santa Fe — (559) 608-5301", "where": "header" },
+    { "href": "tel:559-734-7368", "text": "559-734-7368", "where": "contact" },
+    { "href": "tel:559-608-5301", "text": "559-608-5301", "where": "contact" }
+  ],
+  "embeds_and_third_party": [
+    { "what": "Google Tag Manager", "id": "GTM-TBHW45PH", "where": "every page (script + noscript iframe)" },
+    { "what": "Google Maps embed", "src": "https://maps.google.com/maps?q=2410%20S%20Santa%20Fe%20St%2C%20Visalia%2C%20CA%2093292%2C%20USA&t=m&z=10&output=embed&iwloc=near", "where": "contact (Santa Fe only; no Noble map embed)" },
+    { "what": "Contact form (Elementor Pro)", "fields": "Full Name*, Phone, Email*, Location* (Visalia Noble / Visalia Santa Fe), Message; button 'Send'", "where": "contact" },
+    { "what": "Font Awesome 6.5.1 (cdnjs)", "where": "header icons" },
+    { "what": "Google Fonts", "where": "theme" },
+    { "what": "Google Calendar (Noble Employee Schedule)", "where": "employee page, behind the password; per the brief, not verified" }
+  ],
+  "storedge": {
+    "payment": "FOUND for both locations (see external_links).",
+    "rent_online_or_move_in": "NOT FOUND. No 'Rent Online', 'Reserve a space now', move-in or Storedge rental link appears in the live HTML or the REST API content of any page.",
+    "reserve_buttons": "The only reserve buttons ('Reserve at Visalia Noble' / 'Reserve at Visalia Santa Fe' on about-us and facilityfeatures) still point to the old QuikStor site.",
+    "revisions": "Blocked (401), so earlier versions of the pages could not be checked for Storedge move-in links."
+  },
+  "missing": [
+    "Storedge 'Rent Online' / 'Reserve a space now' move-in URLs for Noble and Santa Fe. Not on the site; I will not guess them.",
+    "Employee Portal password and the Google Calendar embed URL (Noble Employee Schedule).",
+    "Testimonials: the homepage has the heading 'What Our Customers Says' but no testimonials under it. There are no reviews to reuse.",
+    "Meta descriptions: no page has one.",
+    "Alt text: every content image has an empty alt or just its file name (e.g. 'IMG_4031'). The hero promo image has none.",
+    "The promo disclaimer ('*Valid at Noble location only. New customers only. Please visit office for full details.') is not on the live site. It is only in the brief.",
+    "The promo prices and 'LIMITED TIME ONLY!' text exist only inside the banner image, not as page text.",
+    "Where the contact form sends its messages (recipient email) is not visible from outside.",
+    "Business hours: the only hours on the site are the gate hours in the Facility Features copy ('open at 6AM', 'open until 8PM', 'six days a week' staff). There are no office hours."
+  ],
+  "ambiguous": [
+    "The homepage 'Ready to get started?' heading has no button under it. The 'Contact Us' button is in the footer template right after it.",
+    "about-us: the 'Reserve at Visalia Santa Fe' button links to the Noble QuikStor account (same URL as the Noble button).",
+    "Santa Fe address spelling differs: header '2410 S. Santa Fe St.', contact page '2410 S. Santa Fe.'; About page timeline says 'Santa Fe Rd and K Rd'.",
+    "The original hero video (MV-Web-Header.mp4) is in the media library but not used on any live page. It is downloaded to public/video/hero-original.mp4 so the admin can switch back to it.",
+    "The Storedge payment links end in '#/login' (the tenant login screen).",
+    "Copy has typos on the live site that were kept exactly as written: 'What Our Customers Says', 'store you extra items', 'small units, big, units', 'warmer then', 'We know your busy', 'are gates are open', 'Each unit is has', 'opens it's new newest facility', 'it's parent company', 'appoinment'.",
+    "The header logo SVG is blue (#005497) and grey; the hero banner uses navy and orange. The brand palette is a Phase 2 decision."
+  ]
+}

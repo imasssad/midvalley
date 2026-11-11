@@ -1,0 +1,68 @@
+{
+  "_about": "Site-wide data scraped from https://midvalleystorage.com on 2026-11-11. Text is copied exactly as the live site shows it. null means the live site has nothing for it (see content/inventory.json > missing).",
+  "name": "Mid Valley Storage",
+  "homeTitle": "Mid Valley Storage – Visalia’s best choice for convenient, safe, and affordable self storage",
+  "metaDescription": null,
+  "logo": { "src": "/images/logo.svg", "alt": "Mid Valley Storage", "href": "/", "colors": { "blue": "#005497", "grey": "#999999" } },
+  "siteIcon": "/images/site-icon.png",
+  "locations": [
+    {
+      "id": "noble",
+      "name": "Visalia Noble",
+      "headerCallLabel": "Mid Valley Storage Noble",
+      "mobileCallLabel": "Call Noble — (559) 734-7368",
+      "address": { "street": "15323 E. Noble Ave.", "city": "Visalia", "state": "CA", "zip": "93292" },
+      "addressAsWrittenOnContactPage": "15323 E. Noble Ave\nVisalia, CA 93292",
+      "phone": { "display": "(559) 734-7368", "tel": "5597347368", "asWrittenOnContactPage": "559-734-7368" },
+      "mapsUrl": "https://goo.gl/maps/LrHat5624ZYiJjnb6",
+      "paymentUrl": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=e398d43a-ce49-4691-b9af-8157e3883811#/login",
+      "rentOnlineUrl": null,
+      "reserveUrl": null,
+      "oldReserveUrlOnLiveSite": "https://ecom.quikstor.com/midvalleystorage/Account/Login"
+    },
+    {
+      "id": "santa-fe",
+      "name": "Visalia Santa Fe",
+      "headerCallLabel": "Mid Valley Storage Santa Fe",
+      "mobileCallLabel": "Call Santa Fe — (559) 608-5301",
+      "address": { "street": "2410 S. Santa Fe St.", "city": "Visalia", "state": "CA", "zip": "93292" },
+      "addressAsWrittenOnContactPage": "2410 S. Santa Fe.\nVisalia CA 93292",
+      "phone": { "display": "(559) 608-5301", "tel": "5596085301", "asWrittenOnContactPage": "559-608-5301" },
+      "mapsUrl": "https://goo.gl/maps/omapQu9VBfuuR1Tc9",
+      "mapEmbedUrl": "https://maps.google.com/maps?q=2410%20S%20Santa%20Fe%20St%2C%20Visalia%2C%20CA%2093292%2C%20USA&t=m&z=10&output=embed&iwloc=near",
+      "paymentUrl": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=165a4ac4-3327-4405-9927-412c59c08e0e#/login",
+      "rentOnlineUrl": null,
+      "reserveUrl": null,
+      "oldReserveUrlOnLiveSite": "https://ecom.quikstor.com/midvalleystorage_sf/Account/Login"
+    }
+  ],
+  "header": {
+    "paymentRowLabel": "Make a payment",
+    "callRowLabel": "Make a Call",
+    "mobilePaymentButton": "Make a Payment",
+    "_note": "Live header: logo left; row 1 = payment boxes (credit-card icon, location name + street), row 2 = call boxes (phone icon). Mobile: 'Make a Payment' toggle that opens both payment links, then two call buttons. Icons are Font Awesome 6.5.1 (fa-credit-card, fa-phone, fa-chevron-right, fa-chevron-down). The live header has no nav menu; nav links are only in the footer."
+  },
+  "nav": [
+    { "label": "Home", "href": "/" },
+    { "label": "About Us", "href": "/about-us/" },
+    { "label": "Facility Features", "href": "/facilityfeatures/" },
+    { "label": "Contact", "href": "/contact/" }
+  ],
+  "social": [{ "network": "Instagram", "url": "https://www.instagram.com/midvalleystorage/" }],
+  "footer": {
+    "gallery": [
+      { "src": "/images/large-storage-units.jpg", "alt": "dover-large-storage-units" },
+      { "src": "/images/friendly-staff.jpg", "alt": "Service Final" },
+      { "src": "/images/temperature-controlled.jpg", "alt": "Temperature Controlled11" },
+      { "src": "/images/facility-img-20200518.jpg", "alt": "IMG_20200518_110511" },
+      { "src": "/images/rv-storage-img-4031.jpg", "alt": "IMG_4031" },
+      { "src": "/images/free-truck.jpg", "alt": "freetruck" }
+    ],
+    "galleryNote": "Opens each photo full size in a lightbox. Alt texts are the WordPress file names, not descriptions.",
+    "contactButton": { "label": "Contact Us", "href": "http://www.midvalleystorage.com/contact" },
+    "followHeading": "Follow Us",
+    "employeePortal": { "heading": "Employee Portal", "headingHref": "http://www.midvalleystorage.com/employee", "button": "Click here to login", "buttonHref": "http://www.midvalleystorage.com/employee", "buttonTarget": "_blank" },
+    "copyright": "Mid Valley Storage © 2026"
+  },
+  "tracking": { "googleTagManagerId": "GTM-TBHW45PH" }
+}
