@@ -1,37 +1,106 @@
-/* Inner pages, in the rounded and glossy look of the location cards: the split title block
-   (components/PageHero.tsx, ph-), About Us (ab-), Facility Features (ff-), Contact Us (ct-) with its form
-   (components/ContactForm.tsx, cf-), the Employee Portal placeholder (emp-) and the 404 page (nf-).
+/* Inner pages in the "Valley glass" look: the title block (components/PageHero.tsx, ph-), About Us (ab-),
+   Facility Features (ff-), Contact Us (ct-) with its form (components/ContactForm.tsx, cf-), the Employee Portal
+   placeholder (emp-) and the 404 page (nf-).
    Colours: blue/navy and their light blue-grey tints on white, nothing else; orange only on the main
-   call-to-action buttons (.btn-cta, globals). Uses only the tokens and parts in app/globals.css.
+   call-to-action buttons (.btn-cta, globals). Uses the tokens and parts in app/globals.css (cards, frames, chips,
+   dots, glow blobs, gradient text, ridges).
    Every animation here moves transform or opacity only and sits inside prefers-reduced-motion: no-preference (the
-   global reduced-motion rule also cuts every duration). Glow layers use a static blur; only their opacity and
-   transform change. Breakpoints: 1100px, 900px, 680px (phone). */
+   global reduced-motion rule also cuts every duration). Decorative layers are static. Breakpoints: 1100px, 900px,
+   680px (phone). */
 
-/* ---------- Split title block ---------- */
+/* ---------- Shared page parts ---------- */
+/* A clipped decorative layer (dots, glows) painted behind a section's content: <div class="pg-decor" aria-hidden>.
+   The section needs position: relative and isolation: isolate (set below for each). */
+.pg-decor {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+/* Mountain ridge height (components/Ridge.tsx) used in the padding maths; phones draw every ridge 40px tall. */
+.ph,
+.ab-story,
+.ff-row,
+.emp,
+.nf {
+  --rg: 72px;
+}
+.ff-row {
+  --rg: 64px;
+}
+.emp {
+  --rg: 110px;
+}
+.nf {
+  --rg: 90px;
+}
+
+/* ---------- Title block (PageHero) ---------- */
 .ph {
-  padding-block: clamp(2rem, 1.2rem + 3vw, 4.5rem) clamp(3rem, 2rem + 4vw, 6rem);
-  border-bottom: 1px solid var(--line);
-  background: linear-gradient(180deg, var(--white) 0%, var(--mist) 100%);
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  padding-block: clamp(2.25rem, 1.4rem + 3vw, 4.75rem)
+    calc(clamp(3rem, 2rem + 4vw, 6rem) + var(--rg));
+  background: linear-gradient(180deg, var(--mist) 0%, var(--mist-2) 100%);
+}
+/* Dot grid strongest behind the photo, fading out towards the title and the edges. */
+.ph-dots {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: radial-gradient(
+    ellipse 55% 75% at 78% 42%,
+    #000 0%,
+    transparent 72%
+  );
+  mask-image: radial-gradient(
+    ellipse 55% 75% at 78% 42%,
+    #000 0%,
+    transparent 72%
+  );
+}
+.ph-blob {
+  top: -25%;
+  right: -12%;
+  width: 62vw;
+  max-width: 760px;
+}
+.ph-blob-2 {
+  bottom: -35%;
+  left: -18%;
+  width: 48vw;
+  max-width: 560px;
+  opacity: 0.8;
 }
 .ph-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   gap: clamp(1.75rem, 1rem + 3.5vw, 5rem);
-  align-items: end;
+  align-items: center;
 }
 .ph-title {
   display: grid;
+  justify-items: start;
   gap: clamp(1rem, 0.7rem + 1vw, 1.75rem);
   min-width: 0;
-  padding-bottom: clamp(0rem, -0.5rem + 2vw, 1.5rem);
 }
+/* Short glossy bar above the title (decorative). */
 .ph-mark {
-  font-size: 1.6rem;
-  color: var(--blue);
+  width: 4.5rem;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--grad-blue);
+  box-shadow: 0 6px 16px -6px rgba(0, 84, 151, 0.7);
+  transform-origin: 0 50%;
 }
 .ph h1 {
+  max-width: 100%;
+  padding-top: 0.06em; /* room for the cap tops inside the clipped gradient fill */
   font-size: var(--display-xl);
-  line-height: 0.86;
+  line-height: 0.88;
   overflow-wrap: break-word;
 }
 .ph-eyebrow {
@@ -43,15 +112,37 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-/* Rounded photo on a soft blue glow (.frame, globals); the rounded photo box clips the zoom and the curtain. */
-.ph-media {
+/* Photo stage: the rounded photo (.frame) over an offset dot panel, with glass chips over its edges. */
+.ph-stage {
+  position: relative;
+  isolation: isolate;
   min-width: 0;
+}
+.ph-stage-dots {
+  position: absolute;
+  z-index: -1;
+  right: -1.5rem;
+  bottom: -1.5rem;
+  width: 58%;
+  height: 62%;
+  border-radius: var(--radius-card);
+  -webkit-mask-image: linear-gradient(135deg, transparent 8%, #000 60%);
+  mask-image: linear-gradient(135deg, transparent 8%, #000 60%);
+}
+.ph-media {
+  z-index: 1;
+  min-width: 0;
+}
+.ph-media,
+.ph-media::before,
+.ph-media::after,
+.ph-media > .ph-pic {
+  border-radius: var(--radius-card);
 }
 .ph-pic {
   position: relative;
   overflow: hidden;
   aspect-ratio: 16 / 10;
-  border-radius: var(--radius-photo);
   background: var(--mist-2);
 }
 .ph-photo {
@@ -68,6 +159,52 @@
   transform-origin: 100% 50%;
   pointer-events: none;
 }
+.ph-chips {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  list-style: none;
+  pointer-events: none;
+}
+.ph-chip {
+  position: absolute;
+  white-space: nowrap;
+  pointer-events: auto;
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 18px 34px -16px rgba(0, 62, 112, 0.6);
+}
+.ph-chip-1 {
+  top: 12%;
+  left: calc(-1 * clamp(1rem, 0.5rem + 1.5vw, 2.25rem));
+}
+.ph-chip-2 {
+  right: -0.75rem;
+  bottom: 12%;
+}
+.ph-chip-3 {
+  bottom: -1.1rem;
+  left: 16%;
+}
+.ph-chip-text {
+  display: grid;
+  line-height: 1.15;
+}
+.ph-chip-label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ph-chip-value {
+  color: var(--navy);
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
 @media (prefers-reduced-motion: no-preference) {
   @keyframes ph-curtain {
     from {
@@ -82,11 +219,24 @@
       transform: scale(1.08);
     }
   }
-  /* The glow under the photo fades in once the curtain is off. */
-  @keyframes ph-glow {
+  @keyframes ph-fade {
     from {
       opacity: 0;
     }
+  }
+  @keyframes ph-bar {
+    from {
+      transform: scaleX(0);
+    }
+  }
+  @keyframes ph-pop {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.9);
+    }
+  }
+  .ph-mark {
+    animation: ph-bar 0.8s var(--ease) 0.1s both;
   }
   .ph-cover {
     animation: ph-curtain 0.9s var(--ease-in-out) 0.15s both;
@@ -94,12 +244,18 @@
   .ph-photo {
     animation: ph-settle 1.5s var(--ease) 0.15s both;
   }
-  .ph-media::before {
-    animation: ph-glow 0.8s ease 0.75s both;
+  /* The glow under the photo and the dot panel fade in once the curtain is off; then the chips pop in. */
+  .ph-media::before,
+  .ph-stage-dots {
+    animation: ph-fade 0.8s ease 0.75s both;
+  }
+  .ph-chip {
+    animation: ph-pop 0.6s var(--ease) both;
+    animation-delay: calc(1s + var(--i, 0) * 0.15s);
   }
 }
 
-/* ---------- Shared: rounded photos that lift onto their glow on hover ---------- */
+/* ---------- Rounded photos that lift onto their glow on hover (About mosaic, feature rows) ---------- */
 .ab-cell,
 .ff-media {
   transition: transform 0.45s var(--ease);
@@ -132,15 +288,26 @@
   }
 }
 
-/* ---------- About Us: 01 Our Story ---------- */
+/* ---------- About Us: 01 Our Story (editorial split + bento mosaic) ---------- */
+.ab-story {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+.ab-story:has(> .pg-ridge) {
+  padding-bottom: calc(var(--space-section) + var(--rg));
+}
 .ab-story-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
   gap: clamp(2.5rem, 1rem + 5vw, 6.5rem);
-  align-items: start;
+  align-items: center;
 }
 .ab-story-grid.is-text-only {
   grid-template-columns: minmax(0, 1fr);
+}
+.ab-story-text {
+  min-width: 0;
 }
 .ab-copy {
   max-width: 65ch;
@@ -148,172 +315,261 @@
   font-size: var(--text-lg);
   line-height: 1.75;
 }
-/* Drop cap: the story's first letter in big condensed blue. */
+/* Drop cap: the story's first letter, white in a small glossy blue tile (white on the blue: 5:1 and up). */
 .ab-copy > p:first-child::first-letter {
   float: left;
-  margin: 0.06em 0.14em 0 0;
-  color: var(--blue);
+  margin: 0.2em 0.55rem 0 0;
+  padding: 0.16em 0.16em 0.1em;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0) 50%
+    ),
+    var(--grad-blue);
+  color: #fff;
   font-family: var(--font-display);
   font-stretch: var(--condensed);
-  font-size: 4.4em;
+  font-size: 3.5em;
   font-weight: 800;
-  line-height: 0.78;
+  line-height: 0.8;
   text-transform: uppercase;
 }
-@media (min-width: 901px) {
-  .ab-copy {
-    position: sticky;
-    top: 2rem;
-  }
-}
-
-/* Mosaic: two columns, the right one pushed down; cells alternate tall (4:5) and square across the columns. */
-.ab-mosaic {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.5rem, 1rem + 1.6vw, 2.5rem);
-  align-items: start;
-}
-.ab-mosaic.is-single {
-  grid-template-columns: minmax(0, 1fr);
-}
-.ab-col {
-  display: grid;
-  gap: clamp(1.5rem, 1rem + 1.6vw, 2.5rem);
+.ab-stage {
+  position: relative;
+  isolation: isolate;
   min-width: 0;
 }
-.ab-col:nth-child(2) {
-  padding-top: clamp(3rem, 1.5rem + 7vw, 8rem);
+.ab-blob {
+  top: -18%;
+  right: -22%;
+  width: 62vw;
+  max-width: 640px;
+}
+.ab-dots {
+  position: absolute;
+  z-index: -1;
+  left: -1.75rem;
+  bottom: -1.75rem;
+  width: 56%;
+  height: 52%;
+  border-radius: var(--radius-card);
+  -webkit-mask-image: linear-gradient(225deg, transparent 8%, #000 60%);
+  mask-image: linear-gradient(225deg, transparent 8%, #000 60%);
+}
+/* Bento: six columns; a group of four photos fills a 6x3 block (big 4x2, small 2x1, tall 2x2, wide 4x1). */
+.ab-mosaic {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: clamp(104px, 3.5rem + 9vw, 196px);
+  grid-auto-flow: row dense;
+  gap: clamp(0.75rem, 0.5rem + 0.8vw, 1.25rem);
+}
+.ab-cell {
+  min-width: 0;
+}
+.ab-cell--big {
+  grid-column: span 4;
+  grid-row: span 2;
+}
+.ab-cell--small {
+  grid-column: span 2;
+}
+.ab-cell--tall {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.ab-cell--wide {
+  grid-column: span 4;
+}
+.ab-cell--full {
+  grid-column: 1 / -1;
+  grid-row: span 2;
 }
 .ab-pic {
+  height: 100%;
   border-radius: var(--radius-photo);
   background: var(--mist-2);
-}
-.ab-pic--tall {
-  aspect-ratio: 4 / 5;
-}
-.ab-pic--square {
-  aspect-ratio: 1 / 1;
-}
-.ab-pic--wide {
-  aspect-ratio: 4 / 3;
 }
 .ab-ph {
   height: 100%;
 }
 
-/* ---------- About Us: 02 Our History (numbered horizontal timeline on mist) ---------- */
+/* ---------- About Us: 02 Our History (timeline on dotted mist) ---------- */
+.ab-history {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+.ab-history-dots {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    #000 35%,
+    #000 65%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    #000 35%,
+    #000 65%,
+    transparent 100%
+  );
+}
+.ab-history-blob {
+  top: 25%;
+  left: -14%;
+  width: 55vw;
+  max-width: 700px;
+}
 .ab-tl {
-  --tl-gap: clamp(1.5rem, 1rem + 2vw, 3rem);
-  --tl-node: 18px;
+  --tl-node: 22px;
+  --tl-stem: 2.25rem;
+  --tl-gap: clamp(1.25rem, 0.5rem + 1.5vw, 2.25rem);
+  --tl-arm: 2rem;
+  position: relative;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 3rem var(--tl-gap);
   list-style: none;
 }
+/* Above 1100px: each item is card / node / card-space; the cards zig-zag above and below the line. */
 .ab-tl-item {
   position: relative;
-  padding-top: clamp(2.1rem, 1.7rem + 1vw, 2.85rem);
+  display: grid;
+  grid-template-rows: 1fr var(--tl-node) 1fr;
+  justify-items: center;
+  min-width: 0;
 }
-/* The connecting rule: each item draws its own segment across to the next one, so it builds up as the items
+/* The glowing line: each item draws its own segment from its node to the next one, so it builds up as the items
    come in one after another. */
 .ab-tl-item::before {
   content: "";
   position: absolute;
-  top: calc(var(--tl-node) / 2 - 1.5px);
+  top: 50%;
   left: 0;
   right: calc(-1 * var(--tl-gap));
-  height: 3px;
-  border-radius: 3px;
+  height: 4px;
+  margin-top: -2px;
+  border-radius: 4px;
   background: linear-gradient(90deg, var(--blue) 0%, var(--blue-bright) 100%);
-  opacity: 0.55;
+  box-shadow: 0 0 14px rgba(11, 111, 196, 0.55);
 }
-.ab-tl-item:last-child::before,
-.ab-tl-item:nth-child(4n)::before {
-  right: 0;
+.ab-tl-item:nth-child(4n + 1)::before {
+  left: 50%;
 }
-/* Round glossy blue node on the rule, ringed with the ground colour. */
+.ab-tl-item:nth-child(4n)::before,
+.ab-tl-item:last-child::before {
+  right: 50%;
+}
+/* Stem from the node to its card. */
 .ab-tl-item::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
+  left: 50%;
+  width: 2px;
+  height: var(--tl-stem);
+  margin-left: -1px;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 84, 151, 0.2) 0%,
+    var(--blue) 100%
+  );
+  top: calc(50% - var(--tl-node) / 2 - var(--tl-stem));
+}
+.ab-tl-item:nth-child(even)::after {
+  top: calc(50% + var(--tl-node) / 2);
+  background: linear-gradient(
+    180deg,
+    var(--blue) 0%,
+    rgba(0, 84, 151, 0.2) 100%
+  );
+}
+/* Round glossy node, ringed with the ground colour and a soft glow. */
+.ab-tl-node {
+  position: relative;
+  z-index: 1;
+  grid-row: 2;
   width: var(--tl-node);
   height: var(--tl-node);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 45%),
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(255, 255, 255, 0.75) 0%,
+      rgba(255, 255, 255, 0) 45%
+    ),
     var(--grad-blue);
   box-shadow:
     0 0 0 5px var(--mist),
-    0 6px 14px -4px rgba(0, 84, 151, 0.6);
-}
-.ab-tl-year {
-  position: relative;
-  color: var(--blue);
-  font-size: clamp(3.75rem, 2.2rem + 5vw, 7rem);
-  line-height: 0.85;
-}
-/* Outline numerals: a 2px blue stroke (6.9:1 on mist) with a clear fill. The filled copy (::after, from
-   data-year, with empty alt text so it isn't read twice) fades in on hover. */
-@supports (-webkit-text-stroke: 2px black) {
-  .ab-tl-year {
-    -webkit-text-stroke: 2px var(--blue);
-    -webkit-text-fill-color: transparent;
-  }
-  .ab-tl-year::after {
-    content: attr(data-year);
-    content: attr(data-year) / "";
-    position: absolute;
-    inset: 0;
-    -webkit-text-stroke: 0;
-    -webkit-text-fill-color: var(--blue);
-    opacity: 0;
-    transition: opacity 0.35s ease;
-    pointer-events: none;
-  }
-}
-@media (forced-colors: active) {
-  .ab-tl-year {
-    -webkit-text-fill-color: CanvasText;
-  }
-}
-/* The text sits on a glossy rounded card (.card, globals) that lifts onto its glow with the year. */
-.ab-tl-text {
-  max-width: 34ch;
-  margin-top: 1.1rem;
-  padding: 1.1rem 1.25rem 1.2rem;
-  color: var(--text);
-}
-.ab-tl-item > * {
+    0 0 0 6px rgba(0, 84, 151, 0.25),
+    0 6px 18px -2px rgba(0, 84, 151, 0.65);
   transition: transform 0.4s var(--ease);
 }
+.ab-tl-card {
+  grid-row: 1;
+  align-self: end;
+  justify-self: stretch;
+  margin-bottom: var(--tl-stem);
+  padding: clamp(1.15rem, 0.9rem + 0.8vw, 1.6rem);
+}
+.ab-tl-item:nth-child(even) .ab-tl-card {
+  grid-row: 3;
+  align-self: start;
+  margin-top: var(--tl-stem);
+  margin-bottom: 0;
+}
+.ab-tl-year {
+  margin-bottom: 0.65rem;
+  padding-top: 0.06em;
+  font-size: clamp(2.6rem, 1.8rem + 2.4vw, 4.4rem);
+  line-height: 0.88;
+}
+.ab-tl-text {
+  color: var(--text);
+  line-height: 1.65;
+}
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .ab-tl-item:hover .ab-tl-year,
-  .ab-tl-item:hover .ab-tl-text {
-    transform: translateY(-6px);
-  }
-  .ab-tl-item:hover .ab-tl-text::before {
-    opacity: 0.7;
-  }
-  .ab-tl-item:hover .ab-tl-year::after {
-    opacity: 1;
+  .ab-tl-item:hover .ab-tl-node {
+    transform: scale(1.25);
   }
 }
 
-/* ---------- Facility Features: "On this page" chips ---------- */
+/* ---------- Facility Features: "On this page" tray of glass pills ---------- */
 .ff-index {
-  padding-block: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
-  border-bottom: 1px solid var(--line);
-  background: var(--white);
+  position: relative;
+  z-index: 2;
+  margin-top: calc(
+    -1 * clamp(2.25rem, 1.5rem + 2.5vw, 3.75rem)
+  ); /* overlaps the hero's white ridge */
+}
+.ff-tray {
+  padding: clamp(0.75rem, 0.6rem + 0.8vw, 1.35rem);
+  border: 1px solid rgba(0, 84, 151, 0.14);
+  border-radius: var(--radius-card);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(243, 246, 249, 0.96) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 26px 50px -30px rgba(0, 62, 112, 0.6);
 }
 .ff-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  justify-content: center;
+  gap: 0.55rem;
   list-style: none;
 }
-/* Rounded glossy chip: the face is ::after (white-to-mist gradient, gloss line); ::before is a soft blue glow that
+/* Glass pill link: the face is ::after (white-to-mist gradient, gloss line); ::before is a soft blue glow that
    fades in under it as it lifts on hover, like the buttons. */
 .ff-chip {
   position: relative;
@@ -322,8 +578,8 @@
   align-items: center;
   gap: 0.6rem;
   min-height: 44px;
-  padding: 0.4rem 1rem 0.4rem 0.45rem;
-  border-radius: var(--radius);
+  padding: 0.35rem 1.05rem 0.35rem 0.4rem;
+  border-radius: 999px;
   color: var(--navy);
   font-family: var(--font-display);
   font-stretch: 82%;
@@ -339,7 +595,7 @@
 .ff-chip::after {
   content: "";
   position: absolute;
-  border-radius: var(--radius);
+  border-radius: 999px;
 }
 .ff-chip::before {
   inset: 6px 8px -4px;
@@ -355,7 +611,7 @@
   inset: 0;
   z-index: -1;
   background: linear-gradient(180deg, #ffffff 0%, var(--mist) 100%);
-  border: 1px solid rgba(0, 84, 151, 0.22);
+  border: 1px solid rgba(0, 84, 151, 0.2);
   box-shadow:
     inset 0 1px 0 #fff,
     0 6px 14px -10px rgba(0, 62, 112, 0.5);
@@ -367,19 +623,25 @@
 .ff-chip:hover {
   color: var(--blue);
 }
-/* The running number in a small glossy blue badge (white on blue: 7:1 to 4.9:1, bold). */
+/* The running number in a round glossy blue dot (white on blue: 7:1 to 4.9:1, bold). */
 .ff-chip-no {
   display: inline-grid;
   place-items: center;
-  min-width: 2rem;
-  height: 2rem;
-  padding-inline: 0.3rem;
-  border-radius: calc(var(--radius) - 4px);
-  background: var(--grad-blue);
+  flex: none;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 35% 25%,
+      rgba(255, 255, 255, 0.35) 0%,
+      rgba(255, 255, 255, 0) 55%
+    ),
+    var(--grad-blue);
   box-shadow: var(--gloss);
   color: #fff;
   font-size: 0.85rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .ff-chip:hover {
@@ -397,28 +659,67 @@
   }
 }
 
-/* ---------- Facility Features: editorial rows ---------- */
+/* ---------- Facility Features: rows ---------- */
 .ff-list {
-  padding-bottom: var(--space-section);
+  position: relative;
 }
 .ff-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: clamp(2rem, 1rem + 4.5vw, 6rem);
-  align-items: center;
-  padding-block: clamp(3rem, 2rem + 4vw, 6.5rem);
-  border-bottom: 1px solid var(--line);
+  --row-pad: clamp(3.5rem, 2.2rem + 5vw, 7.5rem);
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  padding-block: var(--row-pad);
   scroll-margin-top: 1rem;
 }
-/* Even rows put the photo on the right. */
-.ff-row:nth-child(even) {
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+.ff-row.is-first {
+  padding-top: calc(var(--row-pad) + 0.5rem);
 }
-.ff-row:nth-child(even) .ff-media {
+.ff-row.has-ridge {
+  padding-bottom: calc(var(--row-pad) + var(--rg));
+}
+.ff-row:last-child {
+  padding-bottom: var(--space-section);
+}
+.ff-blob {
+  top: 8%;
+  left: -16%;
+  width: 52vw;
+  max-width: 660px;
+}
+.ff-row--b .ff-blob {
+  left: auto;
+  right: -16%;
+}
+.ff-grid {
+  display: grid;
+  align-items: center;
+}
+/* A) layered: big photo (7) with the text card overlapping its edge (5). */
+.ff-row--a .ff-grid {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+}
+.ff-row--a .ff-text {
+  margin-left: calc(-1 * clamp(3rem, -2rem + 8vw, 7rem));
+}
+/* B) editorial: text (5) beside the photo (7) on its dot panel. */
+.ff-row--b .ff-grid {
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(2rem, 1rem + 4vw, 5.5rem);
+}
+.ff-row--b .ff-stage {
   order: 2;
 }
-.ff-media {
+.ff-stage {
+  position: relative;
+  isolation: isolate;
   min-width: 0;
+}
+.ff-media {
+  z-index: 1;
+  min-width: 0;
+}
+.ff-row--b .ff-media::before {
+  background: rgba(10, 46, 85, 0.45);
 }
 .ff-pic {
   aspect-ratio: 4 / 3;
@@ -428,48 +729,93 @@
 .ff-ph {
   height: 100%;
 }
-.ff-text {
-  max-width: 38rem;
-  min-width: 0;
+.ff-dots {
+  position: absolute;
+  z-index: -1;
+  left: -1.75rem;
+  bottom: -1.75rem;
+  width: 60%;
+  height: 60%;
+  border-radius: var(--radius-card);
+  -webkit-mask-image: linear-gradient(225deg, transparent 8%, #000 60%);
+  mask-image: linear-gradient(225deg, transparent 8%, #000 60%);
 }
-/* Big running number, blue with a glossy blue-to-navy fill where supported. */
-.ff-no {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
-  margin-bottom: clamp(0.9rem, 0.7rem + 0.8vw, 1.5rem);
-  color: var(--blue);
+/* Glossy blue number badge over the photo's top edge (decorative). */
+.ff-badge-wrap {
+  position: absolute;
+  z-index: 3;
+  top: calc(-1 * clamp(1rem, 0.6rem + 1vw, 1.6rem));
+  left: clamp(1rem, 0.5rem + 2vw, 2rem);
+}
+.ff-row--b .ff-badge-wrap {
+  left: auto;
+  right: clamp(1rem, 0.5rem + 2vw, 2rem);
+}
+.ff-badge {
+  display: grid;
+  place-items: center;
+  min-width: clamp(4rem, 3.4rem + 2vw, 5.5rem);
+  aspect-ratio: 1;
+  padding: 0.5rem;
+  border-radius: 20px;
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(255, 255, 255, 0.32) 0%,
+      rgba(255, 255, 255, 0) 55%
+    ),
+    var(--grad-blue);
+  box-shadow:
+    var(--gloss),
+    0 0 0 5px rgba(255, 255, 255, 0.7),
+    0 18px 30px -14px rgba(0, 62, 112, 0.8);
+  color: #fff;
+  text-align: center;
+}
+.ff-badge-n,
+.ff-badge-of {
+  display: block;
   font-family: var(--font-display);
   font-stretch: var(--condensed);
-  font-size: clamp(3.75rem, 2.4rem + 4.6vw, 7.5rem);
   font-weight: 800;
-  line-height: 0.8;
 }
-.ff-no-n {
-  color: var(--blue);
+.ff-badge-n {
+  font-size: clamp(1.9rem, 1.45rem + 1.5vw, 2.8rem);
+  line-height: 0.9;
 }
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .ff-no-n {
-    padding-bottom: 0.06em; /* room for descending glyph edges inside the clipped fill */
-    background: linear-gradient(180deg, var(--blue-bright) 0%, var(--blue) 45%, var(--navy) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
+.ff-badge-of {
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
 }
-@media (forced-colors: active) {
-  .ff-no-n {
-    color: CanvasText;
-    background: none;
-  }
+.ff-text {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
 }
-.ff-of {
-  color: var(--muted);
-  font-size: 1.05rem;
-  letter-spacing: 0.08em;
+.ff-card {
+  padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+}
+.ff-card::before {
+  opacity: 0.35; /* a constant soft blue glow under the floating card */
+}
+.ff-plain {
+  max-width: 38rem;
+}
+/* Short glossy bar above each feature title. */
+.ff-text h2::before {
+  content: "";
+  display: block;
+  width: 3.25rem;
+  height: 5px;
+  margin-bottom: clamp(0.9rem, 0.7rem + 0.6vw, 1.35rem);
+  border-radius: 999px;
+  background: var(--grad-blue);
+  box-shadow: 0 5px 12px -5px rgba(0, 84, 151, 0.7);
 }
 .ff-text h2 {
   margin-bottom: clamp(1rem, 0.8rem + 0.6vw, 1.5rem);
+  padding-top: 0.06em;
 }
 .ff-body {
   color: var(--text);
@@ -477,6 +823,39 @@
 }
 
 /* ---------- Contact Us ---------- */
+.ct {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+.ct-dots {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    rgba(0, 0, 0, 0.5) 45%,
+    transparent 85%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    rgba(0, 0, 0, 0.5) 45%,
+    transparent 85%
+  );
+}
+.ct-blob {
+  top: 4%;
+  right: -16%;
+  width: 58vw;
+  max-width: 720px;
+}
+.ct-blob-2 {
+  bottom: 2%;
+  left: -20%;
+  width: 50vw;
+  max-width: 620px;
+}
 .ct-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
@@ -490,12 +869,24 @@
 }
 .ct-loc {
   display: grid;
-  gap: clamp(1.75rem, 1.4rem + 1vw, 2.5rem);
+  gap: clamp(2rem, 1.6rem + 1vw, 2.75rem);
   min-width: 0;
 }
-/* Map in a glossy rounded frame (.card, globals): the white gradient face shows as a rim round the rounded map. */
+/* Map in a glossy rounded frame (.card, globals): the white gradient face shows as a rim round the rounded map;
+   a glass chip with the location name sits on its top edge. */
 .ct-map {
+  position: relative;
   padding: 0.55rem;
+}
+.ct-map-chip {
+  position: absolute;
+  z-index: 2;
+  top: -1.15rem;
+  left: 1.25rem;
+  max-width: calc(100% - 2.5rem);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 14px 28px -14px rgba(0, 62, 112, 0.6);
 }
 .ct-map iframe {
   display: block;
@@ -515,16 +906,18 @@
   outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
-/* Follow Us: a glossy blue rounded tile (.bg-blue, globals) with a white highlight over its top half. */
+/* Follow Us: a glossy blue rounded tile with a dot texture (.bg-blue.dots, globals), a white highlight over its
+   top half and a big faint Instagram mark in the corner. */
 .ct-follow {
   position: relative;
   isolation: isolate;
+  overflow: hidden;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 1rem 1.5rem;
-  padding: clamp(1.4rem, 1rem + 1.6vw, 2.25rem);
+  padding: clamp(1.5rem, 1rem + 1.8vw, 2.5rem);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: var(--radius-card);
   box-shadow:
@@ -536,8 +929,24 @@
   position: absolute;
   inset: 0 0 50% 0;
   z-index: -1;
-  border-radius: var(--radius-card) var(--radius-card) 0 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.02) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  pointer-events: none;
+}
+.ct-follow-mark {
+  position: absolute;
+  z-index: -1;
+  right: -1.75rem;
+  bottom: -3.25rem;
+  width: 11rem;
+  height: 11rem;
+  color: #fff;
+  opacity: 0.1;
+  transform: rotate(-12deg);
+  transition: transform 0.6s var(--ease);
   pointer-events: none;
 }
 .ct-follow h2 {
@@ -553,7 +962,11 @@
   box-sizing: content-box;
   padding: 9px;
   border-radius: 50%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.08) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.24) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
   color: #fff;
   transition: transform 0.35s var(--ease);
@@ -562,31 +975,63 @@
   .ct-social:hover .icon {
     transform: rotate(-10deg) scale(1.12);
   }
+  .ct-follow:hover .ct-follow-mark {
+    transform: rotate(-4deg) scale(1.08);
+  }
 }
 
-/* Form card: a glossy rounded .card (globals, no lift). Its ::before (the hover glow on lifting cards) becomes a
-   glossy blue card the same shape set just behind the face, which sits 5px lower, so a blue cap shows along the
-   rounded top edge. */
-.ct-form {
-  padding: clamp(1.5rem, 1rem + 2.2vw, 3rem);
-  padding-top: calc(clamp(1.5rem, 1rem + 2.2vw, 3rem) + 5px);
+/* Form card: a glossy rounded .card (globals, no lift) whose glossy blue top band (.card-band) holds the form
+   heading in white next to a round glass mail badge. */
+.ct-form-wrap {
+  min-width: 0;
 }
 .ct-form::before {
-  inset: 0;
-  background: var(--grad-blue);
-  filter: none;
-  opacity: 1;
+  opacity: 0.35; /* a constant soft blue glow under the card */
 }
-.ct-form::after {
-  inset: 5px 0 0 0;
+.ct-form-band {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: clamp(1.25rem, 1rem + 1.2vw, 2rem) clamp(1.5rem, 1rem + 2.2vw, 3rem);
 }
-.ct-form h2 {
-  margin-bottom: clamp(1.25rem, 1rem + 1vw, 2rem);
+.ct-form-band h2 {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 30, 60, 0.35);
+}
+.ct-form-icon {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 50%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.26) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+.ct-form-body {
+  padding: clamp(1.5rem, 1rem + 2.2vw, 3rem);
+}
+/* On tall desktop screens the form stays in view while the location column scrolls. */
+@media (min-width: 1101px) and (min-height: 900px) {
+  .ct-form-wrap {
+    position: sticky;
+    top: 1.5rem;
+  }
 }
 
 /* ---------- Contact form ---------- */
 .cf {
   --cf-error: #b3261e; /* error red: 6.5:1 on white (the one functional colour) */
+  --cf-edge: #74869b; /* field outline: 3.6:1 on white, 3.4:1 on the card's mist end */
   display: grid;
   gap: 1.25rem;
 }
@@ -646,19 +1091,25 @@
   margin-left: 0.1rem;
   color: var(--blue);
 }
-/* Rounded glossy fields; colour and border changes are instant (no transition). */
+/* Rounded glossy fields. On focus: blue edge, the focus ring and a soft blue inner glow. Colour, border and shadow
+   changes are instant (no transition). */
 .cf input,
 .cf select,
 .cf textarea {
   width: 100%;
-  min-height: 3.2rem;
-  padding: 0.75rem 0.95rem;
-  border: 2px solid var(--muted); /* 5.9:1 against white for the field outline */
+  min-height: 3.25rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--cf-edge);
   border-radius: var(--radius);
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-  box-shadow: inset 0 1px 2px rgba(15, 34, 54, 0.06);
+  background: linear-gradient(180deg, #ffffff 0%, #f6f9fc 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(15, 34, 54, 0.07),
+    0 1px 0 #fff;
   color: var(--ink);
-  font-size: max(16px, var(--text-base)); /* 16px+ stops iOS zooming in on focus */
+  font-size: max(
+    16px,
+    var(--text-base)
+  ); /* 16px+ stops iOS zooming in on focus */
   line-height: 1.4;
 }
 .cf textarea {
@@ -675,6 +1126,9 @@
 .cf textarea:focus-visible {
   border-color: var(--blue);
   background: #fff;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 84, 151, 0.2),
+    inset 0 4px 14px -6px rgba(11, 111, 196, 0.45);
   outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
@@ -776,7 +1230,41 @@
 }
 
 /* ---------- Employee Portal placeholder ---------- */
-.emp .wrap {
+.section.emp {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  padding-bottom: calc(var(--space-section) + var(--rg));
+}
+.emp-dots {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: radial-gradient(
+    ellipse 60% 70% at 50% 45%,
+    #000 0%,
+    transparent 75%
+  );
+  mask-image: radial-gradient(
+    ellipse 60% 70% at 50% 45%,
+    #000 0%,
+    transparent 75%
+  );
+}
+.emp-blob {
+  top: -10%;
+  left: 6%;
+  width: 60vw;
+  max-width: 660px;
+}
+.emp-blob-2 {
+  bottom: 0;
+  right: 4%;
+  width: 42vw;
+  max-width: 520px;
+}
+.emp-wrap {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
   min-height: clamp(300px, 45vh, 500px);
@@ -784,32 +1272,50 @@
 .emp-card {
   display: grid;
   justify-items: center;
-  gap: 1.1rem;
   width: min(100%, 38rem);
-  padding: clamp(2rem, 1.5rem + 2.4vw, 3.5rem) clamp(1.5rem, 1rem + 2vw, 3rem);
   text-align: center;
 }
 /* The card's blue glow always shows here (softly); it fades in once the card is in. */
 .emp-card::before {
   opacity: 0.55;
 }
-.emp-card h1 {
-  font-size: var(--display-l);
+.emp-band {
+  justify-self: stretch;
+  height: clamp(5rem, 4rem + 2vw, 6.25rem);
 }
-/* Round glossy blue icon chip. */
+/* Round glossy blue key badge sitting on the band's lower edge, ringed in white. */
 .emp-icon {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
-  width: 4rem;
-  height: 4rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-top: -2.25rem;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 55%),
+    radial-gradient(
+      circle at 35% 25%,
+      rgba(255, 255, 255, 0.35) 0%,
+      rgba(255, 255, 255, 0) 55%
+    ),
     var(--grad-blue);
   box-shadow:
     var(--gloss),
-    0 12px 24px -12px rgba(0, 84, 151, 0.8);
+    0 0 0 6px #fff,
+    0 16px 28px -12px rgba(0, 84, 151, 0.8);
   color: #fff;
+}
+.emp-body {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  padding: clamp(1.25rem, 1rem + 1vw, 1.75rem) clamp(1.5rem, 1rem + 2vw, 3rem)
+    clamp(2rem, 1.5rem + 2.4vw, 3.25rem);
+}
+.emp-card h1 {
+  padding-top: 0.06em;
+  font-size: var(--display-l);
 }
 @media (prefers-reduced-motion: no-preference) {
   @keyframes emp-glow {
@@ -823,50 +1329,108 @@
 }
 
 /* ---------- 404 ---------- */
+.section.nf {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  padding-bottom: calc(var(--space-section) + var(--rg));
+  background: linear-gradient(180deg, var(--white) 0%, var(--mist) 100%);
+}
+.nf-dots {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: radial-gradient(
+    ellipse 50% 70% at 25% 45%,
+    #000 0%,
+    transparent 75%
+  );
+  mask-image: radial-gradient(
+    ellipse 50% 70% at 25% 45%,
+    #000 0%,
+    transparent 75%
+  );
+}
+.nf-blob {
+  top: -5%;
+  left: -6%;
+  width: 60vw;
+  max-width: 700px;
+}
+.nf-blob-2 {
+  bottom: 5%;
+  right: -10%;
+  width: 45vw;
+  max-width: 560px;
+}
 .nf-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(1.5rem, 1rem + 3vw, 4.5rem);
-  align-items: end;
+  align-items: center;
 }
-/* Huge "404" in navy with a glossy blue fill where supported, on a soft static blue shadow. */
+.nf-code-wrap {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+}
+/* A faint glossy ring behind the number (decorative, static). */
+.nf-ring {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 4%;
+  width: min(82%, 26rem);
+  aspect-ratio: 1;
+  translate: 0 -50%;
+  border: 1px solid rgba(0, 84, 151, 0.18);
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(11, 111, 196, 0.14) 0%,
+    rgba(11, 111, 196, 0.04) 70%,
+    rgba(11, 111, 196, 0) 100%
+  );
+  box-shadow:
+    inset 0 0 0 14px rgba(255, 255, 255, 0.45),
+    inset 0 0 0 15px rgba(0, 84, 151, 0.1);
+}
+/* Huge "404" in the navy-to-blue gradient (.grad-text, globals) on a soft static blue shadow. */
 .nf-code {
-  color: var(--navy);
-  font-size: calc(var(--display-xl) * 1.6);
-  line-height: 0.8;
+  padding-top: 0.06em;
+  font-size: clamp(6.5rem, 3rem + 16vw, 18rem);
+  line-height: 0.82;
   filter: drop-shadow(0 18px 22px rgba(0, 84, 151, 0.28));
-}
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .nf-code {
-    padding-bottom: 0.06em;
-    background: linear-gradient(180deg, var(--blue-bright) 0%, var(--blue) 45%, var(--navy) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
 }
 @media (forced-colors: active) {
   .nf-code {
-    color: CanvasText;
-    background: none;
     filter: none;
   }
 }
-/* Text, home button and phone links on a glossy rounded card (.card, globals). */
 .nf-body {
-  display: grid;
-  justify-items: start;
-  gap: 1.5rem;
-  padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+  min-width: 0;
+}
+.nf-band {
+  padding: clamp(1.25rem, 1rem + 1.2vw, 2rem) clamp(1.5rem, 1rem + 2vw, 2.75rem);
 }
 .nf-text {
-  color: var(--ink);
+  position: relative;
+  z-index: 1;
+  color: #fff;
   font-family: var(--font-display);
   font-stretch: var(--condensed);
   font-size: var(--display-m);
   font-weight: 800;
   line-height: 0.95;
+  text-shadow: 0 1px 0 rgba(0, 30, 60, 0.35);
   text-transform: uppercase;
+}
+.nf-inner {
+  display: grid;
+  justify-items: start;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
 }
 .nf-home {
   display: inline-block;
@@ -874,43 +1438,130 @@
 .nf-phones {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem 2.5rem;
+  gap: 0.75rem;
   width: 100%;
-  margin-top: 0.5rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--line);
   list-style: none;
 }
-.nf-phones li {
+/* Phone numbers as glass chip links (.chip, globals): location name above the number. */
+.nf-chip {
+  min-height: 44px;
+  padding: 0.5rem 1.15rem 0.5rem 0.55rem;
+  text-decoration: none;
+  transition: transform 0.28s var(--ease);
+}
+.nf-chip,
+.nf-chip:visited,
+.nf-chip:hover {
+  color: var(--ink);
+}
+.nf-chip-text {
   display: grid;
-  gap: 0.15rem;
+  line-height: 1.2;
 }
 .nf-loc {
   color: var(--muted);
-  font-family: var(--font-display);
-  font-stretch: 82%;
-  font-size: 0.95rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .nf-phone {
-  min-height: 44px; /* tap target */
   color: var(--navy);
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-size: 1.12rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
-.nf-phone .icon {
-  color: var(--blue);
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .nf-chip:hover {
+    transform: translateY(-3px);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .nf-chip:active {
+    transform: scale(0.97);
+    transition-duration: 0.08s;
+  }
 }
 
 /* ---------- Small desktop and tablet landscape ---------- */
 @media (max-width: 1100px) {
+  /* Timeline: the line runs down the middle and the cards alternate sides (the right ones a little lower). */
   .ab-tl {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem calc(2 * var(--tl-arm));
+    padding-bottom: 4.5rem;
   }
-  .ab-tl-item:nth-child(2n)::before,
-  .ab-tl-item:last-child::before {
-    right: 0;
+  .ab-tl::before {
+    content: "";
+    position: absolute;
+    top: 0.75rem;
+    bottom: 1rem;
+    left: 50%;
+    width: 4px;
+    margin-left: -2px;
+    border-radius: 4px;
+    background: linear-gradient(
+      180deg,
+      var(--blue-bright) 0%,
+      var(--blue) 70%,
+      rgba(0, 84, 151, 0) 100%
+    );
+    box-shadow: 0 0 14px rgba(11, 111, 196, 0.5);
   }
+  .ab-tl-item {
+    display: block;
+  }
+  .ab-tl-item:nth-child(n) {
+    grid-column: 1;
+    margin: 0;
+  }
+  .ab-tl-item:nth-child(even) {
+    grid-column: 2;
+    margin: 4.5rem 0 -4.5rem;
+  }
+  .ab-tl-item:nth-child(n)::before {
+    display: none;
+  }
+  /* The arm from the card to the node on the centre line. */
+  .ab-tl-item:nth-child(n)::after {
+    top: calc(1.75rem + var(--tl-node) / 2 - 1px);
+    left: auto;
+    right: calc(-1 * var(--tl-arm));
+    width: var(--tl-arm);
+    height: 2px;
+    margin: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 84, 151, 0.2) 0%,
+      var(--blue) 100%
+    );
+  }
+  .ab-tl-item:nth-child(even)::after {
+    left: calc(-1 * var(--tl-arm));
+    right: auto;
+    background: linear-gradient(
+      90deg,
+      var(--blue) 0%,
+      rgba(0, 84, 151, 0.2) 100%
+    );
+  }
+  .ab-tl-node {
+    position: absolute;
+    top: 1.75rem;
+    right: calc(-1 * var(--tl-arm) - var(--tl-node) / 2);
+  }
+  .ab-tl-item:nth-child(even) .ab-tl-node {
+    right: auto;
+    left: calc(-1 * var(--tl-arm) - var(--tl-node) / 2);
+  }
+  .ab-tl-item:nth-child(n) .ab-tl-card {
+    margin: 0;
+  }
+
   .ct-grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -921,13 +1572,16 @@
   .ct-follow-item {
     grid-column: 1 / -1;
   }
-  .ff-row,
-  .ff-row:nth-child(even) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(1.5rem, 0.8rem + 2vw, 2.5rem);
+
+  .ff-row--a .ff-grid {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   }
-  .ff-text {
-    max-width: none;
+  .ff-row--a .ff-text {
+    margin-left: -3rem;
+  }
+  .ff-row--b .ff-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 0.8rem + 2vw, 2.5rem);
   }
 }
 
@@ -936,79 +1590,137 @@
   .ph-grid {
     grid-template-columns: minmax(0, 1fr);
   }
-  .ph-title {
-    padding-bottom: 0;
+  .ph-dots {
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 55% at 60% 70%,
+      #000 0%,
+      transparent 72%
+    );
+    mask-image: radial-gradient(
+      ellipse 80% 55% at 60% 70%,
+      #000 0%,
+      transparent 72%
+    );
   }
   .ab-story-grid {
     grid-template-columns: minmax(0, 1fr);
   }
-  .ff-row,
-  .ff-row:nth-child(even) {
-    align-items: start;
+  /* Feature rows stacked, photo first. A: the text card overlaps the photo's bottom edge. */
+  .ff-row--a .ff-grid,
+  .ff-row--b .ff-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .ff-row--b .ff-stage {
+    order: 0;
+  }
+  .ff-row--a .ff-text {
+    margin: calc(-1 * clamp(2.5rem, 1rem + 5vw, 4.5rem))
+      clamp(0.75rem, 3vw, 2rem) 0;
+  }
+  .ff-row--b .ff-text {
+    margin-top: clamp(2.25rem, 1.75rem + 2vw, 3rem);
+  }
+  .ff-plain {
+    max-width: none;
   }
   .nf-grid {
     grid-template-columns: minmax(0, 1fr);
     align-items: start;
   }
+  .nf-ring {
+    width: min(70%, 15rem);
+  }
+  .ph-pic {
+    aspect-ratio: 16 / 9;
+  }
 }
 
 /* ---------- Phone ---------- */
 @media (max-width: 680px) {
+  .ph,
+  .ab-story,
+  .ff-row,
+  .emp,
+  .nf {
+    --rg: 40px;
+  }
+  .pg-ridge {
+    height: 40px !important; /* overrides the Ridge height prop on phones */
+  }
   .ph-pic {
     aspect-ratio: 3 / 2;
   }
-  .ab-col:nth-child(2) {
-    padding-top: 2.5rem;
+  .ph-stage-dots {
+    right: -0.5rem;
+    bottom: -0.5rem;
   }
-  .ab-mosaic,
-  .ab-col {
-    gap: 1.25rem;
+  /* Chips in a row overlapping the photo's bottom edge. */
+  .ph-chips {
+    position: relative;
+    inset: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: -1.3rem;
+    padding-inline: 0.5rem;
+  }
+  .ph-chip {
+    position: static;
+    white-space: normal;
   }
 
-  /* Timeline goes vertical, with the rule down the left. */
+  .ab-dots {
+    left: -0.5rem;
+    bottom: -0.75rem;
+  }
+
+  /* Timeline goes to one column, with the line down the left. */
   .ab-tl {
     grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
+    gap: 1.5rem;
+    padding: 0 0 0 calc(var(--tl-node) + 1.1rem);
   }
-  .ab-tl-item {
-    padding-top: 0;
-    padding-left: calc(var(--tl-node) + 1.25rem);
+  .ab-tl::before {
+    left: calc(var(--tl-node) / 2);
   }
-  .ab-tl-item::before,
-  .ab-tl-item:nth-child(2n)::before,
-  .ab-tl-item:nth-child(4n)::before {
-    top: var(--tl-node);
-    bottom: -2.5rem;
-    left: calc(var(--tl-node) / 2 - 1.5px);
+  .ab-tl-item:nth-child(n) {
+    grid-column: 1;
+    margin: 0;
+  }
+  .ab-tl-item:nth-child(n)::after {
+    left: -1.1rem;
     right: auto;
-    width: 3px;
-    height: auto;
-    background: linear-gradient(180deg, var(--blue) 0%, var(--blue-bright) 100%);
+    width: 1.1rem;
+    background: linear-gradient(
+      90deg,
+      var(--blue) 0%,
+      rgba(0, 84, 151, 0.2) 100%
+    );
   }
-  .ab-tl-item:last-child::before {
-    display: none;
-  }
-  .ab-tl-item::after {
-    top: 0.3rem;
-  }
-  .ab-tl-text {
-    margin-top: 0.8rem;
+  .ab-tl-item:nth-child(n) .ab-tl-node {
+    left: calc(-1 * (var(--tl-node) + 1.1rem));
+    right: auto;
   }
 
+  .ff-tray {
+    padding: 0.65rem;
+  }
   .ff-chips {
-    gap: 0.5rem;
+    justify-content: flex-start;
+    gap: 0.45rem;
   }
   .ff-chip {
-    padding-right: 0.8rem;
+    padding-right: 0.85rem;
+    font-size: 0.95rem;
   }
-  /* Stacked, photo first. */
-  .ff-row,
-  .ff-row:nth-child(even) {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.75rem;
+  .ff-dots {
+    left: -0.5rem;
+    bottom: -0.75rem;
   }
-  .ff-row:nth-child(even) .ff-media {
-    order: 0;
+  .ff-row--a .ff-text {
+    margin-inline: 0.5rem;
   }
 
   .ct-info {
@@ -1023,7 +1735,12 @@
   .cf-submit {
     width: 100%;
   }
+
   .nf-phones {
     flex-direction: column;
+  }
+  .nf-phones li,
+  .nf-chip {
+    width: 100%;
   }
 }

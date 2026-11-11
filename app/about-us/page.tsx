@@ -1,10 +1,17 @@
-// About Us (/about-us, same URL as the old site): split title block, "01 Our Story" as an editorial split (the
-// story text beside an asymmetric two-column photo mosaic: the old page used a slider), "02 Our History" as a
-// numbered timeline on mist (round glossy nodes, outline blue years, text on glossy rounded cards), and the closing "Reserve at <location>" band.
-// Mosaic photos are rounded on soft blue glows and lift off them on hover.
-// Motion: the section heads and story text rise in on scroll; each mosaic photo is uncovered by a sliding curtain
-// (one moves with parallax instead); the timeline items come in one after another, so the connecting rule builds up
-// segment by segment. Every word and photo comes from the editable content (content.about).
+// About Us (/about-us, same URL as the old site), in the "Valley glass" look:
+// - Title block (PageHero) with the location names as glass chips on the photo; a white ridge leads into
+// - "01 Our Story": an editorial split on white. Left: the section head (glass number pill, gradient heading,
+//   glossy bar) and the story with a drop cap set in a small glossy blue tile. Right: a rounded bento mosaic of
+//   the story photos (one big, small, tall and wide cells) over a soft glow and an offset dot-grid panel. A mist
+//   ridge at the bottom rises into
+// - "02 Our History" on dotted mist: a timeline of glossy rounded cards (years big in gradient text) hung off a
+//   glowing gradient line with round glossy nodes. Above 1100px the line runs across and the cards zig-zag above
+//   and below it; 681-1100px the line runs down the middle and the cards alternate sides; phones: line down the left.
+// - the closing "Reserve at <location>" band (CtaBand).
+// Motion: section heads and story text rise in on scroll (Reveal); mosaic photos are uncovered by sliding curtains
+// (one cell drifts with parallax instead) and lift onto their glow on hover; timeline cards come in one after
+// another (Stagger), so the line builds up segment by segment, and lift with their node on hover.
+// Every word and photo comes from the editable content (content.about, content.locations).
 import type { Metadata } from "next";
 import { CtaBand } from "@/components/CtaBand";
 import { Curtain } from "@/components/motion/Curtain";
@@ -12,6 +19,7 @@ import { Parallax } from "@/components/motion/Parallax";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { PageHero } from "@/components/PageHero";
 import { Photo } from "@/components/Photo";
+import { Ridge } from "@/components/Ridge";
 import type { Photo as PhotoData } from "@/lib/content-schema";
 import { getSiteContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
@@ -20,26 +28,52 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata("about", "/about-us");
 }
 
-/** Soft blue glow under each rounded mosaic photo, in turn (the variants only change the glow's depth). */
-const FRAMES = ["frame", "frame frame-ink", "frame frame-sand", "frame"];
-const CURTAINS = ["sand", "blue", "ink", "sand"] as const;
-const MOSAIC_SIZES = "(max-width: 680px) 46vw, (max-width: 900px) 45vw, (max-width: 1380px) 24vw, 330px";
+type Cell = "big" | "small" | "tall" | "wide" | "full";
 
-/** One mosaic cell. Cells alternate tall (4:5) and square, crossed between the two columns. */
-function MosaicPhoto({ photo, i, single }: { photo: PhotoData; i: number; single: boolean }) {
-  const col = i % 2;
-  const row = Math.floor(i / 2);
-  const shape = single ? "ab-pic--wide" : (col + row) % 2 === 0 ? "ab-pic--tall" : "ab-pic--square";
-  const sizes = single ? "(max-width: 900px) 92vw, 46vw" : MOSAIC_SIZES;
-  const img = <Photo photo={photo} className="ab-ph" sizes={sizes} />;
+/** Bento cells for n photos: full groups of four fill a 6x3 block (big, small, tall, wide); a remainder of 1-3
+ *  photos still closes the rectangle (full / big + tall / big + small + small). */
+function bento(n: number): Cell[] {
+  const out: Cell[] = [];
+  const full = Math.floor(n / 4);
+  for (let g = 0; g < full; g++) out.push("big", "small", "tall", "wide");
+  const rest = n % 4;
+  if (rest === 1) out.push("full");
+  if (rest === 2) out.push("big", "tall");
+  if (rest === 3) out.push("big", "small", "small");
+  return out;
+}
+
+const CURTAINS = ["blue", "sand", "ink", "sand"] as const;
+const SIZES: Record<Cell, string> = {
+  big: "(max-width: 900px) 62vw, (max-width: 1400px) 31vw, 440px",
+  wide: "(max-width: 900px) 62vw, (max-width: 1400px) 31vw, 440px",
+  small: "(max-width: 900px) 32vw, (max-width: 1400px) 16vw, 220px",
+  tall: "(max-width: 900px) 32vw, (max-width: 1400px) 16vw, 220px",
+  full: "(max-width: 900px) 92vw, 46vw",
+};
+
+function MosaicPhoto({
+  photo,
+  i,
+  cell,
+}: {
+  photo: PhotoData;
+  i: number;
+  cell: Cell;
+}) {
+  const img = <Photo photo={photo} className="ab-ph" sizes={SIZES[cell]} />;
   return (
-    <div className={`ab-cell ${FRAMES[i % FRAMES.length]}`}>
-      {i % 4 === 3 ? (
-        <Parallax className={`ab-pic ${shape}`} strength={0.07}>
+    <div className={`ab-cell ab-cell--${cell} frame`}>
+      {cell === "wide" ? (
+        <Parallax className="ab-pic" strength={0.08}>
           {img}
         </Parallax>
       ) : (
-        <Curtain className={`ab-pic ${shape}`} color={CURTAINS[i % CURTAINS.length]} delay={col * 0.15}>
+        <Curtain
+          className="ab-pic"
+          color={CURTAINS[i % CURTAINS.length]}
+          delay={(i % 4) * 0.12}
+        >
           {img}
         </Curtain>
       )}
@@ -49,64 +83,102 @@ function MosaicPhoto({ photo, i, single }: { photo: PhotoData; i: number; single
 
 export default async function AboutPage() {
   const content = await getSiteContent();
-  const { about } = content;
+  const { about, locations } = content;
   const photos = about.photos;
-  // Two columns: photos 1, 3, 5… on the left, 2, 4, 6… on the right (pushed down for the asymmetric look).
-  const cols = [photos.map((p, i) => ({ p, i })).filter((x) => x.i % 2 === 0), photos.map((p, i) => ({ p, i })).filter((x) => x.i % 2 === 1)];
-  const single = photos.length === 1;
+  const cells = bento(photos.length);
+  const hasHistory = about.timeline.length > 0;
 
   return (
     <>
-      <PageHero heading={about.heading} photo={about.heroPhoto} />
+      <PageHero
+        heading={about.heading}
+        photo={about.heroPhoto}
+        chips={locations.items.map((l) => ({
+          icon: "pin" as const,
+          text: l.name,
+        }))}
+      />
 
       <section className="section ab-story" aria-labelledby="ab-story-heading">
         <div className="wrap">
-          <Reveal className="sec-head">
-            <span className="sec-no" aria-hidden="true">
-              01
-            </span>
-            <h2 id="ab-story-heading">{about.storyHeading}</h2>
-          </Reveal>
-          <div className={photos.length > 0 ? "ab-story-grid" : "ab-story-grid is-text-only"}>
-            <Reveal className="ab-copy" delay={0.05}>
-              {about.story.map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
-            </Reveal>
+          <div
+            className={
+              photos.length > 0 ? "ab-story-grid" : "ab-story-grid is-text-only"
+            }
+          >
+            <div className="ab-story-text">
+              <Reveal className="sec-head">
+                <span className="sec-no" aria-hidden="true">
+                  01
+                </span>
+                <h2 id="ab-story-heading" className="grad-text">
+                  {about.storyHeading}
+                </h2>
+              </Reveal>
+              <Reveal className="ab-copy" delay={0.08}>
+                {about.story.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </Reveal>
+            </div>
             {photos.length > 0 && (
-              <div className={single ? "ab-mosaic is-single" : "ab-mosaic"}>
-                {cols.map(
-                  (col, c) =>
-                    col.length > 0 && (
-                      <div key={c} className="ab-col">
-                        {col.map(({ p, i }) => (
-                          <MosaicPhoto key={`${p.src}-${i}`} photo={p} i={i} single={single} />
-                        ))}
-                      </div>
-                    ),
-                )}
+              <div className="ab-stage">
+                <span className="glow-blob ab-blob" aria-hidden="true" />
+                <span className="dots ab-dots" aria-hidden="true" />
+                <div className="ab-mosaic">
+                  {photos.map((p, i) => (
+                    <MosaicPhoto
+                      key={`${p.src}-${i}`}
+                      photo={p}
+                      i={i}
+                      cell={cells[i]}
+                    />
+                  ))}
+                </div>
               </div>
             )}
           </div>
         </div>
+        {hasHistory && (
+          <Ridge
+            edge="bottom"
+            fill="var(--mist)"
+            height={72}
+            className="pg-ridge"
+          />
+        )}
       </section>
 
-      {about.timeline.length > 0 && (
-        <section className="section bg-sand ab-history" aria-labelledby="ab-history-heading">
+      {hasHistory && (
+        <section
+          className="section bg-sand ab-history"
+          aria-labelledby="ab-history-heading"
+        >
+          <div className="pg-decor" aria-hidden="true">
+            <span className="dots ab-history-dots" />
+            <span className="glow-blob ab-history-blob" />
+          </div>
           <div className="wrap">
-            <Reveal className="sec-head">
+            <Reveal className="sec-head ab-history-head">
               <span className="sec-no" aria-hidden="true">
                 02
               </span>
-              <h2 id="ab-history-heading">{about.historyHeading}</h2>
+              <h2 id="ab-history-heading" className="grad-text">
+                {about.historyHeading}
+              </h2>
             </Reveal>
             <Stagger as="ol" className="ab-tl" gap={0.14}>
               {about.timeline.map((t, i) => (
-                <StaggerItem as="li" key={`${t.year}-${i}`} className="ab-tl-item">
-                  <h3 className="ab-tl-year" data-year={t.year}>
-                    {t.year}
-                  </h3>
-                  <p className="ab-tl-text card">{t.text}</p>
+                <StaggerItem
+                  as="li"
+                  key={`${t.year}-${i}`}
+                  className="ab-tl-item"
+                >
+                  <span className="ab-tl-node" aria-hidden="true" />
+                  <div className="ab-tl-card card lift">
+                    <h3 className="ab-tl-year grad-text">{t.year}</h3>
+                    <p className="ab-tl-text">{t.text}</p>
+                  </div>
                 </StaggerItem>
               ))}
             </Stagger>
@@ -114,7 +186,11 @@ export default async function AboutPage() {
         </section>
       )}
 
-      <CtaBand content={content} heading={about.cta.heading} variant="reserve" />
+      <CtaBand
+        content={content}
+        heading={about.cta.heading}
+        variant="reserve"
+      />
     </>
   );
 }
