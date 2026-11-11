@@ -1,11 +1,16 @@
 /* Site chrome: header (components/Header.tsx, HeaderMobile.tsx), page nav row (NavLinks.tsx) and footer
-   (components/Footer.tsx). Uses only the tokens in app/globals.css. Breakpoints: 1100px, 900px, 680px (phone). */
+   (components/Footer.tsx), in the "valley poster" language of app/globals.css: square corners, condensed display
+   type, hairline rules, charcoal grounds. Hover and tap feedback is CSS and animates transform or opacity only;
+   the global prefers-reduced-motion rule in globals.css stops every transition here, and the transforms also sit
+   in (prefers-reduced-motion: no-preference) blocks. Breakpoints: 1100px, 900px, 680px (phone). */
 
 /* ===================================================================== Header */
-/* In normal document flow: never fixed or sticky, so it can never cover the banner. */
+/* In normal document flow: never fixed or sticky, so it can never cover the banner. White ground with a blue
+   rule along the top (the logo's blue), then the slim nav row on bone. */
 .site-header {
   position: relative;
-  background: var(--white);
+  background: #fff;
+  border-top: 5px solid var(--blue);
   /* Row label column and box columns, adjusted per breakpoint below. */
   --hdr-label-w: 10rem;
   --hdr-box-w: clamp(200px, 16.5vw, 240px);
@@ -21,15 +26,15 @@
 
 /* Logo. Sized so it holds its own next to the three rows: 200px at 1280px and up, 170 / 150 / 130 below
    (see the media queries). Width check at the narrowest end of each range, content = viewport - 2 x gutter:
-   1280: 1184 >= 200 logo + 34 gap + 598 rows (160 label + 2 x 211 boxes + 2 x 8 gaps) = 832.
-   1101: 1013 >= 170 + 30 + 576 (160 + 2 x 200 + 16) = 776.
+   1280: 1178 >= 200 logo + 34 gap + 598 rows (160 label + 2 x 211 boxes + 2 x 8 gaps) = 832.
+   1101: 1013 >= 170 + 30 + 576 (156 + 2 x 200 + 2 x 6.4) = 769.
     901:  829 >= 150 + 26 + 549 (156 + 2 x 190 + 2 x 6.4) = 725.
     681:  627 >= 130 + 16 + 2 x 237 boxes + 6.4 = 626.4 (boxes shrink, max 240 each). */
 .hdr-logo {
   flex: none;
   display: block;
   width: 200px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius);
 }
 .hdr-logo img {
   width: 100%;
@@ -48,18 +53,21 @@
   align-items: center;
   gap: var(--hdr-gap);
 }
+/* Row labels: the display face in normal case (the visible text must match the spec exactly). */
 .hdr-label {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.3rem;
+  gap: 0.25rem;
   margin: 0;
   padding-right: 0.35rem;
   color: var(--ink);
-  font-family: var(--font-text);
-  font-size: var(--text-sm);
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-size: 1.05rem;
   font-weight: 800;
-  line-height: 1.2;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
   text-align: right;
 }
 /* Beside the boxes (above 900px) the three labels always stay on one line, in one even column. */
@@ -70,19 +78,22 @@
 }
 .hdr-label .icon {
   flex: none;
-  color: var(--blue);
+  color: var(--orange-ink);
 }
 
-/* Navy boxes. Text is white in every state: set on the link in all states and inherited by every inner span. */
+/* Navy boxes (fixed spec). Text is white in every state: set on the link in all states and inherited by every
+   inner span. Hover only deepens the background a little: a --navy-3 layer fades in (opacity), no lift. */
 .site-header a.hdr-box,
 .site-header a.hdr-box:visited,
 .site-header a.hdr-box:hover,
 .site-header a.hdr-box:active,
 .site-header a.hdr-box:focus-visible {
-  color: var(--white);
+  color: #fff;
   text-decoration: none;
 }
 .hdr-box {
+  position: relative;
+  isolation: isolate;
   display: flex;
   align-items: center;
   gap: 0.65rem;
@@ -91,19 +102,27 @@
   min-height: 3.1rem;
   padding: 0.55rem 0.85rem;
   background: var(--navy);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius);
   font-family: var(--font-text);
   line-height: 1.2;
   text-align: left;
-  transition: background-color 0.18s ease;
 }
-.hdr-box:hover {
+.hdr-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
   background: var(--navy-3);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.hdr-box:hover::before {
+  opacity: 1;
 }
 .hdr-box:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 3px;
-  border-radius: var(--radius-sm);
 }
 .hdr-box .icon {
   flex: none;
@@ -136,36 +155,53 @@
   display: block;
 }
 
-/* Slim page nav row under the header. */
+/* ---- Slim page nav row: small letter-spaced caps on bone between two hairlines. The current page (and the
+   hovered link) gets a blue bar that grows out from the centre and sits on the bottom rule (scaleX only). */
 .hdr-nav {
-  background: var(--cream);
+  background: var(--bone);
   border-block: 1px solid var(--line);
 }
 .hdr-nav-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0 clamp(1.1rem, 0.6rem + 1.5vw, 2.25rem);
+  gap: 0 clamp(1.25rem, 0.6rem + 1.8vw, 2.75rem);
   list-style: none;
 }
 .hdr-nav-list a {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   color: var(--ink);
-  font-size: var(--text-sm);
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
   text-decoration: none;
+  text-transform: uppercase;
 }
-.hdr-nav-list a:hover {
-  color: var(--blue);
-  text-decoration: underline;
+.hdr-nav-list a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px; /* on the row's bottom rule */
+  height: 3px;
+  background: var(--blue);
+  transform: scaleX(0);
+  transition: transform 0.35s var(--ease);
 }
+.hdr-nav-list a:hover,
 .hdr-nav-list a[aria-current="page"] {
   color: var(--blue);
-  font-weight: 750;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.35em;
+}
+.hdr-nav-list a:hover::after,
+.hdr-nav-list a:focus-visible::after,
+.hdr-nav-list a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+.hdr-nav-list a:focus-visible {
+  outline-offset: 2px;
 }
 
 /* Phone buttons: hidden above 680px (display: none, so screen readers don't hear both versions). */
@@ -189,6 +225,9 @@
   }
   .hdr-logo {
     width: 150px;
+  }
+  .hdr-label {
+    font-size: 1rem;
   }
   .hdr-box {
     gap: 0.5rem;
@@ -269,24 +308,31 @@
 .hm-item {
   display: grid;
 }
+/* Shared by the navy panel buttons and the orange call buttons (which are also .btn .btn-cta: this keeps the
+   .btn press/lift mechanics but sets the header's own type: display face in normal case, left aligned). */
 .hm-btn {
+  position: relative;
+  isolation: isolate;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 0.75rem;
   width: 100%;
   min-height: 3.5rem;
-  padding: 0.7rem 1.1rem;
-  border: 2px solid transparent;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-text);
-  font-size: 1.0625rem;
-  font-weight: 750;
-  line-height: 1.2;
+  padding: 0.75rem 1.1rem;
+  border: 0;
+  border-radius: var(--radius);
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
   text-align: left;
   text-decoration: none;
+  text-transform: none;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color 0.18s ease;
 }
 .hm-btn-label {
   flex: 1 1 auto;
@@ -295,64 +341,69 @@
 .hm-btn .icon {
   flex: none;
 }
+
+/* Navy (fixed spec): white text; hover / open fade in a --navy-3 layer (opacity); a quick press on tap. */
 .hm-btn-navy {
   background: var(--navy);
-  color: var(--white);
+  color: #fff;
+  transition: transform 0.2s var(--ease);
 }
-.hm-btn-navy .icon:first-child {
+.hm-btn-navy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--navy-3);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.hm-btn-navy:hover::before,
+.hm-btn-navy[aria-expanded="true"]::before {
+  opacity: 1;
+}
+.hm-btn-navy > .icon:first-child {
   color: var(--orange-hover);
 }
-.hm-btn-navy:hover,
-.hm-btn-navy[aria-expanded="true"] {
-  background: var(--navy-3);
-}
-.hm-btn-navy[aria-expanded="true"] {
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-}
-.hm-chev {
-  margin-left: auto;
-}
-.hm-btn[aria-expanded="true"] .hm-chev {
-  transform: rotate(180deg);
-}
 @media (prefers-reduced-motion: no-preference) {
-  .hm-chev {
-    transition: transform 0.2s var(--ease-out);
+  .hm-btn-navy:active {
+    transform: scale(0.98);
+    transition-duration: 0.08s;
   }
 }
-/* Call buttons: orange with navy text (5.1:1). */
-.site-header a.hm-btn-call,
-.site-header a.hm-btn-call:visited,
-.site-header a.hm-btn-call:hover,
-.site-header a.hm-btn-call:focus-visible {
-  background: var(--orange);
-  color: var(--navy);
+/* Chevron: Motion turns it 180deg (HeaderMobile.tsx). */
+.hm-chev {
+  display: inline-flex;
+  flex: none;
+  margin-left: auto;
 }
-.site-header a.hm-btn-call:hover {
-  background: var(--orange-hover);
+
+/* Orange call buttons: ink text on orange (5.8:1). */
+.hm-btn-call .icon {
+  color: var(--ink);
 }
 .hm-phone {
   white-space: nowrap;
 }
 
-/* Panels sit in normal flow under their button and push the next buttons down. Before hydration (html.js but
-   no data-ready yet) they are hidden; without JavaScript there is no .js class and they simply show. */
+/* Panels sit in normal flow under their button and push the next buttons down. Motion animates their height
+   and opacity, so the outer box clips and the padding lives on the inner box (it can reach 0 height).
+   Before hydration (html.js but no data-ready yet) they are hidden; without JavaScript there is no .js class and
+   they simply show. */
 .js .hm-panel:not([data-ready]) {
   display: none;
 }
 .hm-panel {
-  padding: 0.35rem;
-  background: var(--blue-tint);
-  border: 2px solid var(--navy-3);
-  border-top: 0;
-  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  overflow: hidden;
+}
+.hm-panel-inner {
+  padding: 0.5rem; /* room for the links' focus outline inside the clipped box */
+  background: var(--navy);
 }
 /* No JavaScript (or not hydrated yet when the boot script gave up): the panel shows under a button that cannot
-   open or close it, so it gets full rounded corners and the button's chevron is hidden. Once hydrated
-   (data-ready) the normal styling applies even if html.js was removed. */
+   open or close it, so it gets a small gap and the button's chevron is hidden. Once hydrated (data-ready) the
+   normal styling applies even if html.js was removed. */
 html:not(.js) .hm-panel:not([data-ready]) {
-  border-top: 2px solid var(--navy-3);
-  border-radius: var(--radius-sm);
   margin-top: 0.25rem;
 }
 html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
@@ -360,7 +411,7 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
 }
 .hm-links {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.4rem;
   list-style: none;
 }
 .hm-link {
@@ -370,11 +421,13 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   gap: 0.75rem;
   min-height: 3.25rem;
   padding: 0.6rem 0.9rem;
-  background: var(--white);
-  border-radius: 6px;
+  background: #fff;
+  border-radius: var(--radius);
   color: var(--ink);
   line-height: 1.25;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s var(--ease);
 }
 .hm-link:visited,
 .hm-link:hover {
@@ -383,9 +436,23 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
 .hm-link:hover .hm-link-title {
   text-decoration: underline;
 }
+.hm-link:focus-visible {
+  outline: 3px solid var(--orange-hover);
+  outline-offset: 2px;
+}
 .hm-link .icon {
   flex: none;
   color: var(--blue);
+  transition: transform 0.3s var(--ease);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hm-link:hover .icon {
+    transform: translateX(4px);
+  }
+  .hm-link:active {
+    transform: scale(0.98);
+    transition-duration: 0.08s;
+  }
 }
 .hm-link-text {
   display: flex;
@@ -398,143 +465,142 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
 .hm-link-sub {
   color: var(--muted);
   font-size: var(--text-sm);
+  font-style: italic;
 }
 
 /* ===================================================================== Footer */
-/* A deeper navy than the CTA band above it, plus a hairline, so the two read as separate blocks.
-   Contrast on #081a31: --on-navy 16.3:1, --on-navy-muted 10.1:1, --orange-hover 7.0:1. */
-.site-footer {
-  background: #081a31;
-  border-top: 1px solid var(--navy-line);
-  color: var(--on-navy);
+/* A deeper ink than the CTA band above it, plus a hairline, so the two read as separate blocks.
+   Contrast on #101215: white 18.9:1, --on-dark-muted 10.2:1, --orange-hover 7.6:1. */
+.site-footer.bg-ink {
+  background: #101215;
+  border-top: 1px solid var(--dark-line);
+  color: var(--on-dark-muted);
   font-size: var(--text-sm);
 }
 .site-footer a:not(.btn),
-.site-footer a:not(.btn):visited {
-  color: var(--white);
-  text-decoration: none;
-}
+.site-footer a:not(.btn):visited,
 .site-footer a:not(.btn):hover {
-  color: var(--white);
-  text-decoration: underline;
-}
-.ft-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 0.9fr) minmax(0, 1.25fr) minmax(0, 1fr);
-  gap: clamp(2rem, 1rem + 2.5vw, 3.5rem);
-  padding-block: clamp(3rem, 2rem + 3vw, 5rem) clamp(2.25rem, 1.5rem + 2vw, 3.5rem);
+  color: #fff;
 }
 
-/* Brand: logo on a white tile, and the Contact button. */
-.ft-brand {
+/* Top row: the logo in white and the Contact button, over a 2px rule. */
+.ft-top {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+  padding-block: clamp(2.5rem, 1.8rem + 2.5vw, 4rem) clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);
+  border-bottom: 2px solid var(--dark-line);
 }
 .ft-logo {
   display: block;
-  width: 168px;
-  padding: 0.85rem 1rem;
-  background: var(--white);
+  flex: none;
+  width: 180px;
   border-radius: var(--radius);
 }
 .ft-logo img {
   width: 100%;
   height: auto;
+  filter: brightness(0) invert(1); /* static: the two-colour logo as one white mark */
+}
+/* On charcoal the orange button's offset block is white, so the lift shows. */
+.site-footer .ft-contact {
+  --btn-shadow: #fff;
 }
 
-/* Headings in the footer are small labels. */
-.site-footer .ft-heading {
-  margin: 0 0 0.6rem;
-  color: var(--on-navy-muted);
-  font-family: var(--font-text);
-  font-size: var(--text-xs);
-  font-stretch: normal;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  line-height: 1.3;
-  text-transform: uppercase;
+/* Columns */
+.ft-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(2rem, 1rem + 2.5vw, 3.5rem);
+  padding-block: clamp(2.5rem, 1.8rem + 2.5vw, 4rem);
 }
-
-/* Page links, Instagram, Employee Portal */
-.ft-links {
+.ft-col {
   display: grid;
   align-content: start;
-  gap: 1.75rem;
+  gap: 0.9rem;
 }
+
+/* Page links: big condensed caps; an orange bar grows under the hovered and the current link (scaleX). */
 .ft-nav-list {
   display: grid;
-  gap: 0.15rem;
+  gap: 0.1rem;
   list-style: none;
 }
 .site-footer .ft-nav-list a {
+  position: relative;
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
   font-family: var(--font-display);
-  font-stretch: var(--display-stretch);
-  font-size: var(--text-lg);
-  font-weight: 750;
-  line-height: 1.2;
+  font-stretch: var(--condensed);
+  font-size: var(--display-s);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.25s var(--ease);
 }
-.site-footer .ft-nav-list a[aria-current="page"] {
-  text-decoration: underline;
-  text-decoration-color: var(--orange);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.3em;
+.site-footer .ft-nav-list a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.3rem;
+  height: 2px;
+  background: var(--orange-hover);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease);
 }
-.site-footer a.ft-social {
-  display: inline-grid;
-  place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border: 1px solid var(--navy-line);
-  border-radius: 50%;
-  transition:
-    background-color 0.18s ease,
-    color 0.18s ease;
+.site-footer .ft-nav-list a:hover::after,
+.site-footer .ft-nav-list a:focus-visible::after,
+.site-footer .ft-nav-list a[aria-current="page"]::after {
+  transform: scaleX(1);
 }
-.site-footer a.ft-social:hover {
-  background: var(--white);
-  color: var(--navy);
-}
-.site-footer a.ft-text-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.75rem;
-  font-weight: 650;
-  text-decoration: underline;
-  text-decoration-color: var(--on-navy-muted);
-}
-.site-footer a.ft-text-link:hover {
-  text-decoration-color: var(--white);
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .site-footer .ft-nav-list a:hover {
+    transform: translateX(6px);
+  }
 }
 
-/* Locations */
-.ft-locations {
-  display: grid;
-  align-content: start;
-  gap: 1.75rem;
+/* Locations: a number on a rule, the name in display caps, then the facts. */
+.ft-no {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  color: var(--orange-hover);
+  font-family: var(--font-display);
+  font-stretch: var(--condensed);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+.ft-no::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.35;
 }
 .site-footer .ft-loc-name {
-  color: var(--white);
-  font-family: var(--font-display);
-  font-stretch: var(--display-stretch);
-  font-size: var(--text-lg);
-  font-weight: 750;
-  letter-spacing: 0;
-  text-transform: none;
+  color: #fff;
+  font-size: var(--display-s);
 }
 .ft-loc address {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-style: normal;
 }
 .ft-line {
   display: flex;
   align-items: flex-start;
-  gap: 0.55rem;
+  gap: 0.6rem;
+  margin: 0;
   line-height: 1.45;
 }
 .ft-line .icon {
@@ -542,77 +608,133 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   margin-top: 0.15rem;
   color: var(--orange-hover);
 }
+.site-footer a.ft-addr {
+  text-decoration: none;
+}
+.site-footer a.ft-addr:hover {
+  text-decoration: underline;
+}
 .site-footer a.ft-phone {
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-stretch: var(--condensed);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-decoration: none;
   white-space: nowrap;
 }
+.site-footer a.ft-phone:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+.ft-line:has(.ft-phone) .icon {
+  margin-top: 0.3rem;
+}
 .ft-hours {
-  margin-top: 0.5rem;
-  color: var(--on-navy-muted);
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--dark-line);
 }
 
-/* Photo grid: square thumbnails (not links). */
+/* Follow Us / Employee Portal: small letter-spaced labels and drawn-underline links. */
+.ft-more {
+  gap: 1.75rem;
+}
+.site-footer .ft-heading {
+  margin: 0 0 0.35rem;
+  color: var(--on-dark-muted);
+  font-family: var(--font-text);
+  font-size: var(--text-xs);
+  font-stretch: normal;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+.site-footer .ft-link {
+  min-height: 2.75rem;
+  font-size: var(--text-base);
+}
+.ft-link .icon {
+  transition: transform 0.3s var(--ease);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .ft-link:hover .ft-arrow {
+    transform: translateX(4px);
+  }
+}
+
+/* Photo strip: six square thumbnails (not links). On hover the photo grows a little inside its clipped box. */
+.ft-strip {
+  padding-bottom: clamp(2.5rem, 1.8rem + 2.5vw, 4rem);
+}
 .ft-gallery {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.5rem;
-  align-content: start;
-  max-width: 26rem;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(0.4rem, 0.2rem + 0.6vw, 0.85rem);
   list-style: none;
 }
 .ft-thumb {
   aspect-ratio: 1;
-  border-radius: var(--radius-sm);
-  background: var(--navy-2);
+  border-radius: var(--radius);
+  background: var(--ink-2);
+}
+.ft-thumb img {
+  transition: transform 0.7s var(--ease);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .ft-gallery-item:hover .ft-thumb img {
+    transform: scale(1.06);
+  }
+}
+
+/* The big name: condensed black caps across the width, words rising in one after another. */
+.ft-word-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.2em;
+  padding-bottom: clamp(1.5rem, 1rem + 2vw, 3rem);
+  color: #fff;
+  font-family: var(--font-display);
+  font-stretch: var(--condensed);
+  font-size: clamp(3rem, 0.6rem + 9vw, 10rem);
+  font-weight: 900;
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.ft-word-part {
+  display: inline-block;
 }
 
 /* Copyright */
 .ft-bottom {
   padding-block: 1.25rem 1.5rem;
-  border-top: 1px solid var(--navy-line);
-  color: var(--on-navy-muted);
+  border-top: 1px solid var(--dark-line);
+  color: var(--on-dark-muted);
   font-size: var(--text-xs);
+  letter-spacing: 0.04em;
 }
 
-/* Tablet: logo and Contact button as one full-width row, then links | locations side by side (similar heights),
-   then the photos as one full-width row of six. */
+/* Tablet: two columns (links | first location, second location | Follow / Employee); the strip stays six wide. */
 @media (max-width: 1100px) {
   .ft-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .ft-brand,
-  .ft-gallery {
-    grid-column: 1 / -1;
-  }
-  .ft-brand {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-  .ft-gallery {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    max-width: none;
-  }
 }
 
-/* Phone: one column, in reading order. The page links come right after the logo (they are the phone's main
-   navigation) and get big tap targets. */
+/* Phone: one column, in reading order. The page links come first (they are the phone's main navigation) as
+   big boxed tap targets, two per row; a quick press on tap. */
 @media (max-width: 680px) {
-  .ft-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.25rem;
-  }
-  .ft-brand {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
+  .ft-top {
     gap: 1rem;
   }
   .ft-logo {
     width: 140px;
+  }
+  .ft-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
   }
   .ft-nav-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -621,12 +743,19 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   .site-footer .ft-nav-list a {
     display: flex;
     width: 100%;
-    min-height: 3rem;
-    padding: 0.5rem 0.9rem;
-    border: 1px solid var(--navy-line);
-    border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.05);
-    font-size: var(--text-base);
+    min-height: 3.25rem;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--dark-line);
+    border-radius: var(--radius);
+    font-size: 1.3rem;
+  }
+  .site-footer .ft-nav-list a::after {
+    left: 0.9rem;
+    right: 0.9rem;
+    bottom: 0.55rem;
+  }
+  .site-footer .ft-nav-list a[aria-current="page"] {
+    border-color: var(--orange-hover);
   }
   .ft-gallery {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -638,12 +767,19 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
   .ft-line {
     align-items: center;
   }
-  .ft-line .icon {
+  .ft-line .icon,
+  .ft-line:has(.ft-phone) .icon {
     margin-top: 0;
   }
   .site-footer a.ft-tap {
     display: inline-flex;
     align-items: center;
     min-height: 2.75rem;
+  }
+}
+@media (max-width: 680px) and (prefers-reduced-motion: no-preference) {
+  .site-footer .ft-nav-list a:active {
+    transform: scale(0.97);
+    transition-duration: 0.08s;
   }
 }

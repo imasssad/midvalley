@@ -3,15 +3,21 @@
 // Phone header actions (680px and below): "Make a Payment" and "Rent Online" buttons that each open a small
 // panel with one link per location, then a "Call <location> <phone>" button per location. No hamburger menu.
 //
-// Without JavaScript the panels must still be usable. The server HTML renders the panels and their links with
-// no `hidden` attribute; CSS hides them only under html.js (added by the layout's boot script before first paint)
-// until this component has hydrated and taken over with the `hidden` attribute (data-ready). So:
+// Motion (motion/react, m.* only): the panels open and close with a smooth height + opacity transition (0.3s)
+// and the chevron turns 180deg (transform). With prefers-reduced-motion the duration is 0, so the panels just
+// appear and disappear (MotionConfig reducedMotion="user" skips transforms, not height, hence useReducedMotion).
+// A closed panel gets the `hidden` attribute once its close animation has finished, so its links can never be
+// reached with Tab or a screen reader while it is closed.
+//
+// Without JavaScript the panels must still be usable. The server HTML renders the panels and their links as a
+// plain <div> with no `hidden` attribute and no inline styles; CSS hides them only under html.js (added by the
+// layout's boot script before first paint) until this component has hydrated and taken over (data-ready). So:
 // - JS on: the panels start closed, with no flash and no layout shift.
 // - JS off: no .js class, the panels are simply visible under their buttons.
 // - JS failed or very slow: the boot script removes .js after 4s and the panels show, so links stay reachable.
-//   Once hydrated, the panels carry data-ready and the no-JS styling no longer applies to them.
 // Until hydration the buttons cannot do anything, so they carry no aria-expanded / aria-controls (they would
 // announce "collapsed" above a panel that is in fact showing).
+import { m, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import type { Location, SiteContent } from "@/lib/content-schema";
 import { phoneHref } from "@/lib/format";
@@ -23,7 +29,46 @@ type PanelKey = "pay" | "rent";
 /** newTabLabel: content.labels.newTab. */
 type Props = { header: SiteContent["header"]; locations: Location[]; newTabLabel: string };
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+const DURATION = 0.3;
 const panelId = (key: PanelKey) => `hdr-m-${key}`;
+
+/** One panel. Before hydration: a plain div (visible without JS, hidden by CSS under html.js). After: an m.div
+ *  whose height and opacity animate between 0 and "auto", and which is `hidden` once fully closed. */
+function Panel({ id, open, ready, children }: { id: string; open: boolean; ready: boolean; children: React.ReactNode }) {
+  const reduce = useReducedMotion();
+  // Shown while open or while the close animation runs. Derived during render (React's documented pattern):
+  // opening shows it at once; with reduced motion closing hides it at once too.
+  const [visible, setVisible] = useState(false);
+  if (open && !visible) setVisible(true);
+  if (!open && visible && reduce) setVisible(false);
+
+  const inner = <div className="hm-panel-inner">{children}</div>;
+  if (!ready) {
+    return (
+      <div id={id} className="hm-panel">
+        {inner}
+      </div>
+    );
+  }
+  return (
+    <m.div
+      id={id}
+      className="hm-panel"
+      data-ready=""
+      hidden={!visible}
+      initial={false}
+      animate={open ? "open" : "closed"}
+      variants={{ open: { height: "auto", opacity: 1 }, closed: { height: 0, opacity: 0 } }}
+      transition={{ duration: reduce ? 0 : DURATION, ease: EASE }}
+      onAnimationComplete={(def) => {
+        if (def === "closed") setVisible(false);
+      }}
+    >
+      {inner}
+    </m.div>
+  );
+}
 
 export function HeaderMobile({ header, locations, newTabLabel }: Props) {
   const [open, setOpen] = useState<PanelKey | null>(null);
@@ -66,22 +111,24 @@ export function HeaderMobile({ header, locations, newTabLabel }: Props) {
     >
       <Icon name={icon} size={22} />
       <span className="hm-btn-label">{label}</span>
-      <Icon name="chevronDown" size={20} className="hm-chev" />
+      {/* Chevron turns 180deg when the panel opens (transform). */}
+      <m.span
+        className="hm-chev"
+        aria-hidden="true"
+        initial={false}
+        animate={{ rotate: ready && open === key ? 180 : 0 }}
+        transition={{ duration: DURATION, ease: EASE }}
+      >
+        <Icon name="chevronDown" size={20} />
+      </m.span>
     </button>
   );
-
-  const panelProps = (key: PanelKey) => ({
-    id: panelId(key),
-    className: "hm-panel",
-    "data-ready": ready ? "" : undefined,
-    hidden: ready ? open !== key : undefined,
-  });
 
   return (
     <div className="hdr-mobile">
       <div className="hm-item">
         {panelButton("pay", "card", header.mobilePaymentLabel)}
-        <div {...panelProps("pay")}>
+        <Panel id={panelId("pay")} open={open === "pay"} ready={ready}>
           <ul className="hm-links" role="list">
             {locations.map((l) => {
               const ext = externalLinkProps(l.paymentUrl);
@@ -101,13 +148,13 @@ export function HeaderMobile({ header, locations, newTabLabel }: Props) {
               );
             })}
           </ul>
-        </div>
+        </Panel>
       </div>
 
       {rentable.length > 0 && (
         <div className="hm-item">
           {panelButton("rent", "key", header.mobileRentLabel)}
-          <div {...panelProps("rent")}>
+          <Panel id={panelId("rent")} open={open === "rent"} ready={ready}>
             {/* PLACEHOLDER (to confirm): rentOnlineUrl is the old QuikStor link until the client confirms it. */}
             <ul className="hm-links" role="list">
               {rentable.map((l) => {
@@ -126,12 +173,13 @@ export function HeaderMobile({ header, locations, newTabLabel }: Props) {
                 );
               })}
             </ul>
-          </div>
+          </Panel>
         </div>
       )}
 
+      {/* Call buttons: orange square buttons (.btn .btn-cta: press on tap, lift on hover), in normal case. */}
       {locations.map((l) => (
-        <a key={l.id} className="hm-btn hm-btn-call" href={phoneHref(l.phone)}>
+        <a key={l.id} className="btn btn-cta hm-btn hm-btn-call" href={phoneHref(l.phone)}>
           <Icon name="phone" size={22} />
           <span className="hm-btn-label">
             {header.mobileCallWord} {l.shortName} <span className="hm-phone">{l.phone}</span>

@@ -1,7 +1,9 @@
 // Site header (layout fixed by the client): logo on the left and, on the right, three rows that take visitors
-// straight to payment, phone and online rental for each location. Below it, a slim page nav row. In normal
-// document flow (never fixed or sticky). On phones the three rows and the nav row are hidden and HeaderMobile
+// straight to payment, phone and online rental for each location. Below it, a slim page nav row with an
+// underline that grows from the centre (transform only). In normal document flow (never fixed or sticky) and
+// never animated in, so it paints at once. On phones the three rows and the nav row are hidden and HeaderMobile
 // shows four big buttons instead (both are in the HTML; CSS shows one or the other with display: none).
+// Styles: app/styles/chrome.css (hdr-, hm-, nav-).
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -38,7 +40,7 @@ export function Header({ content }: { content: SiteContent }) {
 
   return (
     <header className="site-header">
-      <div className="wrap-wide hdr-main">
+      <div className="wrap hdr-main">
         <Link href="/" className="hdr-logo">
           {/* The real SVG logo (166x96 viewBox). Explicit size: no layout shift. SVGs are served unoptimized. */}
           <Image
@@ -109,7 +111,7 @@ export function Header({ content }: { content: SiteContent }) {
 
       {/* Slim page nav row, above 680px only (on phones the footer holds these links). */}
       <nav className="hdr-nav" aria-label="Main">
-        <div className="wrap-wide">
+        <div className="wrap">
           <Suspense fallback={<NavLinksStatic items={nav.items} className="hdr-nav-list" newTabLabel={labels.newTab} />}>
             <NavLinks items={nav.items} className="hdr-nav-list" newTabLabel={labels.newTab} />
           </Suspense>
