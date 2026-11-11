@@ -1,0 +1,7 @@
+{
+  "url": "https://midvalleystorage.com/404-2/",
+  "title": "404 – Mid Valley Storage",
+  "note": "A WordPress page used as the site's 404 design (theme demo leftover). Its 'Go Home Page' link points to http://home, which is broken.",
+  "headings": [{ "level": "h1", "text": "404" }, { "level": "h2", "text": "page not found" }],
+  "links": [{ "text": "Go Home Page", "href": "http://home" }]
+}

@@ -1,0 +1,175 @@
+{
+  "url": "https://midvalleystorage.com/about-us/",
+  "title": "About Us – Mid Valley Storage",
+  "meta_description": null,
+  "headings": [
+    {
+      "level": "h1",
+      "text": "AboutMid Valley Storage"
+    },
+    {
+      "level": "h2",
+      "text": "Our Story"
+    },
+    {
+      "level": "h2",
+      "text": "Our History"
+    },
+    {
+      "level": "h2",
+      "text": "Ready to get started?"
+    }
+  ],
+  "blocks": [
+    {
+      "widget": "jet-headline",
+      "headings": [
+        {
+          "level": "h1",
+          "text": "AboutMid Valley Storage"
+        }
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Our Story"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "Mid Valley Storage has deep roots in the beautiful Central Valley. Starting in 2004, it’s parent company began operating a property management company for residential real estate. Just a few years later as the company grew, they began their first ground-up construction project building a self storage and retail complex in East Visalia in 2009. Thousands of happy customers later, an expansion was made to Tulare with the extensive remodel of another self storage facility, Rapid Self Storage. In the following years, the property management component of the company grew to include additional residential and commercial rentals. Beginning in late 2018, a new site was chosen for another self-storage facility in Central Visalia and construction began. It’s newest site on Santa Fe features individual RV storage and drive-up self-storage. Today, Mid Valley Storage has all types of storage to fit your needs. Temperature controlled storage, drive-up self storage, indoor RV/boat storage, and a full moving center and free moving truck to make your storage experience as easy as possible."
+      ]
+    },
+    {
+      "widget": "jet-slider",
+      "images": [
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_20200518_110511-scaled-e1591656308255.jpg",
+          "alt": "IMG_20200518_110511",
+          "local": "/images/facility-img-20200518.jpg"
+        },
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/Office-Elevation2.jpg",
+          "alt": "Office Elevation2",
+          "local": "/images/office-elevation.jpg"
+        },
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/Night-Full-Elevation1-1.jpg",
+          "alt": "Night Full Elevation1",
+          "local": "/images/night-full-elevation.jpg"
+        },
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/RSS.jpg",
+          "alt": "DCIM100GOPRO",
+          "local": "/images/rss.jpg"
+        }
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Our History"
+        }
+      ]
+    },
+    {
+      "widget": "jet-horizontal-timeline",
+      "items": [
+        {
+          "year": "2009",
+          "text": "Mid Valley Storage opens its first facility located in East Visalia. Drive-up units, temperature controlled, and outdoor parking."
+        },
+        {
+          "year": "2012",
+          "text": "Mid Valley Storage's parent company purchases and fully remodels a self-storage facility in Tulare, CA - Rapid Self Storage"
+        },
+        {
+          "year": "2018",
+          "text": "Mid Valley Storage acquires property in central Visalia and begins construction to build the area's premier self storage."
+        },
+        {
+          "year": "2020",
+          "text": "Mid Valley Storage opens it's new newest facility on Santa Fe Rd and K Rd. Featuring indoor RV storage and conventional units."
+        }
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Ready to get started?"
+        }
+      ]
+    },
+    {
+      "widget": "raven-button",
+      "text": "Reserve at Visalia Noble",
+      "links": [
+        {
+          "text": "Reserve at Visalia Noble",
+          "href": "https://ecom.quikstor.com/midvalleystorage/Account/Login",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "widget": "raven-button",
+      "text": "Reserve at Visalia Santa Fe",
+      "links": [
+        {
+          "text": "Reserve at Visalia Santa Fe",
+          "href": "https://ecom.quikstor.com/midvalleystorage/Account/Login",
+          "target": "_blank"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "text": "Reserve at Visalia Noble",
+      "href": "https://ecom.quikstor.com/midvalleystorage/Account/Login",
+      "target": "_blank"
+    },
+    {
+      "text": "Reserve at Visalia Santa Fe",
+      "href": "https://ecom.quikstor.com/midvalleystorage/Account/Login",
+      "target": "_blank"
+    }
+  ],
+  "images": [
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_20200518_110511-scaled-e1591656308255.jpg",
+      "alt": "IMG_20200518_110511",
+      "local": "/images/facility-img-20200518.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/Office-Elevation2.jpg",
+      "alt": "Office Elevation2",
+      "local": "/images/office-elevation.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/Night-Full-Elevation1-1.jpg",
+      "alt": "Night Full Elevation1",
+      "local": "/images/night-full-elevation.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/RSS.jpg",
+      "alt": "DCIM100GOPRO",
+      "local": "/images/rss.jpg"
+    }
+  ],
+  "background_images": [
+    {
+      "section": "page title",
+      "image": "/images/facility-7cc08783.jpg"
+    }
+  ]
+}

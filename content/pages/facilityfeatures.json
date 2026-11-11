@@ -1,0 +1,349 @@
+{
+  "url": "https://midvalleystorage.com/facilityfeatures/",
+  "title": "Facility Features – Mid Valley Storage",
+  "meta_description": null,
+  "headings": [
+    {
+      "level": "h1",
+      "text": "FacilityFeatures"
+    },
+    {
+      "level": "h2",
+      "text": "Temperature Controlled Storage"
+    },
+    {
+      "level": "h2",
+      "text": "Individual Enclosed RV Storage"
+    },
+    {
+      "level": "h2",
+      "text": "Individual Keycode Access"
+    },
+    {
+      "level": "h2",
+      "text": "Outside Storage"
+    },
+    {
+      "level": "h2",
+      "text": "Friendly Staff"
+    },
+    {
+      "level": "h2",
+      "text": "Easy accessibility"
+    },
+    {
+      "level": "h2",
+      "text": "Convenient Access"
+    },
+    {
+      "level": "h2",
+      "text": "Security"
+    },
+    {
+      "level": "h2",
+      "text": "Ready to get started?"
+    }
+  ],
+  "blocks": [
+    {
+      "widget": "jet-headline",
+      "headings": [
+        {
+          "level": "h1",
+          "text": "FacilityFeatures"
+        }
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Temperature Controlled Storage"
+        }
+      ]
+    },
+    {
+      "widget": "image",
+      "images": [
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/Temperature-Controlled11.jpg",
+          "alt": "",
+          "local": "/images/temperature-controlled.jpg"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "Did you know the inside of regular storage units in the peak of summer can reach over 120 degrees? Self Storage units act like miniature ovens and are often much warmer then the outside air. At Mid Valley Storage, we have perfected inside temperature controlled storage. It’s comfortably air conditioned in the summer and heated in the winter. And, even better, it’s in a interior dust free environment – perfect for your precious belongings. Electronics, wood furniture, paper files, instruments, and antiques are perfect items for temperature controlled storage."
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Individual Enclosed RV Storage"
+        }
+      ]
+    },
+    {
+      "widget": "image",
+      "images": [
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_4031-scaled.jpg",
+          "alt": "IMG_4031",
+          "local": "/images/rv-storage-img-4031.jpg"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "Mid Valley Storage has some of the largest storage units around! We feature units up to 20’x50′ many with oversized doors up to 12’x14′. All oversize units have the option of interior lights and 20AMP power – perfect to keep your batteries charged! These large units were strategically placed to give plenty of room to drive into and out without tight turns. Each unit is has fire sprinklers and ceiling insulation for peace of mind and comfort. Call us today to learn more!"
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Individual Keycode Access"
+        }
+      ]
+    },
+    {
+      "widget": "image",
+      "images": [
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/elementor/thumbs/MID-VALLEY-STORAGE-13-scaled-prbu2zsu9o9oorlvmbmic7kze024te42p49vipw134.jpg",
+          "alt": "MID-VALLEY-STORAGE-13",
+          "local": "/images/keycode-access.jpg"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "We know moving can be exhausting but we’re here to help and make it as easy and secure as possible. At Mid Valley Storage we offer private, secure, and individual keycode access specific to your unit. We constantly review gate records against live security footage to ensure safe and secure access."
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Outside Storage"
+        }
+      ]
+    },
+    {
+      "widget": "image",
+      "images": [
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/elementor/thumbs/IMG_4258-scaled-orf10tr6jayu5v4mc60cvsg5scopjaxc6552sw2jcw.jpg",
+          "alt": "IMG_4258",
+          "local": "/images/outside-storage.jpg"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "In addition to our private enclosed RV and boat storage, we also offer outside parking. Our parking stalls are on DG (decomposed granite) to reduce dust and feature 24/7 security recording and great lighting to help with night visits."
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Friendly Staff"
+        }
+      ]
+    },
+    {
+      "widget": "image",
+      "images": [
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/Service-Final-2048x1287.jpg",
+          "alt": "",
+          "local": "/images/friendly-staff.jpg"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "Our friendly and professional staff is on-site and ready to help you six days a week. We like to call ourselves professional Tetris players and we can assist in choosing the perfect sized storage unit that fits your needs. Call us today, we can’t wait to hear from you!"
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Easy accessibility"
+        }
+      ]
+    },
+    {
+      "widget": "image",
+      "images": [
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08785.jpg",
+          "alt": "",
+          "local": "/images/drive-aisles-7cc08785.jpg"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "Moving is tough, storage shouldn’t be. Our drive aisles are some of the largest around making your move as simple as possible. We can handle the biggest moving trucks on the road and can even assist with the coordination national moving companies. Most facilities have 20′ wide drive aisles while Mid Valley has between 25-45′ wide drive aisles. Plenty of room to unload, pack, and maneuver those big moving trucks!"
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Convenient Access"
+        }
+      ]
+    },
+    {
+      "widget": "image",
+      "images": [
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_20200610_191322-2048x1536.jpg",
+          "alt": "",
+          "local": "/images/gate-access.jpg"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "We know your busy and it can be hard to get to your storage unit during the work day so we offer computerized gate access 365 days a year. For the early birds, our gate hours open at 6AM and for the night owls, are gates are open until 8PM. We can even offer extended gate hours for business customers or special events. Call us today for more information. We also offer convenient online payments, auto-payments, and no long term contracts."
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Security"
+        }
+      ]
+    },
+    {
+      "widget": "image",
+      "images": [
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/Security-2048x1536.jpg",
+          "alt": "",
+          "local": "/images/security.jpg"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "Mid Valley Storage takes its security very seriously. We feature the highest resolution and most modern security cameras that monitor and protect our facilities, customers, and staff. We issue unique gate codes to each tenant that log the entry and exit of all gate activity. Our Noble location features an on-site resident for extra peace of mind. We know your items are important and they’re important to us too."
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Ready to get started?"
+        }
+      ]
+    },
+    {
+      "widget": "raven-button",
+      "text": "Reserve at Visalia Noble",
+      "links": [
+        {
+          "text": "Reserve at Visalia Noble",
+          "href": "https://ecom.quikstor.com/midvalleystorage/Account/Login",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "widget": "raven-button",
+      "text": "Reserve at Visalia Santa Fe",
+      "links": [
+        {
+          "text": "Reserve at Visalia Santa Fe",
+          "href": "https://ecom.quikstor.com/midvalleystorage_sf/Account/Login",
+          "target": "_blank"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "text": "Reserve at Visalia Noble",
+      "href": "https://ecom.quikstor.com/midvalleystorage/Account/Login",
+      "target": "_blank"
+    },
+    {
+      "text": "Reserve at Visalia Santa Fe",
+      "href": "https://ecom.quikstor.com/midvalleystorage_sf/Account/Login",
+      "target": "_blank"
+    }
+  ],
+  "images": [
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/Temperature-Controlled11.jpg",
+      "alt": "",
+      "local": "/images/temperature-controlled.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_4031-scaled.jpg",
+      "alt": "IMG_4031",
+      "local": "/images/rv-storage-img-4031.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/elementor/thumbs/MID-VALLEY-STORAGE-13-scaled-prbu2zsu9o9oorlvmbmic7kze024te42p49vipw134.jpg",
+      "alt": "MID-VALLEY-STORAGE-13",
+      "local": "/images/keycode-access.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/elementor/thumbs/IMG_4258-scaled-orf10tr6jayu5v4mc60cvsg5scopjaxc6552sw2jcw.jpg",
+      "alt": "IMG_4258",
+      "local": "/images/outside-storage.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/Service-Final-2048x1287.jpg",
+      "alt": "",
+      "local": "/images/friendly-staff.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08785.jpg",
+      "alt": "",
+      "local": "/images/drive-aisles-7cc08785.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_20200610_191322-2048x1536.jpg",
+      "alt": "",
+      "local": "/images/gate-access.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/Security-2048x1536.jpg",
+      "alt": "",
+      "local": "/images/security.jpg"
+    }
+  ],
+  "background_images": [
+    {
+      "section": "page title",
+      "image": "/images/facility-7cc08763-hdr.jpg"
+    }
+  ]
+}

@@ -1,0 +1,210 @@
+{
+  "url": "https://midvalleystorage.com/contact/",
+  "title": "Contact – Mid Valley Storage",
+  "meta_description": null,
+  "headings": [
+    {
+      "level": "h2",
+      "text": "Visalia Noble"
+    },
+    {
+      "level": "h2",
+      "text": "Visalia Santa Fe"
+    },
+    {
+      "level": "h1",
+      "text": "Contact Us"
+    }
+  ],
+  "blocks": [
+    {
+      "widget": "google_maps",
+      "iframes": [
+        "https://maps.google.com/maps?q=2410%20S%20Santa%20Fe%20St%2C%20Visalia%2C%20CA%2093292%2C%20USA&t=m&z=10&output=embed&iwloc=near"
+      ]
+    },
+    {
+      "widget": "icon-box",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Visalia Noble"
+        }
+      ],
+      "paragraphs": [
+        "15323 E. Noble Ave\nVisalia, CA 93292\n559-734-7368"
+      ],
+      "links": [
+        {
+          "text": "",
+          "href": "https://goo.gl/maps/LrHat5624ZYiJjnb6",
+          "target": "_blank"
+        },
+        {
+          "text": "Visalia Noble",
+          "href": "https://goo.gl/maps/LrHat5624ZYiJjnb6",
+          "target": "_blank"
+        },
+        {
+          "text": "15323 E. Noble Ave\nVisalia, CA 93292",
+          "href": "https://goo.gl/maps/LrHat5624ZYiJjnb6",
+          "target": "_blank"
+        },
+        {
+          "text": "559-734-7368",
+          "href": "tel:559-734-7368"
+        }
+      ]
+    },
+    {
+      "widget": "icon-box",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Visalia Santa Fe"
+        }
+      ],
+      "paragraphs": [
+        "2410 S. Santa Fe.\nVisalia CA 93292\n559-608-5301"
+      ],
+      "links": [
+        {
+          "text": "",
+          "href": "https://goo.gl/maps/omapQu9VBfuuR1Tc9",
+          "target": "_blank"
+        },
+        {
+          "text": "Visalia Santa Fe",
+          "href": "https://goo.gl/maps/omapQu9VBfuuR1Tc9",
+          "target": "_blank"
+        },
+        {
+          "text": "2410 S. Santa Fe.\nVisalia CA 93292",
+          "href": "https://goo.gl/maps/omapQu9VBfuuR1Tc9",
+          "target": "_blank"
+        },
+        {
+          "text": "559-608-5301",
+          "href": "tel:559-608-5301"
+        }
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h1",
+          "text": "Contact Us"
+        }
+      ]
+    },
+    {
+      "widget": "social-icons",
+      "text": "Instagram",
+      "links": [
+        {
+          "text": "Instagram",
+          "href": "https://www.instagram.com/midvalleystorage/",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "widget": "form",
+      "fields": [
+        {
+          "label": "Full Name*",
+          "type": "text",
+          "name": "form_fields[name]",
+          "required": true
+        },
+        {
+          "label": "Phone",
+          "type": "tel",
+          "name": "form_fields[field_b81e7c2]",
+          "required": false
+        },
+        {
+          "label": "Email*",
+          "type": "email",
+          "name": "form_fields[email]",
+          "required": true
+        },
+        {
+          "label": "Location*",
+          "type": "select",
+          "name": "form_fields[field_3285744]",
+          "required": true,
+          "options": [
+            "",
+            "Visalia Noble",
+            "Visalia Santa Fe"
+          ]
+        },
+        {
+          "label": "Message",
+          "type": "textarea",
+          "name": "form_fields[message]",
+          "required": false
+        }
+      ],
+      "submit_label": "Send"
+    }
+  ],
+  "links": [
+    {
+      "text": "",
+      "href": "https://goo.gl/maps/LrHat5624ZYiJjnb6",
+      "target": "_blank"
+    },
+    {
+      "text": "Visalia Noble",
+      "href": "https://goo.gl/maps/LrHat5624ZYiJjnb6",
+      "target": "_blank"
+    },
+    {
+      "text": "15323 E. Noble Ave\nVisalia, CA 93292",
+      "href": "https://goo.gl/maps/LrHat5624ZYiJjnb6",
+      "target": "_blank"
+    },
+    {
+      "text": "559-734-7368",
+      "href": "tel:559-734-7368"
+    },
+    {
+      "text": "",
+      "href": "https://goo.gl/maps/omapQu9VBfuuR1Tc9",
+      "target": "_blank"
+    },
+    {
+      "text": "Visalia Santa Fe",
+      "href": "https://goo.gl/maps/omapQu9VBfuuR1Tc9",
+      "target": "_blank"
+    },
+    {
+      "text": "2410 S. Santa Fe.\nVisalia CA 93292",
+      "href": "https://goo.gl/maps/omapQu9VBfuuR1Tc9",
+      "target": "_blank"
+    },
+    {
+      "text": "559-608-5301",
+      "href": "tel:559-608-5301"
+    },
+    {
+      "text": "Instagram",
+      "href": "https://www.instagram.com/midvalleystorage/",
+      "target": "_blank"
+    }
+  ],
+  "images": [],
+  "background_images": [
+    {
+      "section": "unknown section 5e3b666",
+      "image": "/images/facility-7cc08763-hdr.jpg"
+    },
+    {
+      "section": "unknown section d33fb4d",
+      "image": "/images/facility-7cc08783.jpg"
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "url": "https://midvalleystorage.com/",
+  "title": "Mid Valley Storage – Visalia’s best choice for convenient, safe, and affordable self storage",
+  "meta_description": null,
+  "hero": {
+    "mode_on_live_site": "promo",
+    "promo": {
+      "images": {
+        "desktop": "/images/hero-promo-desktop.png",
+        "tablet": "/images/hero-promo-tablet.png",
+        "mobile": "/images/hero-promo-mobile.png"
+      },
+      "alt": null,
+      "text_inside_image": "Sunsets, Summer, and STORAGE SPECIALS / MORE SPACE. MORE VALUE. RIGHT WHEN YOU NEED IT. / 5x10 $29.99 PER MONTH / 10x10 $59.99 PER MONTH / SAFE & SECURE 24/7 Security / CONVENIENT LOCATION Easy Access / MONTH-TO-MONTH No Long-Term Contracts / CLEAN & WELL MAINTAINED Peace of Mind / CALL US TODAY! (559) 734-7368 / VISIT OUR WEBSITE midvalleystorage.com / LIMITED TIME ONLY! WHILE SUPPLIES LAST.",
+      "text_inside_image_note": "Read from the image itself; this text is not in the page HTML. The image has no alt text on the live site.",
+      "disclaimer": "*Valid at Noble location only. New customers only. Please visit office for full details.",
+      "disclaimer_source": "Provided in the rebuild brief. NOT found on the live site (not in the HTML, the REST API content, or the banner images)."
+    },
+    "video": {
+      "src": "/video/hero-original.mp4",
+      "original_url": "https://midvalleystorage.com/wp-content/uploads/2020/06/MV-Web-Header.mp4",
+      "size": "1364x720, 4.4 MB",
+      "note": "The original hero video. It is in the WordPress media library but no live page uses it now."
+    }
+  },
+  "headings": [
+    {
+      "level": "h3",
+      "text": "About Mid Valley Storage"
+    },
+    {
+      "level": "h2",
+      "text": "Storage Options"
+    },
+    {
+      "level": "h2",
+      "text": "Conventional Storage"
+    },
+    {
+      "level": "h2",
+      "text": "Temperature Controlled Storage"
+    },
+    {
+      "level": "h2",
+      "text": "RV/Boat/Auto Parking"
+    },
+    {
+      "level": "h2",
+      "text": "Facility Features"
+    },
+    {
+      "level": "h3",
+      "text": "What Our Customers Says"
+    },
+    {
+      "level": "h2",
+      "text": "Ready to get started?"
+    }
+  ],
+  "blocks": [
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h3",
+          "text": "About Mid Valley Storage"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "Welcome to Mid Valley Storage, Visalia’s best choice for convenient, safe, and affordable self storage. We pride ourselves with our friendly and professional customer service, state of the art security, and convenient locations."
+      ]
+    },
+    {
+      "widget": "image",
+      "images": [
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/Lobby11-1024x630.jpg",
+          "alt": "",
+          "local": "/images/lobby.jpg"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "We aim to become Visalia area’s premier and feature rich self storage facility. Whether you’re looking for a place to store your boat or RV after a camping or lake trip or looking to organize items from around the home or office, Mid Valley Storage does it all. Attentive detail without compromise can be seen throughout the facility from the moment the gate keypad recognizes your name and unit number, to the sophisticated temperature controlled units, well lit and video monitored RV and boat parking, and complete moving supply center in the office. Features aside, Mid Valley Storage has only one focus: the complete 110% satisfaction of its customers."
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Storage Options"
+        }
+      ]
+    },
+    {
+      "widget": "image-gallery",
+      "links": [
+        {
+          "text": "",
+          "href": "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08763-HDR.jpg"
+        },
+        {
+          "text": "",
+          "href": "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08783.jpg"
+        },
+        {
+          "text": "",
+          "href": "https://midvalleystorage.com/wp-content/uploads/2020/06/DJI_0050.jpg"
+        },
+        {
+          "text": "",
+          "href": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_2020.jpg"
+        }
+      ],
+      "images": [
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08763-HDR-300x200.jpg",
+          "alt": "",
+          "local": "/images/facility-7cc08763-hdr.jpg"
+        },
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08783-300x200.jpg",
+          "alt": "",
+          "local": "/images/facility-7cc08783.jpg"
+        },
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/DJI_0050-300x200.jpg",
+          "alt": "",
+          "local": "/images/aerial-dji-0050.jpg"
+        },
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_2020-300x200.jpg",
+          "alt": "",
+          "local": "/images/facility-img-2020.jpg"
+        }
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Conventional Storage"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "Exterior drive-up units, interior drive-up units, small units, big, units – Mid Valley Storage has them all! With sizes from 5×5 to 20×50, we’ve got the perfect space just for you! It’s the perfect spot to store you extra items and get your garage back. Call us today and our professional staff can help you find the perfect size just for you."
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Temperature Controlled Storage"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "Scorching hot summers and cold foggy winters are no problem for our interior temperature controlled units. Cool air conditioning in the summer and warm heat in the winter – all in a interior dust free environment. Perfect for electronics, music equipment, antiques, documents, and so much more!"
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "RV/Boat/Auto Parking"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "With three National Parks nearby, numerous lakes, and the beach a few hours away – we know how great it is to hit the road in your RV, boat, or trailer. We have indoor, privately enclosed units with oversized doors perfect for your toys! All oversized units have the option of adding power and lights, perfect for keeping your battery charged before your next trip!"
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Facility Features"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "paragraphs": [
+        "Whether you need to store your holiday decorations in the off season or store your entire house during a move, our goal is to exceed your expectations! We provide secure, convenient, and spotlessly clean storage units from small 5×5 to large 20×50 in RV units. Call us today to speak with one of our friendly professional managers who can assist in choosing the perfect storage size just for you"
+      ]
+    },
+    {
+      "widget": "image",
+      "images": [
+        {
+          "src": "https://midvalleystorage.com/wp-content/uploads/2019/12/A4D21FCC-AFB1-4D83-B047-FC26C98760DD-1024x944.jpg",
+          "alt": "",
+          "local": "/images/facility-features.jpg"
+        }
+      ]
+    },
+    {
+      "widget": "text-editor",
+      "list": [
+        "Access to your storage 7 Days a Week",
+        "Huge Variety of Sizes",
+        "Ground Floor Drive-Up Accessible Units",
+        "Indoor private RV/Boat storage with individual lights and power",
+        "Modern Construction & Thoughtful Design",
+        "No Deposits Required",
+        "Month-to-Month Rentals",
+        "State-Of-The-Art Security",
+        "Computerized Access",
+        "Video Surveillance",
+        "Moving Supplies",
+        "Convenience"
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h3",
+          "text": "What Our Customers Says"
+        }
+      ]
+    },
+    {
+      "widget": "heading",
+      "headings": [
+        {
+          "level": "h2",
+          "text": "Ready to get started?"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "text": "",
+      "href": "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08763-HDR.jpg"
+    },
+    {
+      "text": "",
+      "href": "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08783.jpg"
+    },
+    {
+      "text": "",
+      "href": "https://midvalleystorage.com/wp-content/uploads/2020/06/DJI_0050.jpg"
+    },
+    {
+      "text": "",
+      "href": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_2020.jpg"
+    }
+  ],
+  "images": [
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/Lobby11-1024x630.jpg",
+      "alt": "",
+      "local": "/images/lobby.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08763-HDR-300x200.jpg",
+      "alt": "",
+      "local": "/images/facility-7cc08763-hdr.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/7CC08783-300x200.jpg",
+      "alt": "",
+      "local": "/images/facility-7cc08783.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/DJI_0050-300x200.jpg",
+      "alt": "",
+      "local": "/images/aerial-dji-0050.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2020/06/IMG_2020-300x200.jpg",
+      "alt": "",
+      "local": "/images/facility-img-2020.jpg"
+    },
+    {
+      "src": "https://midvalleystorage.com/wp-content/uploads/2019/12/A4D21FCC-AFB1-4D83-B047-FC26C98760DD-1024x944.jpg",
+      "alt": "",
+      "local": "/images/facility-features.jpg"
+    }
+  ],
+  "background_images": [
+    {
+      "section": "hero (Elementor section ed0ac0d, no text or widgets inside)",
+      "desktop": "/images/hero-promo-desktop.png",
+      "tablet": "/images/hero-promo-tablet.png",
+      "mobile": "/images/hero-promo-mobile.png"
+    },
+    {
+      "section": "What Our Customers Says",
+      "image": "/images/facility-7cc08783.jpg"
+    }
+  ]
+}

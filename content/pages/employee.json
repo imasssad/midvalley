@@ -1,0 +1,13 @@
+{
+  "url": "https://midvalleystorage.com/employee/",
+  "title": "Employee – Mid Valley Storage",
+  "exists": true,
+  "protected": true,
+  "scraped": false,
+  "note": "The page shows a password form. It was not scraped and the password was not bypassed. Footer links to it: 'Employee Portal' and 'Click here to login' (opens in a new tab).",
+  "described_content": "Embeds a Google Calendar (Noble Employee Schedule), per the rebuild brief. Not verified.",
+  "needed_from_owner": [
+    "The Employee Portal password (it will go in an environment variable, not in the code)",
+    "The Google Calendar embed URL for the Noble Employee Schedule"
+  ]
+}
