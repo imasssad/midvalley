@@ -11,7 +11,8 @@ import { getSiteContent, getYear } from "@/lib/content";
 export async function SiteChrome({ children }: { children: React.ReactNode }) {
   const [content, year] = await Promise.all([getSiteContent(), getYear()]);
   return (
-    <>
+    // .site-root scales the whole public site to 90% on screens wider than a phone (app/globals.css).
+    <div className="site-root">
       <GtmNoScript />
       <a className="skip-link" href="#main">
         {content.labels.skipToContent}
@@ -24,6 +25,6 @@ export async function SiteChrome({ children }: { children: React.ReactNode }) {
       <Ready />
       <LocalBusinessJsonLd content={content} />
       <Gtm />
-    </>
+    </div>
   );
 }

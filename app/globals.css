@@ -211,6 +211,15 @@ textarea {
   color: #fff;
 }
 
+/* ---- Overall size: the whole public site at 90% (the client asked for everything 10% smaller). CSS zoom scales
+   text, spacing, boxes and photos together. Phones keep 100%: smaller text there would make iPhones zoom in on
+   form fields (under 16px) and shrink tap targets below 44px. ---- */
+@media (min-width: 681px) {
+  .site-root {
+    zoom: 0.9;
+  }
+}
+
 /* ---- Layout ---- */
 .wrap {
   width: 100%;

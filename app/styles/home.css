@@ -869,8 +869,10 @@ html:has(.h-lb[open]) {
 }
 .h-lb {
   --lb-pad: clamp(0.5rem, 0.3rem + 1vw, 1.25rem);
-  width: 100vw;
-  height: 100dvh;
+  /* Stretched to the viewport edges (not 100vw/100dvh, which the 90% site zoom would shrink). */
+  inset: 0;
+  width: auto;
+  height: auto;
   max-width: none;
   max-height: none;
   margin: 0;
