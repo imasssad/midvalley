@@ -1,6 +1,6 @@
 /* Inner pages in the "Valley glass" look: the title block (components/PageHero.tsx, ph-), About Us (ab-),
    Facility Features (ff-), Contact Us (ct-) with its form (components/ContactForm.tsx, cf-), the Employee Portal
-   placeholder (emp-) and the 404 page (nf-).
+   (emp-) and the 404 page (nf-).
    Colours: blue/navy and their light blue-grey tints on white, nothing else; orange only on the main
    call-to-action buttons (.btn-cta, globals). Uses the tokens and parts in app/globals.css (cards, frames, chips,
    dots, glow blobs, gradient text).
@@ -1182,14 +1182,86 @@
 .cf-status[data-state="sending"] {
   color: var(--muted);
 }
-.cf-status[data-state="sent"] {
-  color: var(--blue); /* 7.3:1 on white */
-}
 .cf-status[data-state="error"] {
   color: var(--cf-error);
 }
 .cf-call {
   flex-basis: 100%;
+}
+/* Success panel: replaces the form inside the card (same height, so nothing below jumps). Motion (ContactForm)
+   fades and scales it in; the check's two strokes grow with scaleX, drawn on a 24-unit grid matching the check
+   icon's path (m5 12.5 4.5 4.5L19 7.5). */
+.cf-stage {
+  display: grid;
+}
+.cf-done {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 1.25rem;
+  padding: 2rem 0.5rem;
+  text-align: center;
+}
+.cf-done-badge {
+  display: grid;
+  place-items: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: var(--grad-blue);
+  box-shadow:
+    var(--gloss),
+    0 14px 28px -14px rgba(0, 84, 151, 0.75);
+  color: #fff;
+}
+.cf-done-check {
+  --u: 0.11rem; /* one unit of the icon's 24-unit grid */
+  --t: calc(var(--u) * 2.6); /* stroke thickness */
+  position: relative;
+  width: calc(var(--u) * 24);
+  height: calc(var(--u) * 24);
+}
+/* Each stroke box starts half a stroke before its start point (round cap) and turns around that point. */
+.cf-done-stroke {
+  position: absolute;
+  height: var(--t);
+  transform-origin: calc(var(--t) / 2) 50%;
+}
+.cf-done-stroke--short {
+  left: calc(var(--u) * 5 - var(--t) / 2);
+  top: calc(var(--u) * 12.5 - var(--t) / 2);
+  width: calc(var(--u) * 6.364 + var(--t));
+  rotate: 45deg;
+}
+.cf-done-stroke--long {
+  left: calc(var(--u) * 9.5 - var(--t) / 2);
+  top: calc(var(--u) * 17 - var(--t) / 2);
+  width: calc(var(--u) * 13.435 + var(--t));
+  rotate: -45deg;
+}
+.cf-done-stroke > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--t) / 2);
+  background: currentColor;
+  transform-origin: left center;
+}
+.cf-done-text {
+  max-width: 26ch;
+  color: var(--navy);
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-size: var(--display-s);
+  font-weight: 800;
+  line-height: 1.2;
+}
+/* Focused by script only (so screen readers read it); it isn't a control, so no focus ring. */
+.cf-done-text:focus {
+  outline: none;
+}
+.cf-again {
+  min-width: 11rem;
 }
 @media (prefers-reduced-motion: no-preference) {
   @keyframes cf-rise {
@@ -1209,21 +1281,17 @@
       transform: translateX(-2px);
     }
   }
-  /* Field errors and the call button rise in as they appear; a failed send nudges the status line sideways;
-     "sent" rises in. */
+  /* Field errors and the call button rise in as they appear; a failed send nudges the status line sideways. */
   .cf-error,
   .cf-call {
     animation: cf-rise 0.35s var(--ease) both;
-  }
-  .cf-status[data-state="sent"] {
-    animation: cf-rise 0.45s var(--ease) both;
   }
   .cf-status[data-state="error"] {
     animation: cf-nudge 0.45s ease both;
   }
 }
 
-/* ---------- Employee Portal placeholder ---------- */
+/* ---------- Employee Portal (app/employee/page.tsx, components/employee/*) ---------- */
 .section.emp {
   position: relative;
   isolation: isolate;
@@ -1269,6 +1337,10 @@
   width: min(100%, 38rem);
   text-align: center;
 }
+/* Signed in: the card widens to the page width for the calendar. */
+.emp-card:has(.emp-portal) {
+  width: 100%;
+}
 /* The card's blue glow always shows here (softly); it fades in once the card is in. */
 .emp-card::before {
   opacity: 0.55;
@@ -1304,6 +1376,7 @@
   display: grid;
   justify-items: center;
   gap: 1rem;
+  width: 100%;
   padding: clamp(1.25rem, 1rem + 1vw, 1.75rem) clamp(1.5rem, 1rem + 2vw, 3rem)
     clamp(2rem, 1.5rem + 2.4vw, 3.25rem);
 }
@@ -1311,14 +1384,161 @@
   padding-top: 0.06em;
   font-size: var(--display-l);
 }
+/* The heading takes focus (from script) right after signing in; the ring shows only for keyboard users. */
+.emp-card h1:focus:not(:focus-visible) {
+  outline: none;
+}
+/* Space held for the form while the request-time part streams in. */
+.emp-pending {
+  min-height: 9rem;
+}
+.emp-gate {
+  width: 100%;
+}
+
+/* Sign-in form: fields styled like the contact form (.cf). */
+.emp-form {
+  --emp-error: #b3261e; /* error red: 6.5:1 on white */
+  --emp-edge: #74869b; /* field outline: 3.6:1 on white */
+  display: grid;
+  gap: 1.25rem;
+  width: min(100%, 24rem);
+  margin-inline: auto;
+  text-align: left;
+}
+.emp-field {
+  display: grid;
+  gap: 0.45rem;
+}
+.emp-field label {
+  display: block;
+  color: var(--navy);
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-size: 0.98rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.emp-field label::before {
+  content: "";
+  display: inline-block;
+  margin-right: 0.5rem;
+  vertical-align: 0.06em;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--grad-blue);
+  opacity: 0.3;
+  transform: scale(0.55);
+  transition:
+    transform 0.3s var(--ease),
+    opacity 0.2s ease;
+}
+.emp-field:focus-within label::before {
+  opacity: 1;
+  transform: scale(1);
+}
+.emp-field input {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--emp-edge);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #ffffff 0%, #f6f9fc 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(15, 34, 54, 0.07),
+    0 1px 0 #fff;
+  color: var(--ink);
+  font-size: max(16px, var(--text-base)); /* 16px+ stops iOS zooming in on focus */
+  line-height: 1.4;
+}
+.emp-field input:hover {
+  border-color: var(--blue);
+}
+.emp-field input:focus-visible {
+  border-color: var(--blue);
+  background: #fff;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 84, 151, 0.2),
+    inset 0 4px 14px -6px rgba(11, 111, 196, 0.45);
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.emp-field input[aria-invalid="true"] {
+  border-color: var(--emp-error);
+}
+.emp-error {
+  color: var(--emp-error);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.emp-submit:disabled,
+.emp-logout:disabled {
+  opacity: 0.65;
+  cursor: progress;
+}
+
+/* Signed in: the calendar, full width, in a rounded white frame; Log out below it. */
+.emp-portal {
+  display: grid;
+  justify-items: center;
+  gap: 1.5rem;
+}
+.emp-cal {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(0, 84, 151, 0.14);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 12px 28px -18px rgba(15, 34, 54, 0.45);
+}
+.emp-cal-frame {
+  display: block;
+  width: 100%;
+  height: 760px;
+  border: 0;
+}
+.emp-logout {
+  min-width: 11rem;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   @keyframes emp-glow {
     from {
       opacity: 0;
     }
   }
+  @keyframes emp-nudge {
+    20% {
+      transform: translateX(-5px);
+    }
+    45% {
+      transform: translateX(4px);
+    }
+    70% {
+      transform: translateX(-2px);
+    }
+  }
   .emp-card::before {
     animation: emp-glow 0.8s ease 0.75s both;
+  }
+  /* A refused password nudges the message sideways as it appears. */
+  .emp-error:not(:empty) {
+    animation: emp-nudge 0.45s ease both;
+  }
+}
+@media (max-width: 680px) {
+  /* Phones: the calendar takes most of the screen height. */
+  .emp-cal-frame {
+    height: 85vh;
+    height: 85svh;
+  }
+  .emp-body:has(.emp-portal) {
+    padding-inline: 0.75rem;
   }
 }
 
@@ -1429,16 +1649,22 @@
 .nf-home {
   display: inline-block;
 }
-.nf-phones {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+/* The header's actions under the home button: payment chips, then the orange call buttons. */
+.nf-actions {
+  display: grid;
+  gap: 0.85rem;
   width: 100%;
   padding-top: 1.5rem;
   border-top: 1px solid var(--line);
+}
+.nf-pay,
+.nf-calls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   list-style: none;
 }
-/* Phone numbers as glass chip links (.chip, globals): location name above the number. */
+/* Payment links as glass chip links (.chip, globals): the label above the location name and street. */
 .nf-chip {
   min-height: 44px;
   padding: 0.5rem 1.15rem 0.5rem 0.55rem;
@@ -1461,13 +1687,18 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-.nf-phone {
+.nf-name {
   color: var(--navy);
   font-family: var(--font-display);
   font-stretch: 82%;
   font-size: 1.12rem;
   font-weight: 800;
   letter-spacing: 0.02em;
+}
+.nf-street {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .nf-chip:hover {
@@ -1479,6 +1710,13 @@
     transform: scale(0.97);
     transition-duration: 0.08s;
   }
+}
+/* Call buttons (.btn .btn-cta, globals; at least 3.25rem tall). The number keeps its digits together. */
+.nf-call {
+  min-height: 44px;
+}
+.nf-call-phone {
+  white-space: nowrap;
 }
 
 /* ---------- Small desktop and tablet landscape ---------- */
@@ -1723,15 +1961,19 @@
   .cf-row {
     grid-template-columns: minmax(0, 1fr);
   }
-  .cf-submit {
+  .cf-submit,
+  .cf-again {
     width: 100%;
   }
 
-  .nf-phones {
+  .nf-pay,
+  .nf-calls {
     flex-direction: column;
   }
-  .nf-phones li,
-  .nf-chip {
+  .nf-pay li,
+  .nf-calls li,
+  .nf-chip,
+  .nf-call {
     width: 100%;
   }
 }
