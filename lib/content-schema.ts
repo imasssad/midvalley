@@ -22,11 +22,24 @@ const required = (max: number) => text(max).min(1, "This can't be empty.");
 
 /** A full https:// link (no spaces, quotes or angle brackets). Empty is allowed where the field is optional. */
 export const LINK_PATTERN = /^https:\/\/[^\s<>"'`]+$/i;
+
+/** What is wrong with a link, in plain words, or null when it's fine. Shared by the schema and the admin form. */
+export function linkProblem(v: string): string | null {
+  if (LINK_PATTERN.test(v)) return null;
+  if (/\s/.test(v)) return "Links can't contain spaces. Copy the link again from the address bar.";
+  if (/^http:\/\//i.test(v)) return "Use https:// instead of http:// at the start of the link.";
+  if (!/^https:\/\//i.test(v)) return "Use a full link that starts with https://";
+  return "Links can't contain quotes or angle brackets.";
+}
+
 const link = z
   .string()
   .trim()
   .max(500, "This link is too long.")
-  .refine((v) => LINK_PATTERN.test(v), "Use a full link that starts with https://");
+  .superRefine((v, ctx) => {
+    const problem = linkProblem(v);
+    if (problem) ctx.addIssue({ code: "custom", message: problem });
+  });
 const optionalLink = z.union([z.literal(""), link]);
 
 /** A page on this website ("/contact") or a full https:// link. */

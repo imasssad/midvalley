@@ -198,6 +198,9 @@ If the domain can't be verified yet, the form still works: messages are saved an
     `noindex, nofollow` and `no-store`. Every admin page and action checks the user again on the server.
   - The session cookie is httpOnly, Secure, SameSite=Lax, and lasts 7 days.
   - Passwords are stored only as bcrypt hashes. Sign-in is rate-limited per email and per connection.
+  - The rate limits (admin sign-in, Employee Portal, contact form) identify a connection by the IP address Vercel
+    reports (`x-vercel-forwarded-for`). They are built for Vercel; on other hosting, make sure the proxy in front sets
+    `x-real-ip` or appends to `x-forwarded-for`.
 - **Search engines:** `robots.txt` keeps `/admin`, `/api/` and `/employee` out of search engines, and the sitemap
   lists only the four public pages.
 - **Secrets** live only in Vercel's environment variables. The Blob store is private; uploaded photos are served

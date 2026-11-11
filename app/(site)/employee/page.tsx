@@ -1,5 +1,5 @@
 // Employee Portal (/employee, same URL as the old site), kept out of search engines (noindex here, not in the
-// sitemap; deliberately not blocked in app/robots.ts so crawlers can see the noindex).
+// sitemap; also disallowed in app/robots.ts, as the client asked; the page sends noindex too).
 // "Valley glass": a centred glossy card on a dotted mist ground with soft glows along the bottom. The card's glossy
 // blue top band carries a round glossy key badge on its lower edge; below it the h1 in gradient text.
 //

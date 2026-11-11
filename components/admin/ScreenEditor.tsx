@@ -307,6 +307,14 @@ export function ScreenEditor({ screen, content, uploadMode }: { screen: ScreenKe
               </p>
             </div>
           )}
+          {screen === "banner" &&
+            draft.hero.banner.desktop.src !== saved.hero.banner.desktop.src &&
+            draft.hero.banner.alt === saved.hero.banner.alt && (
+              <p className="notice warn" role="status">
+                You picked a new banner: update “Describe the banner” below so it matches the new picture and its words
+                (people using screen readers, and Google, read that description instead of the picture).
+              </p>
+            )}
           {screen === "banner" && <BannerRestore saved={saved} dirty={dirty} busy={status.kind === "saving"} onRestore={() => void restoreBanner()} />}
           {blocks.map((block, i) => {
             const value = getAt(draft, block.path) as Record<string, unknown>;

@@ -41,7 +41,7 @@ export default async function HistoryPage() {
     id: h.id,
     when: when(h.savedAt),
     who: nameOf(h.savedBy.email, h.savedBy.name || h.savedBy.email),
-    what: isScreenKey(h.section) ? `Changed ${screens[h.section].title}` : (h.note ?? toolTitles[h.section] ?? "Saved the website"),
+    what: h.note ?? (isScreenKey(h.section) ? `Changed ${screens[h.section].title}` : (toolTitles[h.section] ?? "Saved the website")),
     details: h.changes?.length ? describeChanges(h.changes) : "",
     canUndo: Boolean(h.changes?.length),
     fields: h.fields.map((f) => {

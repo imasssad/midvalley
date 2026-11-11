@@ -4,7 +4,7 @@
 // (f-home-about-heading), so history links can point straight at a field. Link fields check themselves as you
 // type and show a live "Open link ↗" so the owner can try the address; phone fields check for a 10-digit number.
 import { useEffect, useState } from "react";
-import { LINK_PATTERN, type Photo } from "@/lib/content-schema";
+import { LINK_PATTERN, linkProblem, type Photo } from "@/lib/content-schema";
 import type { UploadMode } from "@/lib/media";
 import { phoneDigits } from "@/lib/phone";
 import { PhotoField } from "./PhotoField";
@@ -62,7 +62,7 @@ function withScheme(v: string): string {
 function liveProblem(kind: Field & { kind: "text" }, value: string): string | null {
   const v = value.trim();
   if (!v) return null;
-  if (kind.inputType === "url" && !LINK_PATTERN.test(v)) return "Use a full link that starts with https://";
+  if (kind.inputType === "url") return linkProblem(v);
   if (kind.inputType === "href" && !(LINK_PATTERN.test(v) || /^\/[^\s<>"'`]*$/.test(v))) return "Use a page like /contact or a full link that starts with https://";
   if (kind.inputType === "tel" && phoneDigits(v) === null) return "Enter a 10-digit US phone number, like (559) 734-7368.";
   return null;

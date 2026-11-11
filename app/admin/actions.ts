@@ -118,11 +118,13 @@ export async function logout(): Promise<void> {
 const bannerOf = (c: SiteContent) => ({ banner: c.hero.banner, disclaimer: c.hero.disclaimer });
 
 /**
- * When `next` changes the banner, keep what it replaces in hero.previousBanner, so "Restore previous banner" can
+ * When `next` puts up a new computer banner, keep what it replaces in hero.previousBanner, so "Restore previous banner" can
  * put it back in one click. Returns the content to save.
  */
 function keepPreviousBanner(current: SiteContent, next: SiteContent): SiteContent {
-  if (sameValue(bannerOf(current), bannerOf(next))) return next;
+  // Only a new computer banner (a new promo) replaces the kept one. Small-print, description or tablet/phone-only
+  // edits don't, so the button always brings back the last whole promo.
+  if (current.hero.banner.desktop.src === next.hero.banner.desktop.src) return next;
   if (!sameValue(current.hero.previousBanner, next.hero.previousBanner)) return next; // the change set it itself
   return { ...next, hero: { ...next.hero, previousBanner: { ...bannerOf(current), replacedAt: new Date().toISOString() } } };
 }
