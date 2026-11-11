@@ -49,7 +49,7 @@ export const viewport: Viewport = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [content, year] = await Promise.all([getSiteContent(), getYear()]);
   return (
-    <html lang="en-US" className={`${archivo.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang="en-US" data-scroll-behavior="smooth" className={`${archivo.variable} ${inter.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>

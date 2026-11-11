@@ -1,40 +1,51 @@
-/* Mid Valley Storage: "valley poster" design. Deliberately unlike rapidselfstorage.com:
-   - warm sand/bone grounds and charcoal ink with full-bleed Mid Valley blue bands (not cool white, mist and navy)
-   - condensed, uppercase Archivo display type with Inter text (not one grotesk family)
-   - square corners, hairline rules, numbered sections and hard offset "print" shadows (not rounded cards, pills
-     and soft shadows)
-   - square photos on offset colour blocks, revealed by a sliding curtain and moved with parallax (not rounded
-     photo frames with clip-path reveals)
-   Orange is only for call-to-action buttons and tiny accents. Navy (--navy) is used only by the header boxes,
-   which follow the client's fixed header spec.
+/* Mid Valley Storage design. Two colours and one accent:
+   - BLUE: the logo blue (--blue) and its deep navy shade (--navy) for headings, bands, the header boxes and the
+     footer, plus light blue-grey tints of it (--mist) as the second ground;
+   - WHITE as the main ground;
+   - ORANGE (--orange) as the one small accent: the main call-to-action buttons only.
+   Shape: rounded and glossy. Rounded cards (22px) with a glossy gradient face and a soft glow on hover, rounded
+   glossy buttons (12px) that lift onto a coloured glow, rounded photos with a soft blue shadow.
+   Kept unlike rapidselfstorage.com (pill buttons, plain white cards with grey shadows, one grotesk family in
+   mixed case, cool mist/navy/electric blue, rounded photo hero with a dark overlay): condensed uppercase Archivo
+   display type with Inter text, glossy gradient bands and buttons, numbered sections, the promo banner as the
+   hero, curtain and parallax photo reveals, and a different section order.
    Motion: Motion for React (components/motion/*) for reveals, parallax, curtains, page transitions and the phone
-   header panels; CSS for hover/tap feedback and the above-the-fold hero entrance (so it starts on first paint).
-   Everything animates transform and opacity only, and prefers-reduced-motion turns it all off.
+   header panels; CSS for hover/tap feedback and the above-the-fold entrance (so it starts on first paint).
+   Everything animates transform and opacity only; prefers-reduced-motion turns it all off.
    Breakpoints: 1100px, 900px, 680px (phone). */
 :root {
-  /* Colour */
-  --bone: #fbf8f2; /* page ground */
-  --sand: #f4eee4; /* alternate section ground */
-  --sand-2: #e9e0d2;
-  --ink: #16181c; /* text and dark bands */
-  --ink-2: #23272d;
-  --text: #2b2f36;
-  --muted: #5e636b; /* 5.7:1 on bone, 5.2:1 on sand */
-  --line: #d9d0c2;
-  --line-strong: #b7ab98;
-  --blue: #005497; /* logo blue: brand bands, links, headings accents */
-  --blue-deep: #003e70;
-  --sky: #d8e6f2; /* pale blue text on blue (6:1) */
-  --navy: #0b2340; /* header boxes only (fixed spec) */
-  --navy-3: #173a66;
-  --orange: #e8720c; /* CTA buttons only; ink text on it (5.8:1) */
-  --orange-hover: #f5862a;
-  --orange-ink: #a84f00; /* tiny orange accents on light grounds (5.2:1) */
-  --peach: #ffd2a8; /* tiny accents on blue (5.5:1) */
+  /* Blue */
+  --blue: #005497; /* logo blue */
+  --blue-bright: #0b6fc4; /* gloss highlight of the blue */
+  --navy: #0a2e55; /* deep shade of the same blue: header boxes, dark bands, footer */
+  --navy-3: #12406f; /* navy hover */
+  --navy-deep: #071f3a;
+  /* Neutrals (white and blue-tinted greys) */
+  --white: #ffffff;
+  --mist: #f3f6f9; /* second ground */
+  --mist-2: #e6edf4;
+  --ink: #0f2236; /* text: a blue-black */
+  --text: #2a3a4d;
+  --muted: #566578; /* 6:1 on white, 5.5:1 on mist */
+  --line: #dbe3ec;
+  --line-strong: #b9c6d4;
   --on-dark: #ffffff;
-  --on-dark-muted: #b9bdc4; /* 9.4:1 on ink */
+  --on-dark-muted: #c7d6e6; /* 9:1 on navy */
   --dark-line: rgba(255, 255, 255, 0.16);
+  /* Accent */
+  --orange: #e8720c; /* call-to-action buttons only; ink text on it (5.3:1) */
+  --orange-hover: #f5862a;
   --focus: #005497;
+
+  /* Old names kept so every part reads the same palette. */
+  --bone: var(--white);
+  --sand: var(--mist);
+  --sand-2: var(--mist-2);
+  --ink-2: var(--navy);
+  --sky: var(--on-dark-muted);
+  --peach: var(--on-dark-muted);
+  --orange-ink: var(--blue); /* small accents on light grounds are blue now */
+  --blue-deep: var(--navy);
 
   /* Type */
   --font-display: var(--font-archivo), "Arial Narrow", Arial, sans-serif;
@@ -53,8 +64,15 @@
   --gutter: clamp(16px, 4vw, 56px);
   --wrap: 1400px;
   --space-section: clamp(4rem, 2.4rem + 6vw, 9rem);
-  --radius: 2px; /* square, on purpose */
-  --offset: 8px; /* hard print shadow */
+  --radius: 12px; /* buttons, inputs, chips, header boxes */
+  --radius-card: 22px; /* cards and panels */
+  --radius-photo: 18px; /* photos */
+  --offset: 8px;
+  --shadow-soft: 0 1px 2px rgba(15, 34, 54, 0.06), 0 22px 44px -26px rgba(0, 62, 112, 0.45);
+  --gloss: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  --grad-blue: linear-gradient(135deg, var(--blue-bright) 0%, var(--blue) 48%, var(--navy) 100%);
+  --grad-navy: linear-gradient(160deg, #0f3e70 0%, var(--navy) 55%, var(--navy-deep) 100%);
+  --grad-orange: linear-gradient(180deg, #ff9a45 0%, var(--orange) 55%, #e3690a 100%);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
@@ -78,7 +96,7 @@ html {
 }
 body {
   margin: 0;
-  background: var(--bone);
+  background: var(--white);
   color: var(--text);
   font-family: var(--font-text);
   font-size: var(--text-base);
@@ -163,7 +181,7 @@ textarea {
 .bg-ink :focus-visible,
 .bg-blue :focus-visible,
 .on-dark :focus-visible {
-  outline-color: var(--orange-hover);
+  outline-color: #fff;
 }
 
 .sr-only {
@@ -204,18 +222,24 @@ textarea {
   padding-block: var(--space-section);
 }
 .bg-bone {
-  background: var(--bone);
+  background: var(--white);
 }
 .bg-sand {
-  background: var(--sand);
+  background: var(--mist);
 }
+/* Dark band: deep navy gradient with a soft gloss at the top. */
 .bg-ink {
-  background: var(--ink);
+  background:
+    radial-gradient(120% 80% at 50% -20%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%),
+    var(--grad-navy);
   color: var(--on-dark-muted);
 }
+/* Blue band: the logo blue with a glossy gradient. */
 .bg-blue {
-  background: var(--blue);
-  color: var(--sky);
+  background:
+    radial-gradient(120% 80% at 50% -20%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 60%),
+    var(--grad-blue);
+  color: var(--on-dark-muted);
 }
 .bg-ink h1,
 .bg-ink h2,
@@ -255,11 +279,9 @@ textarea {
   background: currentColor;
   opacity: 0.35;
 }
-.bg-ink .sec-no {
-  color: var(--orange-hover);
-}
+.bg-ink .sec-no,
 .bg-blue .sec-no {
-  color: var(--peach);
+  color: var(--on-dark-muted);
 }
 .lede {
   font-size: var(--text-lg);
@@ -274,14 +296,14 @@ textarea {
   color: var(--muted);
 }
 
-/* ---- Buttons: square, condensed caps. The face (::after) sits on a hard offset block (::before) that shows
-   when the button lifts on hover. Both are pseudo-elements inside the button's own stacking context, so
-   only transforms and opacity change. Set --btn-bg / --btn-fg / --btn-border / --btn-shadow per variant. ---- */
+/* ---- Buttons: rounded and glossy, condensed caps. The face is ::after (gradient + gloss line); ::before is a soft
+   coloured glow that fades in under the button as it lifts on hover. Only transform and opacity animate.
+   Variants set --btn-face / --btn-fg / --btn-border / --btn-glow. ---- */
 .btn {
-  --btn-bg: var(--ink);
+  --btn-face: var(--grad-navy);
   --btn-fg: #fff;
-  --btn-border: var(--btn-bg);
-  --btn-shadow: var(--orange);
+  --btn-border: transparent;
+  --btn-glow: rgba(0, 84, 151, 0.7);
   position: relative;
   isolation: isolate;
   display: inline-flex;
@@ -289,7 +311,7 @@ textarea {
   justify-content: center;
   gap: 0.65rem;
   min-height: 3.25rem;
-  padding: 0.8rem 1.35rem;
+  padding: 0.8rem 1.4rem;
   border: 0;
   border-radius: var(--radius);
   background: transparent;
@@ -310,21 +332,26 @@ textarea {
 .btn::after {
   content: "";
   position: absolute;
-  inset: 0;
   border-radius: var(--radius);
 }
 .btn::before {
+  inset: 6px 8px -4px;
   z-index: -2;
-  background: var(--btn-shadow);
+  background: var(--btn-glow);
+  filter: blur(10px);
   opacity: 0;
   transition:
     transform 0.28s var(--ease),
-    opacity 0.2s ease;
+    opacity 0.25s ease;
 }
 .btn::after {
+  inset: 0;
   z-index: -1;
-  background: var(--btn-bg);
+  background: var(--btn-face);
   border: 2px solid var(--btn-border);
+  box-shadow:
+    var(--gloss),
+    0 10px 20px -12px rgba(15, 34, 54, 0.55);
 }
 .btn,
 .btn:visited,
@@ -337,11 +364,11 @@ textarea {
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .btn:hover {
-    transform: translate(-3px, -3px);
+    transform: translateY(-3px);
   }
   .btn:hover::before {
     opacity: 1;
-    transform: translate(6px, 6px);
+    transform: translateY(4px);
   }
   .btn:hover .icon-arrow {
     transform: translateX(4px);
@@ -356,37 +383,31 @@ textarea {
     opacity: 0;
   }
 }
-/* Orange: the main action (rent, call). */
+/* Orange: the main action (rent, call). The only orange on the site. */
 .btn-cta {
-  --btn-bg: var(--orange);
+  --btn-face: var(--grad-orange);
   --btn-fg: var(--ink);
-  --btn-shadow: var(--ink);
+  --btn-glow: rgba(232, 114, 12, 0.85);
 }
-/* Charcoal: secondary actions on light grounds. */
+/* Navy: secondary actions. */
 .btn-ink {
-  --btn-bg: var(--ink);
+  --btn-face: var(--grad-navy);
   --btn-fg: #fff;
-  --btn-shadow: var(--orange);
+  --btn-glow: rgba(0, 84, 151, 0.7);
 }
-/* Outline on light grounds. */
+/* White with a blue outline, on light grounds. */
 .btn-line {
-  --btn-bg: transparent;
-  --btn-border: var(--ink);
-  --btn-fg: var(--ink);
-  --btn-shadow: var(--ink);
+  --btn-face: linear-gradient(180deg, #ffffff 0%, var(--mist) 100%);
+  --btn-fg: var(--navy);
+  --btn-border: rgba(0, 84, 151, 0.35);
+  --btn-glow: rgba(0, 84, 151, 0.45);
 }
-.btn-line:hover::before {
-  opacity: 0.18;
-}
-/* Outline on dark grounds (ink or blue). */
+/* Glassy white on dark grounds (navy or blue). */
 .btn-light {
-  --btn-bg: transparent;
-  --btn-border: #fff;
+  --btn-face: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.06) 100%);
   --btn-fg: #fff;
-  --btn-shadow: #fff;
-}
-.btn-light:hover::before {
-  opacity: 0.25;
+  --btn-border: rgba(255, 255, 255, 0.55);
+  --btn-glow: rgba(255, 255, 255, 0.35);
 }
 .btn-block {
   width: 100%;
@@ -408,6 +429,7 @@ textarea {
   right: 0;
   bottom: -2px;
   height: 2px;
+  border-radius: 2px;
   background: currentColor;
   transform: scaleX(0.25);
   transform-origin: left;
@@ -418,75 +440,115 @@ textarea {
   transform: scaleX(1);
 }
 
-/* ---- Cards: square, hairline border; on hover the card lifts off a hard offset block. Like buttons, the face is
-   ::after and the block ::before, so put the card's background in --card-bg (not background). ---- */
+/* ---- Cards: rounded and glossy. The face is ::after (white-to-mist gradient, gloss line, soft blue shadow);
+   ::before is a blue glow that fades in behind the card as it lifts on hover (.lift). Put the card's background
+   in --card-bg (not background), because the face is drawn by ::after. ---- */
 .card {
-  --card-bg: #fff;
-  --card-border: var(--line);
-  --card-shadow: var(--blue);
+  --card-bg: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  --card-border: rgba(0, 84, 151, 0.14);
+  --card-glow: linear-gradient(120deg, rgba(0, 84, 151, 0.55), rgba(11, 111, 196, 0.35));
   position: relative;
   isolation: isolate;
   background: transparent;
-  border-radius: var(--radius);
+  border-radius: var(--radius-card);
   transition: transform 0.35s var(--ease);
 }
 .card::before,
 .card::after {
   content: "";
   position: absolute;
-  inset: 0;
-  border-radius: var(--radius);
+  border-radius: var(--radius-card);
 }
 .card::before {
+  inset: 14px 10px -10px;
   z-index: -2;
-  background: var(--card-shadow);
+  background: var(--card-glow);
+  filter: blur(24px);
   opacity: 0;
   transition:
     transform 0.35s var(--ease),
-    opacity 0.25s ease;
+    opacity 0.3s ease;
 }
 .card::after {
+  inset: 0;
   z-index: -1;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    var(--shadow-soft);
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .card.lift:hover {
-    transform: translate(-4px, -4px);
+    transform: translateY(-6px);
   }
   .card.lift:hover::before {
-    opacity: 1;
-    transform: translate(var(--offset), var(--offset));
+    opacity: 0.8;
   }
+}
+/* Glossy blue band at the top of a card (location cards and similar). */
+.card-band {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  background: var(--grad-blue);
+  color: #fff;
+}
+.card-band::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 45% 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.04) 100%);
+  pointer-events: none;
 }
 
 /* ---- Photos (components/Photo.tsx) ---- */
 .photo {
   position: relative;
   overflow: hidden;
-  background: var(--sand-2);
+  background: var(--mist-2);
 }
-/* A photo sitting on an offset colour block. Put the Photo (or Parallax/Curtain) inside. */
+/* A rounded photo with a soft blue glow under it and a thin glossy edge. Put the Photo (or Parallax/Curtain)
+   inside. The colour variants only change the glow. */
 .frame {
   position: relative;
   isolation: isolate;
+  border-radius: var(--radius-photo);
+}
+.frame > * {
+  border-radius: var(--radius-photo);
+  overflow: hidden;
 }
 .frame::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 8% 6% -4%;
   z-index: -1;
-  background: var(--blue);
-  transform: translate(clamp(10px, 1.2vw, 18px), clamp(10px, 1.2vw, 18px));
+  border-radius: var(--radius-photo);
+  background: rgba(0, 84, 151, 0.45);
+  filter: blur(28px);
 }
-.frame-orange::before {
-  background: var(--orange);
+.frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: var(--radius-photo);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  pointer-events: none;
 }
+.frame-orange::before,
 .frame-ink::before {
-  background: var(--ink);
+  background: rgba(10, 46, 85, 0.5);
 }
 .frame-sand::before {
-  background: var(--sand-2);
+  background: rgba(0, 84, 151, 0.3);
+}
+.bg-blue .frame::before,
+.bg-ink .frame::before {
+  background: rgba(0, 0, 0, 0.35);
 }
 
 /* ---- Motion fallbacks (components/motion/*). Motion writes the hidden starting state inline. If the app's
