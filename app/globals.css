@@ -609,3 +609,180 @@ html:not(.js) .curtain-cover {
 }
 
 /* Placeholders the admin fills in later are marked in the code with "PLACEHOLDER". */
+
+/* ======================================================================================================
+   Signature details (shared by every part): the valley ridge divider, dot-grid and glow textures, glass
+   chips, gradient headline text and the section heading style.
+   ====================================================================================================== */
+
+/* Ridge divider (components/Ridge.tsx). Parent must be position: relative. */
+.ridge {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.ridge-bottom {
+  bottom: -1px;
+}
+.ridge-top {
+  top: -1px;
+  transform: scaleY(-1);
+}
+
+/* Soft dot grid texture (static). Put on a section or a decorative element. */
+.dots {
+  background-image: radial-gradient(rgba(0, 84, 151, 0.14) 1.2px, transparent 1.3px);
+  background-size: 22px 22px;
+}
+.bg-blue.dots,
+.bg-ink.dots {
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.12) 1.2px, transparent 1.3px),
+    radial-gradient(120% 80% at 50% -20%, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 60%),
+    var(--grad-blue);
+  background-size:
+    22px 22px,
+    auto,
+    auto;
+}
+.bg-ink.dots {
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.1) 1.2px, transparent 1.3px),
+    radial-gradient(120% 80% at 50% -20%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%),
+    var(--grad-navy);
+}
+
+/* A soft static light behind something (absolute, decorative). */
+.glow-blob {
+  position: absolute;
+  z-index: -1;
+  width: 40vw;
+  max-width: 560px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(11, 111, 196, 0.22), rgba(11, 111, 196, 0));
+  pointer-events: none;
+}
+
+/* Glass chip: a small rounded label with a frosted look (on photos, blue bands or light grounds). */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2.5rem;
+  padding: 0.5rem 1rem 0.5rem 0.55rem;
+  border: 1px solid rgba(0, 84, 151, 0.16);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(243, 246, 249, 0.92) 100%);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 12px 26px -16px rgba(0, 62, 112, 0.55);
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  line-height: 1.25;
+}
+.chip-dot {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--grad-blue);
+  color: #fff;
+  box-shadow: var(--gloss);
+}
+.chip-dot .icon {
+  width: 15px;
+  height: 15px;
+}
+.chip-dark {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.06) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+.chip-dark .chip-dot {
+  background: #fff;
+  color: var(--blue);
+}
+
+/* Headline text with a navy-to-blue gradient fill (AA at both ends on white and mist). */
+.grad-text {
+  color: var(--navy);
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .grad-text {
+    background: linear-gradient(100deg, var(--navy) 0%, var(--blue) 60%, var(--blue-bright) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+@media (forced-colors: active) {
+  .grad-text {
+    color: CanvasText;
+    background: none;
+  }
+}
+
+/* Section heading: a small glass pill with the section number, the big heading, and a short glossy blue bar.
+   Markup stays <div class="sec-head"><span class="sec-no">01</span><h2>…</h2></div>. */
+.sec-head {
+  position: relative;
+  justify-items: start;
+}
+.sec-head::after {
+  content: "";
+  width: 4.5rem;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--grad-blue);
+  box-shadow: 0 6px 16px -6px rgba(0, 84, 151, 0.7);
+}
+.sec-no {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.85rem 0.3rem 0.35rem;
+  border: 1px solid rgba(0, 84, 151, 0.18);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff 0%, var(--mist) 100%);
+  box-shadow: inset 0 1px 0 #fff;
+  color: var(--blue);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+}
+.sec-no::before {
+  content: "";
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 50%;
+  background: var(--grad-blue);
+  box-shadow:
+    var(--gloss),
+    0 0 0 4px rgba(0, 84, 151, 0.12);
+}
+.sec-no::after {
+  content: none;
+}
+.bg-blue .sec-no,
+.bg-ink .sec-no {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.06) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+.bg-blue .sec-no::before,
+.bg-ink .sec-no::before {
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.18);
+}
+.bg-blue .sec-head::after,
+.bg-ink .sec-head::after {
+  background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0.4));
+  box-shadow: none;
+}

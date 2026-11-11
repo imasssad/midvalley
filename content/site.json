@@ -150,15 +150,30 @@
       "items": [
         {
           "title": "Conventional Storage",
-          "text": "Exterior drive-up units, interior drive-up units, small units, big, units – Mid Valley Storage has them all! With sizes from 5×5 to 20×50, we’ve got the perfect space just for you! It’s the perfect spot to store you extra items and get your garage back. Call us today and our professional staff can help you find the perfect size just for you."
+          "text": "Exterior drive-up units, interior drive-up units, small units, big, units – Mid Valley Storage has them all! With sizes from 5×5 to 20×50, we’ve got the perfect space just for you! It’s the perfect spot to store you extra items and get your garage back. Call us today and our professional staff can help you find the perfect size just for you.",
+          "photo": {
+            "src": "/images/facility-7cc08783.jpg",
+            "alt": "Large drive-up storage buildings at dusk with pickup trucks parked in the wide yard",
+            "focus": "50% 50%"
+          }
         },
         {
           "title": "Temperature Controlled Storage",
-          "text": "Scorching hot summers and cold foggy winters are no problem for our interior temperature controlled units. Cool air conditioning in the summer and warm heat in the winter – all in a interior dust free environment. Perfect for electronics, music equipment, antiques, documents, and so much more!"
+          "text": "Scorching hot summers and cold foggy winters are no problem for our interior temperature controlled units. Cool air conditioning in the summer and warm heat in the winter – all in a interior dust free environment. Perfect for electronics, music equipment, antiques, documents, and so much more!",
+          "photo": {
+            "src": "/images/temperature-controlled.jpg",
+            "alt": "Long indoor hallway of white temperature controlled storage unit doors",
+            "focus": "50% 50%"
+          }
         },
         {
           "title": "RV/Boat/Auto Parking",
-          "text": "With three National Parks nearby, numerous lakes, and the beach a few hours away – we know how great it is to hit the road in your RV, boat, or trailer. We have indoor, privately enclosed units with oversized doors perfect for your toys! All oversized units have the option of adding power and lights, perfect for keeping your battery charged before your next trip!"
+          "text": "With three National Parks nearby, numerous lakes, and the beach a few hours away – we know how great it is to hit the road in your RV, boat, or trailer. We have indoor, privately enclosed units with oversized doors perfect for your toys! All oversized units have the option of adding power and lights, perfect for keeping your battery charged before your next trip!",
+          "photo": {
+            "src": "/images/rv-storage-img-4031.jpg",
+            "alt": "Motorhome parked inside an enclosed RV storage unit",
+            "focus": "50% 55%"
+          }
         }
       ],
       "gallery": [

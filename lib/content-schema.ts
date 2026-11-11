@@ -120,7 +120,7 @@ export const homeSchema = z.object({
   about: z.object({ eyebrow: required(60), heading: required(140), paragraphs: z.array(required(1500)).min(1).max(4), photo: photoSchema }),
   storageOptions: z.object({
     heading: required(60),
-    items: z.array(z.object({ title: required(60), text: required(800) })).min(1).max(6),
+    items: z.array(z.object({ title: required(60), text: required(800), photo: photoSchema.optional() })).min(1).max(6),
     gallery: z.array(photoSchema).max(8),
   }),
   features: z.object({ heading: required(60), intro: required(800), list: z.array(required(90)).min(1).max(20), photo: photoSchema }),
