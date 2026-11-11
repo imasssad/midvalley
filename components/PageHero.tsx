@@ -1,9 +1,9 @@
-// Title block at the top of the inner pages (About Us, Facility Features, Contact Us): a split poster block on the
-// bone ground. Left: a decorative "/" index rule and the page's one h1 in huge condensed caps. Right (below the
-// title on tablets and phones): the page's wide photo, square-cornered on an offset blue block.
+// Title block at the top of the inner pages (About Us, Facility Features, Contact Us): a split block on a white to
+// mist ground. Left: a decorative "/" index rule and the page's one h1 in huge condensed caps. Right (below the
+// title on tablets and phones): the page's wide photo, rounded, on a soft blue glow (.frame).
 // Above the fold, so the entrance is pure CSS (app/styles/pages.css) and starts on first paint: the h1 rises in,
-// a charcoal curtain slides off the photo while the photo settles from a slight zoom, then the blue block slides
-// out from behind it. Transform and opacity only; nothing animates with prefers-reduced-motion.
+// a navy curtain slides off the rounded photo while the photo settles from a slight zoom, then the glow fades in
+// under it. Transform and opacity only; nothing animates with prefers-reduced-motion.
 // No copy of its own: everything is passed in.
 import type { Photo as PhotoData } from "@/lib/content-schema";
 import { Photo } from "./Photo";

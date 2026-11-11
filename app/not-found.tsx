@@ -2,8 +2,8 @@
 // linking to the real homepage (the old link pointed to http://home), plus each location's phone number so nobody
 // is stuck. A plain not-found.js can't export metadata in this Next version: the title comes from the root
 // layout's default (content.seo.notFound.title) and the description is a React 19 <meta>, hoisted into <head>.
-// A poster: a huge condensed "404" on a hard blue offset, then the text, the home button and the phone links,
-// rising in one after another with CSS (.enter-rise), so nothing waits for JavaScript.
+// A huge condensed "404" in glossy blue, then a glossy rounded card with the text, the home button and the phone
+// links, rising in one after another with CSS (.enter-rise), so nothing waits for JavaScript.
 import Link from "next/link";
 import { Icon } from "@/components/Icon";
 import { getSiteContent } from "@/lib/content";
@@ -20,7 +20,7 @@ export default async function NotFound() {
         <h1 className="nf-code enter-rise" style={order(0)}>
           {notFound.heading}
         </h1>
-        <div className="nf-body">
+        <div className="nf-body card">
           <p className="nf-text enter-rise" style={order(1)}>
             {notFound.text}
           </p>

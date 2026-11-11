@@ -1,6 +1,7 @@
 // About Us (/about-us, same URL as the old site): split title block, "01 Our Story" as an editorial split (the
 // story text beside an asymmetric two-column photo mosaic: the old page used a slider), "02 Our History" as a
-// numbered timeline on sand, and the closing "Reserve at <location>" band.
+// numbered timeline on mist (round glossy nodes, outline blue years, text on glossy rounded cards), and the closing "Reserve at <location>" band.
+// Mosaic photos are rounded on soft blue glows and lift off them on hover.
 // Motion: the section heads and story text rise in on scroll; each mosaic photo is uncovered by a sliding curtain
 // (one moves with parallax instead); the timeline items come in one after another, so the connecting rule builds up
 // segment by segment. Every word and photo comes from the editable content (content.about).
@@ -19,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata("about", "/about-us");
 }
 
-/** Offset colour block behind each mosaic photo, in turn. */
+/** Soft blue glow under each rounded mosaic photo, in turn (the variants only change the glow's depth). */
 const FRAMES = ["frame", "frame frame-ink", "frame frame-sand", "frame"];
 const CURTAINS = ["sand", "blue", "ink", "sand"] as const;
 const MOSAIC_SIZES = "(max-width: 680px) 46vw, (max-width: 900px) 45vw, (max-width: 1380px) 24vw, 330px";
@@ -105,7 +106,7 @@ export default async function AboutPage() {
                   <h3 className="ab-tl-year" data-year={t.year}>
                     {t.year}
                   </h3>
-                  <p className="ab-tl-text">{t.text}</p>
+                  <p className="ab-tl-text card">{t.text}</p>
                 </StaggerItem>
               ))}
             </Stagger>

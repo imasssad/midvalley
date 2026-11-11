@@ -1,7 +1,7 @@
 // Facility Features (/facilityfeatures, same URL as the old site): split title block, an "On this page" index of
-// square chips (wraps onto several lines on phones, no sideways scrolling), then each feature as a full-width
-// editorial row between hairline rules: a big running number, the h2 title, the text and the photo on an offset
-// colour block. Photos alternate sides from 681px up and sit first, stacked, on phones. Then the closing
+// rounded glossy chips (wraps onto several lines on phones, no sideways scrolling), then each feature as a
+// full-width editorial row between hairline rules: a big blue running number, the h2 title, the text and the
+// rounded photo on a soft blue glow. Photos alternate sides from 681px up and sit first, stacked, on phones. Then the closing
 // "Reserve at <location>" band. Every word and photo comes from content.features.
 // Motion: the chips come in one after another; in each row the text slides in from the side opposite the photo,
 // and the photo moves with parallax (odd rows) or is uncovered by a sliding curtain (even rows).
@@ -73,7 +73,7 @@ export default async function FeaturesPage() {
             const img = <Photo photo={f.photo} className="ff-ph" sizes={SIZES} />;
             return (
               <section key={ids[i]} id={ids[i]} className="ff-row" aria-labelledby={`${ids[i]}-heading`}>
-                <div className={odd ? "ff-media frame" : "ff-media frame frame-orange"}>
+                <div className={odd ? "ff-media frame" : "ff-media frame frame-ink"}>
                   {odd ? (
                     <Parallax className="ff-pic" strength={0.08}>
                       {img}
@@ -87,7 +87,7 @@ export default async function FeaturesPage() {
                 <Reveal className="ff-text" from={odd ? "right" : "left"} y={40} delay={0.08}>
                   {/* Decorative running number ("03 / 08"), generated from the list, not copy. */}
                   <p className="ff-no" aria-hidden="true">
-                    {String(i + 1).padStart(2, "0")}
+                    <span className="ff-no-n">{String(i + 1).padStart(2, "0")}</span>
                     <span className="ff-of">/ {total}</span>
                   </p>
                   <h2 id={`${ids[i]}-heading`}>{f.title}</h2>

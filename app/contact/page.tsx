@@ -1,7 +1,7 @@
 // Contact Us (/contact, same URL as the old site): split title block, then two columns on desktop: on the left the
-// numbered location tickets stacked (with the Google Maps embed in a square frame under any location that has one:
-// only Santa Fe on the old site) and the Instagram link as a blue tile; on the right the message form in a white
-// card with an orange top rule. Tickets side by side on tablets with the form below; one column on phones.
+// numbered location tickets stacked (with the Google Maps embed in a glossy rounded frame under any location that
+// has one: only Santa Fe on the old site) and the Instagram link as a glossy blue tile; on the right the message
+// form in a glossy rounded card with a blue top cap. Tickets side by side on tablets with the form below; one column on phones.
 // Motion: the tickets, map and Instagram tile come in one after another; the form card rises in.
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
@@ -35,7 +35,7 @@ export default async function ContactPage() {
               <StaggerItem key={l.id} className="ct-loc">
                 <LocationCard location={l} content={content} headingLevel="h2" index={i} />
                 {l.mapEmbedUrl && (
-                  <div className="ct-map frame frame-ink">
+                  <div className="ct-map card">
                     <iframe
                       src={l.mapEmbedUrl}
                       title={`Map of ${l.name}`}

@@ -1,7 +1,8 @@
 // Employee Portal (/employee, same URL as the old site): a placeholder for now, kept out of search engines
 // (noindex here, not in the sitemap; deliberately not blocked in app/robots.ts so crawlers can see the noindex).
 // Phase 3 adds the server-side password gate (password in an env var) and the Google Calendar embed.
-// A square card on sand; above the fold, so it rises in with CSS (.enter-rise) and its blue offset block slides out.
+// A glossy rounded card on mist with a round blue icon chip; above the fold, so it rises in with CSS (.enter-rise)
+// and its soft blue glow fades in.
 import type { Metadata } from "next";
 import { Icon } from "@/components/Icon";
 import { getSiteContent } from "@/lib/content";

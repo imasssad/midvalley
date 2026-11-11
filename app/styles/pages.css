@@ -1,14 +1,17 @@
-/* Inner pages, "valley poster" style: the split title block (components/PageHero.tsx, ph-), About Us (ab-),
-   Facility Features (ff-), Contact Us (ct-) with its form (components/ContactForm.tsx, cf-), the Employee Portal
-   placeholder (emp-) and the 404 page (nf-). Uses only the tokens and parts in app/globals.css.
+/* Inner pages, in the rounded and glossy look of the location cards: the split title block
+   (components/PageHero.tsx, ph-), About Us (ab-), Facility Features (ff-), Contact Us (ct-) with its form
+   (components/ContactForm.tsx, cf-), the Employee Portal placeholder (emp-) and the 404 page (nf-).
+   Colours: blue/navy and their light blue-grey tints on white, nothing else; orange only on the main
+   call-to-action buttons (.btn-cta, globals). Uses only the tokens and parts in app/globals.css.
    Every animation here moves transform or opacity only and sits inside prefers-reduced-motion: no-preference (the
-   global reduced-motion rule also cuts every duration). Breakpoints: 1100px, 900px, 680px (phone). */
+   global reduced-motion rule also cuts every duration). Glow layers use a static blur; only their opacity and
+   transform change. Breakpoints: 1100px, 900px, 680px (phone). */
 
 /* ---------- Split title block ---------- */
 .ph {
   padding-block: clamp(2rem, 1.2rem + 3vw, 4.5rem) clamp(3rem, 2rem + 4vw, 6rem);
   border-bottom: 1px solid var(--line);
-  background: var(--bone);
+  background: linear-gradient(180deg, var(--white) 0%, var(--mist) 100%);
 }
 .ph-grid {
   display: grid;
@@ -24,6 +27,7 @@
 }
 .ph-mark {
   font-size: 1.6rem;
+  color: var(--blue);
 }
 .ph h1 {
   font-size: var(--display-xl);
@@ -39,28 +43,27 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-/* The offset blue block comes from .frame (globals); the photo box clips the zoom and the curtain. */
+/* Rounded photo on a soft blue glow (.frame, globals); the rounded photo box clips the zoom and the curtain. */
 .ph-media {
   min-width: 0;
-  margin-right: clamp(10px, 1.2vw, 18px);
-  margin-bottom: clamp(10px, 1.2vw, 18px);
 }
 .ph-pic {
   position: relative;
   overflow: hidden;
   aspect-ratio: 16 / 10;
-  background: var(--sand-2);
+  border-radius: var(--radius-photo);
+  background: var(--mist-2);
 }
 .ph-photo {
   position: absolute;
   inset: 0;
 }
-/* At rest the curtain is folded away (scaleX 0), so with reduced motion the photo simply shows. */
+/* Navy curtain. At rest it is folded away (scaleX 0), so with reduced motion the photo simply shows. */
 .ph-cover {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: var(--ink);
+  background: var(--grad-navy);
   transform: scaleX(0);
   transform-origin: 100% 50%;
   pointer-events: none;
@@ -79,11 +82,10 @@
       transform: scale(1.08);
     }
   }
-  /* No "to" frame: it ends on the block's own offset from .frame. */
-  @keyframes ph-block {
+  /* The glow under the photo fades in once the curtain is off. */
+  @keyframes ph-glow {
     from {
       opacity: 0;
-      transform: translate(0, 0);
     }
   }
   .ph-cover {
@@ -93,23 +95,36 @@
     animation: ph-settle 1.5s var(--ease) 0.15s both;
   }
   .ph-media::before {
-    animation: ph-block 0.7s var(--ease) 0.75s both;
+    animation: ph-glow 0.8s ease 0.75s both;
   }
 }
 
-/* ---------- Shared: photo cells that lift off their offset block on hover ---------- */
-.ab-cell > *,
-.ff-media > * {
+/* ---------- Shared: rounded photos that lift onto their glow on hover ---------- */
+.ab-cell,
+.ff-media {
   transition: transform 0.45s var(--ease);
+}
+.ab-cell::before,
+.ff-media::before {
+  opacity: 0.75;
+  transition:
+    transform 0.45s var(--ease),
+    opacity 0.35s ease;
 }
 .ab-cell .photo img,
 .ff-media .photo img {
   transition: transform 0.9s var(--ease);
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .ab-cell:hover > *,
-  .ff-media:hover > * {
-    transform: translate(-5px, -5px);
+  .ab-cell:hover,
+  .ff-media:hover {
+    transform: translateY(-6px);
+  }
+  /* The glow stays where it was (counter-move) and brightens, so the photo seems to rise off it. */
+  .ab-cell:hover::before,
+  .ff-media:hover::before {
+    opacity: 1;
+    transform: translateY(8px);
   }
   .ab-cell:hover .photo img,
   .ff-media:hover .photo img {
@@ -133,7 +148,7 @@
   font-size: var(--text-lg);
   line-height: 1.75;
 }
-/* Poster drop cap: the story's first letter in big condensed blue. */
+/* Drop cap: the story's first letter in big condensed blue. */
 .ab-copy > p:first-child::first-letter {
   float: left;
   margin: 0.06em 0.14em 0 0;
@@ -170,11 +185,9 @@
 .ab-col:nth-child(2) {
   padding-top: clamp(3rem, 1.5rem + 7vw, 8rem);
 }
-.ab-cell {
-  margin: 0 clamp(10px, 1.2vw, 18px) clamp(10px, 1.2vw, 18px) 0;
-}
 .ab-pic {
-  background: var(--sand-2);
+  border-radius: var(--radius-photo);
+  background: var(--mist-2);
 }
 .ab-pic--tall {
   aspect-ratio: 4 / 5;
@@ -189,10 +202,10 @@
   height: 100%;
 }
 
-/* ---------- About Us: 02 Our History (numbered horizontal timeline on sand) ---------- */
+/* ---------- About Us: 02 Our History (numbered horizontal timeline on mist) ---------- */
 .ab-tl {
   --tl-gap: clamp(1.5rem, 1rem + 2vw, 3rem);
-  --tl-node: 14px;
+  --tl-node: 18px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 3rem var(--tl-gap);
@@ -200,24 +213,26 @@
 }
 .ab-tl-item {
   position: relative;
-  padding-top: clamp(2rem, 1.6rem + 1vw, 2.75rem);
+  padding-top: clamp(2.1rem, 1.7rem + 1vw, 2.85rem);
 }
-/* The 2px connecting rule: each item draws its own segment across to the next one, so it builds up as the items
+/* The connecting rule: each item draws its own segment across to the next one, so it builds up as the items
    come in one after another. */
 .ab-tl-item::before {
   content: "";
   position: absolute;
-  top: calc(var(--tl-node) / 2 - 1px);
+  top: calc(var(--tl-node) / 2 - 1.5px);
   left: 0;
   right: calc(-1 * var(--tl-gap));
-  height: 2px;
-  background: var(--blue);
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--blue) 0%, var(--blue-bright) 100%);
+  opacity: 0.55;
 }
 .ab-tl-item:last-child::before,
 .ab-tl-item:nth-child(4n)::before {
   right: 0;
 }
-/* Square node on the rule. */
+/* Round glossy blue node on the rule, ringed with the ground colour. */
 .ab-tl-item::after {
   content: "";
   position: absolute;
@@ -225,8 +240,13 @@
   left: 0;
   width: var(--tl-node);
   height: var(--tl-node);
-  background: var(--ink);
-  box-shadow: 0 0 0 5px var(--sand);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 45%),
+    var(--grad-blue);
+  box-shadow:
+    0 0 0 5px var(--mist),
+    0 6px 14px -4px rgba(0, 84, 151, 0.6);
 }
 .ab-tl-year {
   position: relative;
@@ -234,8 +254,8 @@
   font-size: clamp(3.75rem, 2.2rem + 5vw, 7rem);
   line-height: 0.85;
 }
-/* Outline numerals: a 2px blue stroke (7:1 on sand) with a clear fill. The filled copy (::after, from data-year,
-   with empty alt text so it isn't read twice) fades in on hover. */
+/* Outline numerals: a 2px blue stroke (6.9:1 on mist) with a clear fill. The filled copy (::after, from
+   data-year, with empty alt text so it isn't read twice) fades in on hover. */
 @supports (-webkit-text-stroke: 2px black) {
   .ab-tl-year {
     -webkit-text-stroke: 2px var(--blue);
@@ -258,19 +278,23 @@
     -webkit-text-fill-color: CanvasText;
   }
 }
+/* The text sits on a glossy rounded card (.card, globals) that lifts onto its glow with the year. */
 .ab-tl-text {
   max-width: 34ch;
   margin-top: 1.1rem;
-  padding-top: 1.1rem;
-  border-top: 1px solid var(--line-strong);
+  padding: 1.1rem 1.25rem 1.2rem;
   color: var(--text);
 }
 .ab-tl-item > * {
   transition: transform 0.4s var(--ease);
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .ab-tl-item:hover .ab-tl-year {
+  .ab-tl-item:hover .ab-tl-year,
+  .ab-tl-item:hover .ab-tl-text {
     transform: translateY(-6px);
+  }
+  .ab-tl-item:hover .ab-tl-text::before {
+    opacity: 0.7;
   }
   .ab-tl-item:hover .ab-tl-year::after {
     opacity: 1;
@@ -281,7 +305,7 @@
 .ff-index {
   padding-block: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
   border-bottom: 1px solid var(--line);
-  background: var(--bone);
+  background: var(--white);
 }
 .ff-chips {
   display: flex;
@@ -289,16 +313,18 @@
   gap: 0.6rem;
   list-style: none;
 }
-/* Square chip: the face (::after) lifts off a hard ink block (::before) on hover, like the cards. */
+/* Rounded glossy chip: the face is ::after (white-to-mist gradient, gloss line); ::before is a soft blue glow that
+   fades in under it as it lifts on hover, like the buttons. */
 .ff-chip {
   position: relative;
   isolation: isolate;
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.6rem;
   min-height: 44px;
-  padding: 0.45rem 0.95rem;
-  color: var(--ink);
+  padding: 0.4rem 1rem 0.4rem 0.45rem;
+  border-radius: var(--radius);
+  color: var(--navy);
   font-family: var(--font-display);
   font-stretch: 82%;
   font-size: 1rem;
@@ -313,37 +339,55 @@
 .ff-chip::after {
   content: "";
   position: absolute;
-  inset: 0;
   border-radius: var(--radius);
 }
 .ff-chip::before {
+  inset: 6px 8px -4px;
   z-index: -2;
-  background: var(--ink);
+  background: rgba(0, 84, 151, 0.45);
+  filter: blur(10px);
   opacity: 0;
   transition:
     transform 0.28s var(--ease),
-    opacity 0.2s ease;
+    opacity 0.25s ease;
 }
 .ff-chip::after {
+  inset: 0;
   z-index: -1;
-  background: var(--bone);
-  border: 1px solid var(--line-strong);
+  background: linear-gradient(180deg, #ffffff 0%, var(--mist) 100%);
+  border: 1px solid rgba(0, 84, 151, 0.22);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 6px 14px -10px rgba(0, 62, 112, 0.5);
+}
+.ff-chip:hover,
+.ff-chip:visited {
+  color: var(--navy);
 }
 .ff-chip:hover {
   color: var(--blue);
 }
+/* The running number in a small glossy blue badge (white on blue: 7:1 to 4.9:1, bold). */
 .ff-chip-no {
-  color: var(--orange-ink);
+  display: inline-grid;
+  place-items: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding-inline: 0.3rem;
+  border-radius: calc(var(--radius) - 4px);
+  background: var(--grad-blue);
+  box-shadow: var(--gloss);
+  color: #fff;
   font-size: 0.85rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .ff-chip:hover {
-    transform: translate(-2px, -2px);
+    transform: translateY(-2px);
   }
   .ff-chip:hover::before {
     opacity: 1;
-    transform: translate(4px, 4px);
+    transform: translateY(3px);
   }
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -375,11 +419,11 @@
 }
 .ff-media {
   min-width: 0;
-  margin: 0 clamp(10px, 1.2vw, 18px) clamp(10px, 1.2vw, 18px) 0;
 }
 .ff-pic {
   aspect-ratio: 4 / 3;
-  background: var(--sand-2);
+  border-radius: var(--radius-photo);
+  background: var(--mist-2);
 }
 .ff-ph {
   height: 100%;
@@ -388,17 +432,36 @@
   max-width: 38rem;
   min-width: 0;
 }
+/* Big running number, blue with a glossy blue-to-navy fill where supported. */
 .ff-no {
   display: flex;
   align-items: baseline;
   gap: 0.6rem;
   margin-bottom: clamp(0.9rem, 0.7rem + 0.8vw, 1.5rem);
-  color: var(--orange-ink);
+  color: var(--blue);
   font-family: var(--font-display);
   font-stretch: var(--condensed);
   font-size: clamp(3.75rem, 2.4rem + 4.6vw, 7.5rem);
   font-weight: 800;
   line-height: 0.8;
+}
+.ff-no-n {
+  color: var(--blue);
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .ff-no-n {
+    padding-bottom: 0.06em; /* room for descending glyph edges inside the clipped fill */
+    background: linear-gradient(180deg, var(--blue-bright) 0%, var(--blue) 45%, var(--navy) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+@media (forced-colors: active) {
+  .ff-no-n {
+    color: CanvasText;
+    background: none;
+  }
 }
 .ff-of {
   color: var(--muted);
@@ -430,37 +493,69 @@
   gap: clamp(1.75rem, 1.4rem + 1vw, 2.5rem);
   min-width: 0;
 }
+/* Map in a glossy rounded frame (.card, globals): the white gradient face shows as a rim round the rounded map. */
 .ct-map {
-  margin: 0 clamp(10px, 1.2vw, 18px) clamp(10px, 1.2vw, 18px) 0;
+  padding: 0.55rem;
 }
 .ct-map iframe {
   display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 3;
-  border: 1px solid var(--ink);
-  border-radius: var(--radius);
-  background: var(--sand-2);
+  border: 0;
+  border-radius: calc(var(--radius-card) - 0.55rem);
+  background: var(--mist-2);
 }
-/* Follow Us: a blue poster tile. */
+/* Chrome never matches :focus-visible on an iframe, so the keyboard focus ring goes on the frame instead. */
+.ct-map iframe:focus,
+.ct-map iframe:focus-visible {
+  outline: none;
+}
+.ct-map:focus-within {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+/* Follow Us: a glossy blue rounded tile (.bg-blue, globals) with a white highlight over its top half. */
 .ct-follow {
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 1rem 1.5rem;
   padding: clamp(1.4rem, 1rem + 1.6vw, 2.25rem);
-  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-card);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    var(--shadow-soft);
+}
+.ct-follow::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 50% 0;
+  z-index: -1;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.02) 100%);
+  pointer-events: none;
 }
 .ct-follow h2 {
   font-size: var(--display-m);
+  text-shadow: 0 1px 0 rgba(0, 30, 60, 0.35);
 }
 .ct-social {
   min-height: 44px;
   font-size: var(--text-lg);
 }
+/* The icon in a round glassy chip. */
 .ct-social .icon {
-  color: var(--peach);
+  box-sizing: content-box;
+  padding: 9px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.08) 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  color: #fff;
   transition: transform 0.35s var(--ease);
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
@@ -469,19 +564,21 @@
   }
 }
 
-/* Form card: white face (.card, no lift); its ::before (the hover block on lifting cards) is reused as the
-   4px orange top rule, drawn inside the card. */
+/* Form card: a glossy rounded .card (globals, no lift). Its ::before (the hover glow on lifting cards) becomes a
+   glossy blue card the same shape set just behind the face, which sits 5px lower, so a blue cap shows along the
+   rounded top edge. */
 .ct-form {
-  --card-bg: #fff;
-  --card-border: var(--line);
   padding: clamp(1.5rem, 1rem + 2.2vw, 3rem);
+  padding-top: calc(clamp(1.5rem, 1rem + 2.2vw, 3rem) + 5px);
 }
 .ct-form::before {
-  inset: 0 0 auto 0;
-  z-index: 0;
-  height: 4px;
-  background: var(--orange);
+  inset: 0;
+  background: var(--grad-blue);
+  filter: none;
   opacity: 1;
+}
+.ct-form::after {
+  inset: 5px 0 0 0;
 }
 .ct-form h2 {
   margin-bottom: clamp(1.25rem, 1rem + 1vw, 2rem);
@@ -489,7 +586,7 @@
 
 /* ---------- Contact form ---------- */
 .cf {
-  --cf-error: #b3261e; /* error red: 6.5:1 on white */
+  --cf-error: #b3261e; /* error red: 6.5:1 on white (the one functional colour) */
   display: grid;
   gap: 1.25rem;
 }
@@ -511,10 +608,10 @@
 .cf-note .cf-req {
   margin-left: 0;
 }
-/* Labels in small condensed caps, with a square marker that grows in while the field has focus. */
+/* Labels in small condensed caps, with a round blue marker that grows in while the field has focus. */
 .cf-field label {
   display: block;
-  color: var(--ink);
+  color: var(--navy);
   font-family: var(--font-display);
   font-stretch: 82%;
   font-size: 0.98rem;
@@ -530,7 +627,8 @@
   vertical-align: 0.06em;
   width: 0.55rem;
   height: 0.55rem;
-  background: var(--blue);
+  border-radius: 50%;
+  background: var(--grad-blue);
   opacity: 0.3;
   transform: scale(0.55);
   transition:
@@ -546,9 +644,9 @@
 }
 .cf-req {
   margin-left: 0.1rem;
-  color: var(--orange-ink);
+  color: var(--blue);
 }
-/* Square fields; colour and border changes are instant (no transition). */
+/* Rounded glossy fields; colour and border changes are instant (no transition). */
 .cf input,
 .cf select,
 .cf textarea {
@@ -557,7 +655,8 @@
   padding: 0.75rem 0.95rem;
   border: 2px solid var(--muted); /* 5.9:1 against white for the field outline */
   border-radius: var(--radius);
-  background: #fff;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: inset 0 1px 2px rgba(15, 34, 54, 0.06);
   color: var(--ink);
   font-size: max(16px, var(--text-base)); /* 16px+ stops iOS zooming in on focus */
   line-height: 1.4;
@@ -569,12 +668,13 @@
 .cf input:hover,
 .cf select:hover,
 .cf textarea:hover {
-  border-color: var(--ink);
+  border-color: var(--blue);
 }
 .cf input:focus-visible,
 .cf select:focus-visible,
 .cf textarea:focus-visible {
-  border-color: var(--ink);
+  border-color: var(--blue);
+  background: #fff;
   outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
@@ -594,7 +694,7 @@
   top: 50%;
   right: 0.95rem;
   translate: 0 -50%;
-  color: var(--ink);
+  color: var(--blue);
   pointer-events: none;
 }
 .cf-error {
@@ -635,7 +735,7 @@
   color: var(--muted);
 }
 .cf-status[data-state="sent"] {
-  color: #1d6b3a; /* success green: 6.4:1 on white */
+  color: var(--blue); /* 7.3:1 on white */
 }
 .cf-status[data-state="error"] {
   color: var(--cf-error);
@@ -682,41 +782,43 @@
   min-height: clamp(300px, 45vh, 500px);
 }
 .emp-card {
-  --card-bg: #fff;
-  --card-border: var(--ink);
   display: grid;
   justify-items: center;
   gap: 1.1rem;
-  width: min(100% - var(--offset), 38rem);
+  width: min(100%, 38rem);
   padding: clamp(2rem, 1.5rem + 2.4vw, 3.5rem) clamp(1.5rem, 1rem + 2vw, 3rem);
   text-align: center;
 }
-/* The hard blue offset block always shows here (it slides out once the card is in). */
+/* The card's blue glow always shows here (softly); it fades in once the card is in. */
 .emp-card::before {
-  opacity: 1;
-  transform: translate(var(--offset), var(--offset));
+  opacity: 0.55;
 }
 .emp-card h1 {
   font-size: var(--display-l);
 }
+/* Round glossy blue icon chip. */
 .emp-icon {
   display: grid;
   place-items: center;
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: var(--radius);
-  background: var(--blue);
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 55%),
+    var(--grad-blue);
+  box-shadow:
+    var(--gloss),
+    0 12px 24px -12px rgba(0, 84, 151, 0.8);
   color: #fff;
 }
 @media (prefers-reduced-motion: no-preference) {
-  @keyframes emp-block {
+  @keyframes emp-glow {
     from {
       opacity: 0;
-      transform: translate(0, 0);
     }
   }
   .emp-card::before {
-    animation: emp-block 0.6s var(--ease) 0.75s both;
+    animation: emp-glow 0.8s ease 0.75s both;
   }
 }
 
@@ -727,16 +829,35 @@
   gap: clamp(1.5rem, 1rem + 3vw, 4.5rem);
   align-items: end;
 }
+/* Huge "404" in navy with a glossy blue fill where supported, on a soft static blue shadow. */
 .nf-code {
-  color: var(--ink);
+  color: var(--navy);
   font-size: calc(var(--display-xl) * 1.6);
   line-height: 0.8;
-  text-shadow: 0.05em 0.05em 0 var(--blue);
+  filter: drop-shadow(0 18px 22px rgba(0, 84, 151, 0.28));
 }
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .nf-code {
+    padding-bottom: 0.06em;
+    background: linear-gradient(180deg, var(--blue-bright) 0%, var(--blue) 45%, var(--navy) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+@media (forced-colors: active) {
+  .nf-code {
+    color: CanvasText;
+    background: none;
+    filter: none;
+  }
+}
+/* Text, home button and phone links on a glossy rounded card (.card, globals). */
 .nf-body {
   display: grid;
   justify-items: start;
   gap: 1.5rem;
+  padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
 }
 .nf-text {
   color: var(--ink);
@@ -775,7 +896,10 @@
 }
 .nf-phone {
   min-height: 44px; /* tap target */
-  color: var(--ink);
+  color: var(--navy);
+}
+.nf-phone .icon {
+  color: var(--blue);
 }
 
 /* ---------- Small desktop and tablet landscape ---------- */
@@ -855,10 +979,11 @@
   .ab-tl-item:nth-child(4n)::before {
     top: var(--tl-node);
     bottom: -2.5rem;
-    left: calc(var(--tl-node) / 2 - 1px);
+    left: calc(var(--tl-node) / 2 - 1.5px);
     right: auto;
-    width: 2px;
+    width: 3px;
     height: auto;
+    background: linear-gradient(180deg, var(--blue) 0%, var(--blue-bright) 100%);
   }
   .ab-tl-item:last-child::before {
     display: none;
@@ -868,14 +993,13 @@
   }
   .ab-tl-text {
     margin-top: 0.8rem;
-    padding-top: 0.8rem;
   }
 
   .ff-chips {
     gap: 0.5rem;
   }
   .ff-chip {
-    padding-inline: 0.8rem;
+    padding-right: 0.8rem;
   }
   /* Stacked, photo first. */
   .ff-row,
