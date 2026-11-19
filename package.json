@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "seed": "node scripts/seed.mjs",
-    "admin:reset": "node scripts/reset-admin.mjs"
+    "admin:reset": "node scripts/reset-admin.mjs",
+    "migrate:update1": "node scripts/migrate-update1.mjs"
   },
   "dependencies": {
     "@vercel/blob": "2.8.0",
