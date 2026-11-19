@@ -138,6 +138,15 @@
       "replacedAt": "2026-11-19T00:00:00.000Z"
     }
   },
+  "specials": {
+    "enabled": true,
+    "text": "Winter Special: Rent 4 months, get up to 4 months free*",
+    "finePrint": "*On select units. New customers only. Noble location only.",
+    "buttonLabel": "Rent Online at Noble",
+    "buttonUrl": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=e398d43a-ce49-4691-b9af-8157e3883811#/move-in",
+    "startDate": "",
+    "endDate": ""
+  },
   "valueStrip": {
     "enabled": true,
     "items": [
@@ -252,6 +261,88 @@
     },
     "locations": {
       "heading": "Our Locations"
+    },
+    "steps": {
+      "enabled": true,
+      "heading": "Rent a unit in three easy steps.",
+      "items": [
+        {
+          "title": "Pick your size",
+          "body": "Browse our storage sizes, or call and our friendly staff will help you choose the perfect size."
+        },
+        {
+          "title": "Rent online",
+          "body": "Rent your unit online at Noble or Santa Fe. No deposit required."
+        },
+        {
+          "title": "Get your code and move in",
+          "body": "You get your own gate keycode. Use it at the gate and move in."
+        }
+      ]
+    },
+    "security": {
+      "enabled": true,
+      "heading": "Your items are important to us too.",
+      "text": "We feature the highest resolution and most modern security cameras that monitor and protect our facilities, customers, and staff. We issue unique gate codes to each tenant that log the entry and exit of all gate activity.",
+      "stats": [
+        {
+          "value": "1 code",
+          "label": "per tenant, logging every entry and exit"
+        },
+        {
+          "value": "365",
+          "label": "days a year of computerized gate access"
+        },
+        {
+          "value": "On-site",
+          "label": "resident at our Noble location"
+        }
+      ],
+      "photo": {
+        "src": "/images/security.jpg",
+        "alt": "Office service desk below a wall of security camera monitors",
+        "focus": "50% 50%"
+      },
+      "photoLabel": "Video Surveillance"
+    },
+    "faq": {
+      "enabled": true,
+      "heading": "Questions, answered.",
+      "intro": "Can't find what you need? Our friendly staff is happy to help.",
+      "items": [
+        {
+          "q": "Do I need a deposit or a long-term contract?",
+          "a": "No. There's no deposit, rentals are month to month, and there are no long-term contracts."
+        },
+        {
+          "q": "When can I get to my unit?",
+          "a": "The computerized gate is open from 6AM to 8PM, 365 days a year. Extended gate hours are available for business customers and special events. Call us for details."
+        },
+        {
+          "q": "What sizes do you have?",
+          "a": "Everything from small 5x5 units up to 20x50, including indoor RV and boat units with oversized doors up to 12'x14', outside parking stalls and temperature controlled units. See our storage sizes, or call and we'll help you choose."
+        },
+        {
+          "q": "Do you have temperature controlled storage?",
+          "a": "Yes. Our interior temperature controlled units are air conditioned in the summer and heated in the winter, in a dust-free indoor environment."
+        },
+        {
+          "q": "Can I store an RV or boat?",
+          "a": "Yes. We have indoor, privately enclosed units with oversized doors and the option of interior lights and 20AMP power, plus outside parking stalls on decomposed granite with 24/7 security recording."
+        },
+        {
+          "q": "How do I pay?",
+          "a": "Pay online through your location's payment portal: use Make a payment at the top of any page (in the menu on phones). Auto-pay is available."
+        },
+        {
+          "q": "How secure is the facility?",
+          "a": "Each tenant gets a unique gate code that logs every entry and exit, high-resolution cameras protect the facility, and our Noble location has an on-site resident."
+        },
+        {
+          "q": "Do you sell moving supplies?",
+          "a": "Yes. The office has a complete moving supply center. Ask about our free moving truck."
+        }
+      ]
     },
     "cta": {
       "heading": "Ready to get started?"
@@ -552,7 +643,8 @@
     "previousPhoto": "Previous photo",
     "nextPhoto": "Next photo",
     "photoCount": "{current} of {total}",
-    "onThisPage": "On this page"
+    "onThisPage": "On this page",
+    "specialsBar": "Current special"
   },
   "notFound": {
     "heading": "404",

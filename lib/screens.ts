@@ -7,6 +7,7 @@ import { getAt, setAt } from "./diff";
 
 export type ScreenKey =
   | "banner"
+  | "specials"
   | "locations"
   | "home"
   | "about"
@@ -44,6 +45,13 @@ export const screens: Record<ScreenKey, Screen> = {
     page: "/",
     note: "The Rent Online and Call buttons under the banner come from Locations & contact.",
   },
+  specials: {
+    title: "Specials bar",
+    group: "top",
+    blurb: "The slim bar with your current offer at the very top of every page, above the header: the offer, its small print, a button and the dates it shows.",
+    scopes: [["specials"]],
+    page: "/",
+  },
   locations: {
     title: "Locations & contact",
     group: "top",
@@ -54,10 +62,10 @@ export const screens: Record<ScreenKey, Screen> = {
   home: {
     title: "Home page",
     group: "pages",
-    blurb: "Every section of the homepage under the banner: the value strip, About, Storage Options with its photos, Storage Sizes, Facility Features and the closing heading.",
+    blurb: "Every section of the homepage under the banner: the value strip, About, Storage Options with its photos, Storage Sizes, the three steps to rent, Facility Features, Security, the questions and answers (FAQ) and the closing heading.",
     scopes: [["valueStrip"], ["home"], ["unitSizes"]],
     page: "/",
-    note: "Reviews have their own screen. The location cards come from Locations & contact.",
+    note: "Reviews and the specials bar have their own screens. The location cards and the Rent Online and Call buttons come from Locations & contact.",
   },
   about: {
     title: "About Us page",

@@ -42,7 +42,7 @@ function describedBy(id: string, help?: string, error?: string | null) {
   return [help && `${id}-help`, error && `${id}-error`].filter(Boolean).join(" ") || undefined;
 }
 
-const SHORT = new Set<Field["kind"]>(["select", "check"]);
+const SHORT = new Set<Field["kind"]>(["select", "check", "date"]);
 const isBlock = (f: Field) => ["group", "list", "strings", "photo", "photos", "radio"].includes(f.kind);
 
 /** Browsers without CSS field-sizing: size the growing box to its text (called after every render). */
@@ -215,6 +215,22 @@ function FieldView({ field: f, value, path, ctx }: { field: Exclude<Field, { kin
             <span>{f.label}</span>
           </label>
           <Help id={`${id}-help`} text={f.help} />
+          <ErrorText id={`${id}-error`} text={error} />
+        </div>
+      );
+    case "date":
+      return (
+        <div className="field">
+          <label htmlFor={id}>{f.label}</label>
+          <Help id={`${id}-help`} text={f.help} />
+          <div className="input-row">
+            <input id={id} type="date" value={String(value ?? "")} onChange={(e) => set(e.target.value)} {...aria} />
+            {value ? (
+              <button type="button" className="link-btn" onClick={() => set("")}>
+                Clear<span className="sr-only-admin"> {f.label}</span>
+              </button>
+            ) : null}
+          </div>
           <ErrorText id={`${id}-error`} text={error} />
         </div>
       );

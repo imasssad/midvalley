@@ -180,6 +180,36 @@ export const valueStripSchema = z.object({
 
 const ctaSchema = z.object({ heading: required(80) });
 
+/** A whole day, "YYYY-MM-DD", or "" for no limit. */
+const date = z.union([z.literal(""), z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Pick a date, or clear it.")]);
+
+/**
+ * The slim specials bar at the very top of every page (above the header). Shown while switched on and, when dates
+ * are set, only from the first day to the last day (whole days in California time). The button is optional: it
+ * shows when it has both words and a link.
+ */
+export const specialsSchema = z
+  .object({
+    enabled: z.boolean(),
+    /** The offer, in one line: "Winter Special: Rent 4 months, get up to 4 months free*" */
+    text: text(160),
+    /** Optional small print after the offer. Empty hides it. */
+    finePrint: text(200),
+    buttonLabel: text(40),
+    buttonUrl: optionalLink,
+    startDate: date,
+    endDate: date,
+  })
+  .superRefine((s, ctx) => {
+    if (s.enabled && !s.text) ctx.addIssue({ code: "custom", path: ["text"], message: "Add the offer before switching the bar on." });
+    if (s.buttonLabel && !s.buttonUrl) ctx.addIssue({ code: "custom", path: ["buttonUrl"], message: "Add the link for the button, or clear the button's words." });
+    if (s.buttonUrl && !s.buttonLabel) ctx.addIssue({ code: "custom", path: ["buttonLabel"], message: "Add the words on the button, or clear its link." });
+    if (s.startDate && s.endDate && s.endDate < s.startDate) {
+      ctx.addIssue({ code: "custom", path: ["endDate"], message: "The last day is before the first day." });
+    }
+  });
+export type Specials = z.infer<typeof specialsSchema>;
+
 export const homeSchema = z.object({
   about: z.object({ eyebrow: required(60), heading: required(140), paragraphs: z.array(required(1500)).min(1).max(4), photo: photoSchema }),
   storageOptions: z.object({
@@ -189,6 +219,29 @@ export const homeSchema = z.object({
   }),
   features: z.object({ heading: required(60), intro: required(800), list: z.array(required(90)).min(1).max(20), photo: photoSchema }),
   locations: z.object({ heading: required(60) }),
+  /** "Rent a unit in three easy steps": numbered steps after Storage Sizes, then the Rent Online and Call buttons. */
+  steps: z.object({
+    enabled: z.boolean(),
+    heading: required(120),
+    items: z.array(z.object({ title: required(60), body: required(300) })).max(4, "That's the most steps the section can show."),
+  }),
+  /** Security, after Facility Features: text, up to three big numbers and a photo with a small glass label on it. */
+  security: z.object({
+    enabled: z.boolean(),
+    heading: required(120),
+    text: required(800),
+    stats: z.array(z.object({ value: required(14), label: required(90) })).max(3, "That's the most numbers the section can show."),
+    photo: photoSchema,
+    /** The small glass label on the photo. Empty hides it. */
+    photoLabel: text(60),
+  }),
+  /** Questions and answers, after Security. Also given to Google as FAQ data (schema.org FAQPage). */
+  faq: z.object({
+    enabled: z.boolean(),
+    heading: required(120),
+    intro: text(300),
+    items: z.array(z.object({ q: required(200), a: required(1200) })).max(20, "That's the most questions the section can show."),
+  }),
   cta: ctaSchema,
 });
 
@@ -304,6 +357,8 @@ export const labelsSchema = z.object({
   /** "1 of 4" in the photo viewer: {current} and {total} are filled in. */
   photoCount: required(40),
   onThisPage: required(40),
+  /** Names the specials bar for screen readers ("Current special"). */
+  specialsBar: required(40),
 });
 
 /** The not-found page (the old site's 404 words). */
@@ -329,6 +384,7 @@ export const sectionSchemas = {
   header: headerSchema,
   nav: navSchema,
   hero: heroSchema,
+  specials: specialsSchema,
   valueStrip: valueStripSchema,
   home: homeSchema,
   unitSizes: unitSizesSchema,

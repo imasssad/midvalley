@@ -8,6 +8,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { restorePreviousBanner, saveScreen, type SaveResult } from "@/app/admin/actions";
 import { fieldErrors, sectionSchemas, type SectionKey, type SiteContent } from "@/lib/content-schema";
 import type { UploadMode } from "@/lib/media";
+import { specialsHiddenReason } from "@/lib/format";
 import { getAt, screens, setAt, type ScreenKey } from "@/lib/screens";
 import { Fields } from "./fields";
 import { PreviewFrame, type Device } from "./PreviewFrame";
@@ -42,6 +43,10 @@ function visibilityNote(screen: ScreenKey, c: SiteContent): { ok: boolean; text:
     return c.hero.mode === "video"
       ? { ok: false, text: "Original video is selected: visitors see the video, not the banner. Choose “Promo image” to show the banner." }
       : { ok: true, text: "Promo image is selected: the banner shows at the top of the homepage." };
+  }
+  if (screen === "specials") {
+    const reason = specialsHiddenReason(c.specials, Date.now());
+    return reason ? { ok: false, text: `${reason} The preview shows how it will look.` } : { ok: true, text: "The specials bar shows at the top of every page." };
   }
   if (screen === "reviews" && !c.testimonials.items.length) return { ok: false, text: "The reviews section is hidden until there is at least one review." };
   if (screen === "home" && !c.valueStrip.enabled) return { ok: false, text: "The value strip is switched off, so it isn't on the website." };

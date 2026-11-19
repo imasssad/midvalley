@@ -16,10 +16,11 @@ export const PREVIEW_MSG = {
 
 /** Which parts each screen's preview shows. Screens with an empty list have no preview. */
 export const previewParts: Record<PreviewTarget, string[]> = {
-  all: ["header", "hero", "valueStrip", "about", "locations", "storage", "features", "reviews", "cta", "footer"],
+  all: ["specials", "header", "hero", "valueStrip", "about", "locations", "storage", "steps", "features", "security", "faq", "reviews", "cta", "footer"],
   banner: ["header", "hero"],
+  specials: ["specials", "header"],
   locations: ["header", "locations", "footer"],
-  home: ["valueStrip", "about", "locations", "storage", "features", "reviews", "cta"],
+  home: ["valueStrip", "about", "locations", "storage", "steps", "features", "security", "faq", "reviews", "cta"],
   about: ["aboutHero", "aboutCta"],
   features: ["featuresHero", "featuresCta"],
   contact: ["contactHero", "contactPage"],

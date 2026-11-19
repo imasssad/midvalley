@@ -11,6 +11,8 @@ export type PhotoVariant = "photo" | "logo" | "banner" | "bannerOptional";
 export type Field =
   | { kind: "text"; key: string; label: string; help?: string; multiline?: boolean; max: number; inputType?: TextInput; placeholder?: string }
   | { kind: "toggle"; key: string; label: string; help?: string }
+  /** A whole day (YYYY-MM-DD), or empty. */
+  | { kind: "date"; key: string; label: string; help?: string }
   | { kind: "check"; key: string; label: string; help?: string }
   | { kind: "select"; key: string; label: string; help?: string; options: { value: string; label: string }[] }
   | { kind: "radio"; key: string; label: string; help?: string; options: { value: string; label: string; help?: string }[] }
@@ -130,6 +132,37 @@ export const screenBlocks: Record<ScreenKey, Block[]> = {
       title: "Original video",
       help: "The video itself (hero-original.mp4) always stays on the site, so “Original video” can be chosen at any time.",
       fields: [photo("poster", "Still picture for the video", "Shown while the video loads, and instead of it for visitors who prefer less motion.")],
+    },
+  ],
+
+  specials: [
+    {
+      path: ["specials"],
+      title: "The offer",
+      help: "A slim navy bar at the very top of every page, above the header. Keep the offer short: one line on computers.",
+      fields: [
+        { kind: "toggle", key: "enabled", label: "Show the specials bar" },
+        line("text", "Offer", 160, "For example: Winter Special: Rent 4 months, get up to 4 months free*"),
+        line("finePrint", "Small print (optional)", 200, "Shown smaller after the offer, for example: *On select units. New customers only. Leave empty to hide it."),
+      ],
+    },
+    {
+      path: ["specials"],
+      title: "Button (optional)",
+      help: "A small orange button at the end of the bar. Clear both boxes for no button. To send people to a location's online rental, copy its Rent Online link from Locations & contact.",
+      fields: [
+        line("buttonLabel", "Words on the button", 40, "For example: Rent Online at Noble."),
+        link("buttonUrl", "Where the button goes", "A full link starting with https://. Links to other websites open in a new tab."),
+      ],
+    },
+    {
+      path: ["specials"],
+      title: "When it shows (optional)",
+      help: "Dates are in California time and the last day is included. With no dates, the bar shows until you switch it off.",
+      fields: [
+        { kind: "date", key: "startDate", label: "First day (optional)" },
+        { kind: "date", key: "endDate", label: "Last day (optional)" },
+      ],
     },
   ],
 
@@ -294,6 +327,26 @@ export const screenBlocks: Record<ScreenKey, Block[]> = {
       ],
     },
     {
+      path: ["home", "steps"],
+      title: "Rent in three steps",
+      help: "Numbered steps right after Storage Sizes, with the Rent Online and Call buttons under them (those come from Locations & contact). Remove every step to hide the section.",
+      fields: [
+        { kind: "toggle", key: "enabled", label: "Show the steps" },
+        line("heading", "Heading", 120),
+        {
+          kind: "list",
+          key: "items",
+          label: "Steps",
+          help: "Numbered 1, 2, 3 in this order. Three steps look best.",
+          itemName: "step",
+          max: 4,
+          itemTitle: (v, i) => `${i + 1}. ${String(v.title || "New step")}`,
+          newItem: () => ({ title: "", body: "" }),
+          fields: [line("title", "Title", 60), para("body", "Text", 300)],
+        },
+      ],
+    },
+    {
       path: ["home", "features"],
       title: "Facility Features",
       help: "The blue section with the list of features. The full Facility Features page has its own screen.",
@@ -302,6 +355,50 @@ export const screenBlocks: Record<ScreenKey, Block[]> = {
         para("intro", "Introduction", 800),
         { kind: "strings", key: "list", label: "Features list", itemName: "feature", max: 20, maxLength: 90 },
         photo("photo", "Photo"),
+      ],
+    },
+    {
+      path: ["home", "security"],
+      title: "Security",
+      help: "Right after Facility Features: your text and up to three big numbers beside a photo.",
+      fields: [
+        { kind: "toggle", key: "enabled", label: "Show the Security section" },
+        line("heading", "Heading", 120),
+        para("text", "Text", 800),
+        {
+          kind: "list",
+          key: "stats",
+          label: "Big numbers",
+          help: "Up to three. Keep the number or word short (for example 365 or On-site); the line under it says what it means.",
+          itemName: "number",
+          max: 3,
+          itemTitle: (v, i) => String(v.value || `Number ${i + 1}`),
+          newItem: () => ({ value: "", label: "" }),
+          fields: [line("value", "Number or short word", 14), line("label", "What it means", 90)],
+        },
+        photo("photo", "Photo"),
+        line("photoLabel", "Small label on the photo (optional)", 60, "For example: Video Surveillance. Leave empty to hide it."),
+      ],
+    },
+    {
+      path: ["home", "faq"],
+      title: "Questions & answers (FAQ)",
+      help: "After Security. Each question opens to show its answer. Google may also show them in search results. Remove every question to hide the section.",
+      fields: [
+        { kind: "toggle", key: "enabled", label: "Show the questions & answers" },
+        line("heading", "Heading", 120),
+        line("intro", "Line under the heading (optional)", 300, "Leave empty to hide it. The Call buttons under the questions come from Locations & contact."),
+        {
+          kind: "list",
+          key: "items",
+          label: "Questions",
+          itemName: "question",
+          max: 20,
+          collapse: true,
+          itemTitle: (v, i) => String(v.q || `Question ${i + 1}`),
+          newItem: () => ({ q: "", a: "" }),
+          fields: [line("q", "Question", 200), para("a", "Answer", 1200)],
+        },
       ],
     },
     {
@@ -571,6 +668,7 @@ export const screenBlocks: Record<ScreenKey, Block[]> = {
         line("required", "Explains the * on required form fields", 40),
         line("newTab", "Read out after links that open a new tab", 40),
         line("skipToContent", "Skip link for keyboard users", 40),
+        line("specialsBar", "Name of the specials bar (read out by screen readers)", 40),
       ],
     },
     {

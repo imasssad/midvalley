@@ -88,6 +88,16 @@ export async function getYear(): Promise<number> {
   return new Date().getFullYear();
 }
 
+/**
+ * "Now" for the specials bar's dates, cached for up to an hour so pages can still be prerendered. The bar also
+ * re-checks its dates against the visitor's clock before it is painted (components/SpecialsBar.tsx).
+ */
+export async function getNow(): Promise<number> {
+  "use cache";
+  cacheLife("hours");
+  return Date.now();
+}
+
 /** The content exactly as stored (not filled in from defaults), or null when nothing has been saved yet. */
 export async function readStoredContent(): Promise<unknown> {
   return readJSON(CONTENT_PATH);

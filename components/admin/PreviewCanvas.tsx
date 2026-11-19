@@ -1,8 +1,8 @@
 "use client";
 
 // The inside of a live preview (app/admin/preview). The editor sends the draft content with postMessage and this
-// draws the website's OWN components with it (Header, HeroBanner, the homepage sections, LocationCard, CtaBand,
-// PageHero, ContactForm, Footer), so the preview always looks like the real thing. It runs in its own frame so the
+// draws the website's OWN components with it (SpecialsBar, Header, HeroBanner, the homepage sections, LocationCard,
+// CtaBand, PageHero, ContactForm, Footer), so the preview always looks like the real thing. It runs in its own frame so the
 // website's styles and screen-size rules apply exactly as they do on the site. It only imports those components;
 // the public pages' code paths are untouched.
 //
@@ -15,17 +15,23 @@ import { CtaBand } from "@/components/CtaBand";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { AboutIntro } from "@/components/home/AboutIntro";
+import { Faq } from "@/components/home/Faq";
 import { FeaturesList } from "@/components/home/FeaturesList";
 import { HeroBanner } from "@/components/home/HeroBanner";
 import { Locations } from "@/components/home/Locations";
 import { pickItems } from "@/components/home/pickItems";
+import { RentSteps } from "@/components/home/RentSteps";
+import { homeNumbers, showSecurity, visibleFaq, visibleSteps } from "@/components/home/sectionNumbers";
+import { Security } from "@/components/home/Security";
 import { StorageOptions } from "@/components/home/StorageOptions";
 import { Testimonials } from "@/components/home/Testimonials";
-import { numbersAfterSizes, UnitSizes } from "@/components/home/UnitSizes";
+import { UnitSizes } from "@/components/home/UnitSizes";
 import { ValueStrip } from "@/components/home/ValueStrip";
 import { LocationCard } from "@/components/LocationCard";
 import { gateHoursChip, PageHero, type HeroChip } from "@/components/PageHero";
+import { SpecialsBar } from "@/components/SpecialsBar";
 import type { SiteContent } from "@/lib/content-schema";
+import { specialsHiddenReason } from "@/lib/format";
 import type { ScreenKey } from "@/lib/screens";
 import { PREVIEW_MSG, previewParts, type PreviewLayout, type PreviewTarget } from "./preview-protocol";
 
@@ -47,6 +53,14 @@ const featureChips = (c: SiteContent): HeroChip[] => {
 };
 
 const parts: Part[] = [
+  // The specials screen draws the bar even while it's off or outside its dates (the note above the preview says so);
+  // the overview shows it only when visitors see it.
+  {
+    id: "specials",
+    screen: "specials",
+    render: ({ c, now }) => <SpecialsBar content={c} now={now} preview />,
+    hidden: ({ c, now, target }) => (target === "all" ? specialsHiddenReason(c.specials, now) : c.specials.text ? null : "The specials bar is hidden because it has no offer."),
+  },
   { id: "header", screen: "header", render: ({ c }) => <Header content={c} /> },
   { id: "hero", screen: "banner", render: ({ c }) => <HeroBanner content={c} /> },
   {
@@ -55,8 +69,8 @@ const parts: Part[] = [
     render: ({ c }) => <ValueStrip content={c} />,
     hidden: ({ c }) => (!c.valueStrip.enabled ? "The value strip is switched off." : c.valueStrip.items.length ? null : "The value strip is hidden because it has no points."),
   },
-  { id: "about", screen: "home", render: ({ c }) => <AboutIntro content={c} no="01" /> },
-  { id: "locations", screen: "locations", render: ({ c }) => <Locations content={c} no="02" /> },
+  { id: "about", screen: "home", render: ({ c }) => <AboutIntro content={c} no={homeNumbers(c).about} /> },
+  { id: "locations", screen: "locations", render: ({ c }) => <Locations content={c} no={homeNumbers(c).locations} /> },
   // Storage Sizes (it hides itself while switched off or empty) is drawn with Storage Options, so every preview that
   // shows the storage part shows it in its place.
   {
@@ -64,16 +78,34 @@ const parts: Part[] = [
     screen: "home",
     render: ({ c }) => (
       <>
-        <StorageOptions content={c} no="03" />
-        <UnitSizes content={c} no="04" />
+        <StorageOptions content={c} no={homeNumbers(c).options} />
+        <UnitSizes content={c} no={homeNumbers(c).sizes} />
       </>
     ),
   },
-  { id: "features", screen: "home", render: ({ c }) => <FeaturesList content={c} no={numbersAfterSizes(c).features} /> },
+  {
+    id: "steps",
+    screen: "home",
+    render: ({ c }) => <RentSteps content={c} no={homeNumbers(c).steps} />,
+    hidden: ({ c }) => (!c.home.steps.enabled ? "The three steps are switched off." : visibleSteps(c).length ? null : "The three steps are hidden because there are no steps."),
+  },
+  { id: "features", screen: "home", render: ({ c }) => <FeaturesList content={c} no={homeNumbers(c).features} /> },
+  {
+    id: "security",
+    screen: "home",
+    render: ({ c }) => <Security content={c} no={homeNumbers(c).security} />,
+    hidden: ({ c }) => (showSecurity(c) ? null : "The Security section is switched off."),
+  },
+  {
+    id: "faq",
+    screen: "home",
+    render: ({ c }) => <Faq content={c} no={homeNumbers(c).faq} />,
+    hidden: ({ c }) => (!c.home.faq.enabled ? "The questions & answers are switched off." : visibleFaq(c).length ? null : "The questions & answers are hidden because there are no questions."),
+  },
   {
     id: "reviews",
     screen: "reviews",
-    render: ({ c }) => <Testimonials content={c} no={numbersAfterSizes(c).reviews} />,
+    render: ({ c }) => <Testimonials content={c} no={homeNumbers(c).reviews} />,
     hidden: ({ c }) => (c.testimonials.items.length ? null : "The reviews section is hidden until there is at least one review."),
   },
   { id: "cta", screen: "home", render: ({ c }) => <CtaBand content={c} heading={c.home.cta.heading} variant="rent" /> },

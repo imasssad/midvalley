@@ -8,6 +8,7 @@ import { storageMode } from "@/lib/storage";
 const tasks = [
   { href: "/admin/banner", title: "Change the promo banner", text: "Upload this month's banner, or bring back the last one." },
   { href: "/admin/banner#f-hero-mode", title: "Show the video instead", text: "Switch between the promo banner and the original video." },
+  { href: "/admin/specials", title: "Change the specials bar", text: "The offer in the slim bar at the very top of every page, and its dates." },
   { href: "/admin/locations", title: "Change hours, phone or links", text: "Gate and office hours, phone numbers, payment and Rent Online links." },
   { href: "/admin/messages", title: "Read messages", text: "Everything sent with the contact form." },
   { href: "/admin/reviews", title: "Add a customer review", text: "Real reviews only, with permission." },
