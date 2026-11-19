@@ -84,29 +84,32 @@
     "mode": "image",
     "banner": {
       "desktop": {
-        "src": "/images/hero-winter-desktop.jpg",
+        "src": "/images/banner/winter-landscape-1536x1024.webp",
         "alt": "",
         "focus": "50% 50%",
-        "width": 2880,
-        "height": 1440
+        "width": 1536,
+        "height": 1024,
+        "original": "/images/banner/winter-landscape-1536x1024.jpg"
       },
       "tablet": {
-        "src": "/images/hero-winter-tablet.jpg",
+        "src": "/images/banner/winter-landscape-1536x1024.webp",
         "alt": "",
         "focus": "50% 50%",
-        "width": 2304,
-        "height": 1536
+        "width": 1536,
+        "height": 1024,
+        "original": "/images/banner/winter-landscape-1536x1024.jpg"
       },
       "mobile": {
-        "src": "/images/hero-winter-mobile.jpg",
+        "src": "/images/banner/winter-portrait-1024x1536.webp",
         "alt": "",
         "focus": "50% 50%",
-        "width": 1080,
-        "height": 2276
+        "width": 1024,
+        "height": 1536,
+        "original": "/images/banner/winter-portrait-1024x1536.jpg"
       },
-      "alt": "Mid Valley Storage Winter Special: rent 4 months, get up to 4 months free. On select units, new customers only, Noble location only."
+      "alt": "Winter special: buy up to 4 months, get up to 4 months free at Mid Valley Storage. Limited time only, while supplies last. New customers only. Noble location only."
     },
-    "disclaimer": "*On select units. New customers only. Noble location only.",
+    "disclaimer": "*On select units. New customers only. Noble location only. Please visit office for full details.",
     "video": {
       "src": "/video/hero-original.mp4",
       "poster": {
@@ -140,8 +143,8 @@
   },
   "specials": {
     "enabled": true,
-    "text": "Winter Special: Rent 4 months, get up to 4 months free*",
-    "finePrint": "*On select units. New customers only. Noble location only.",
+    "text": "Winter Special: Buy up to 4 months, get up to 4 months free*",
+    "finePrint": "*On select units. New customers only. Noble location only. Please visit office for full details.",
     "buttonLabel": "Rent Online at Noble",
     "buttonUrl": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=e398d43a-ce49-4691-b9af-8157e3883811#/move-in",
     "startDate": "",
@@ -350,48 +353,32 @@
   },
   "unitSizes": {
     "enabled": true,
+    "showOnFeatures": true,
     "heading": "Storage Sizes",
     "groups": [
       {
         "name": "Regular Storage",
         "note": "",
         "sizes": [
-          "5x5",
           "5x7",
-          "5x8",
           "5x10",
-          "6x10",
-          "9x10",
-          "9x14",
-          "10x5",
-          "10x9",
+          "7x10",
           "10x10",
-          "10x12",
-          "10x12.5",
           "10x15",
-          "10x30",
-          "10x31",
-          "10x33",
-          "12x30",
-          "12x40",
-          "13x10",
-          "15x30",
-          "15x40",
-          "15x50",
-          "20x50"
+          "10x20",
+          "10x25",
+          "10x30"
         ]
       },
       {
         "name": "Parking",
         "note": "",
         "sizes": [
-          "11x14",
-          "11x21",
-          "11x25",
-          "11x30",
-          "11x35",
-          "11x40",
-          "11x50"
+          "10x5",
+          "10x20",
+          "10x25",
+          "10x30",
+          "10x40"
         ]
       },
       {
@@ -678,7 +665,7 @@
     },
     "shareImage": {
       "src": "/images/share.jpg",
-      "alt": "Mid Valley Storage Winter Special: rent 4 months, get up to 4 months free",
+      "alt": "Mid Valley Storage Winter Special: buy up to 4 months, get up to 4 months free",
       "focus": "50% 50%"
     }
   }

@@ -26,6 +26,8 @@ const KNOWN_SIZES: Record<string, Size> = {
   "/images/hero-winter-desktop.jpg": { width: 2880, height: 1440 },
   "/images/hero-winter-tablet.jpg": { width: 2304, height: 1536 },
   "/images/hero-winter-mobile.jpg": { width: 1080, height: 2276 },
+  "/images/banner/winter-landscape-1536x1024.webp": { width: 1536, height: 1024 },
+  "/images/banner/winter-portrait-1024x1536.webp": { width: 1024, height: 1536 },
 };
 
 /** Banners uploaded in the admin panel carry their measured size (width/height, saved when the upload was
@@ -64,7 +66,7 @@ function QuickActions({ content }: { content: SiteContent }) {
               {l.name}
             </p>
             <div className="h-quick-group">
-              {/* PLACEHOLDER (to confirm): rentOnlineUrl is the old QuikStor reserve link until the client confirms it. */}
+              {/* rentOnlineUrl: the location's Storedge move-in link (confirmed by the client). */}
               {l.rentOnlineUrl && (
                 <a
                   className="btn btn-cta h-quick-btn enter-rise"
