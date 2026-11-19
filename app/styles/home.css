@@ -5,9 +5,11 @@
    Order and grounds: promo banner; action dock (white glass panel on a mist-to-white ground with a fading dot
    grid); value strip (navy glossy bar straddling the white/mist edge); 01 About (mist, the h1, layered photo with
    glass chips); 02 Our Locations (white, glow + dots);
-   03 Storage Options (mist, bento of photo cards + thumbnail strip); 04 Storage Sizes (white, glossy cards of size pills); 05 Facility Features (glossy blue band with
-   dots, cloud of glass pills); 06 reviews (white,
-   only when there are some); closing band (navy, components/CtaBand.tsx).
+   03 Storage Options (mist, bento of photo cards + thumbnail strip); 04 Storage Sizes (white, glossy cards of size
+   pills); rent in three steps (mist, glossy step cards on a glowing line); Facility Features (glossy blue band with
+   dots, cloud of glass pills); Security (white, photo + glossy stat tiles); questions & answers (mist, glossy
+   <details> cards); reviews (white, only when there are some); closing band (navy, components/CtaBand.tsx).
+   Section numbers after 03 depend on which sections are shown (components/home/sectionNumbers.ts).
    Motion here is CSS hover/tap feedback only (transform and opacity, inside prefers-reduced-motion:
    no-preference); scroll reveals, pops, curtains and parallax come from components/motion/* and
    components/home/Pop.tsx. Glow layers use a static blur; only their opacity and transform change. Decorative
@@ -1474,4 +1476,600 @@ html:has(.h-lb[open]) {
     gap: 0.5rem 0.65rem;
     padding-inline: 1rem;
   }
+}
+
+/* ---- Rent Online / Call buttons per location (components/home/LocationActions.tsx): under the three steps and the
+   questions. A tidy centred grid: one row per location, its orange Rent Online button and its white Call button
+   side by side, each column as wide as its widest button (.is-pairs; a location without a rent link keeps its Call
+   button in the second column). Calls only (questions): one column. Phones: full-width buttons, one location
+   after the other. ---- */
+.h-actions {
+  display: grid;
+  grid-template-columns: max-content;
+  justify-content: center;
+  gap: 0.75rem 1rem;
+  margin-top: clamp(2rem, 1.4rem + 2vw, 3.25rem);
+}
+.h-actions.is-pairs {
+  grid-template-columns: repeat(2, max-content);
+}
+.h-actions-group {
+  display: contents;
+}
+.h-actions.is-pairs .btn-line {
+  grid-column: 2;
+}
+.h-actions-btn > span {
+  white-space: nowrap;
+}
+.h-actions-loc {
+  padding-left: 0.65rem;
+  border-left: 2px solid rgba(15, 34, 54, 0.28);
+}
+.btn-line .h-actions-loc {
+  border-left-color: rgba(0, 84, 151, 0.3);
+}
+@media (max-width: 680px) {
+  .h-actions,
+  .h-actions.is-pairs {
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: stretch;
+    gap: 0.65rem;
+  }
+  .h-actions.is-pairs .btn-line {
+    grid-column: auto;
+  }
+  /* A little more room between one location's buttons and the next location's. */
+  .h-actions-group + .h-actions-group > :first-child {
+    margin-top: 0.6rem;
+  }
+  .h-actions-btn {
+    flex-wrap: wrap;
+    gap: 0.5rem 0.65rem;
+    padding-inline: 1rem;
+  }
+}
+
+/* ---- Rent in three steps (components/home/RentSteps.tsx; after Storage Sizes, while switched on and holding
+   steps): mist ground with a soft glow; the steps as glossy .card tiles in a row (--h-steps = how many), joined by
+   a glowing gradient line at the height of the numbers with a glossy arrow chip in each gap; big condensed step
+   numbers in gradient text beside a small glossy icon chip; in a row the cards share their rows (subgrid) so
+   titles and texts line up. 900px down: stacked (a 40rem column on tablets, buttons aligned left with it), the
+   line runs down the left behind the cards' edge and the arrow chips point down. Cards are moved by Motion (StaggerItem), so their lift is on
+   the inner .card. White instead of mist when Storage Sizes is hidden (Storage Options above is mist). ---- */
+.h-steps {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+.h-options + .h-steps {
+  background: var(--white);
+}
+.h-steps-blob {
+  top: 20%;
+  right: -10%;
+  width: 46vw;
+}
+.h-steps-stage {
+  --h-steps-gap: clamp(1.5rem, 0.8rem + 2.6vw, 3.5rem);
+  position: relative;
+  isolation: isolate;
+}
+.h-steps-line {
+  position: absolute;
+  z-index: -1;
+  top: clamp(2.6rem, 2.2rem + 1vw, 3.2rem);
+  left: 8%;
+  right: 8%;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(11, 111, 196, 0.15) 0%, var(--blue-bright) 22%, var(--blue) 55%, var(--navy) 85%, rgba(10, 46, 85, 0.15) 100%);
+  box-shadow: 0 0 18px 2px rgba(11, 111, 196, 0.35);
+}
+.h-steps-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(var(--h-steps, 3), minmax(0, 1fr));
+  gap: var(--h-steps-gap);
+}
+.h-step-item {
+  position: relative;
+  display: grid;
+  min-width: 0;
+}
+.h-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: clamp(1.35rem, 1rem + 1.2vw, 2.25rem);
+}
+.h-step-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.h-step-no {
+  font-family: var(--font-display);
+  font-stretch: var(--condensed);
+  font-size: clamp(3.2rem, 2.6rem + 2vw, 4.6rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.h-step-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--grad-blue);
+  box-shadow:
+    var(--gloss),
+    0 0 0 5px rgba(0, 84, 151, 0.1),
+    0 10px 22px -10px rgba(0, 84, 151, 0.8);
+  color: #fff;
+}
+.h-step-title {
+  color: var(--navy);
+  font-size: clamp(1.45rem, 1.2rem + 0.9vw, 2rem);
+  letter-spacing: 0.02em;
+}
+.h-step-body {
+  color: var(--text);
+}
+/* The glossy arrow chip, centred in the gap after a card, on the line. */
+.h-step-arrow {
+  position: absolute;
+  z-index: 2;
+  top: clamp(2.6rem, 2.2rem + 1vw, 3.2rem);
+  right: calc(var(--h-steps-gap) / -2);
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid rgba(0, 84, 151, 0.2);
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fff 0%, var(--mist) 100%);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 8px 18px -8px rgba(0, 62, 112, 0.7);
+  color: var(--blue);
+  transform: translate(50%, calc(-50% + 2px));
+}
+/* In a row, the cards share three rows (subgrid): every title starts, and every text starts, at the same height
+   whichever title wraps. */
+@media (min-width: 901px) {
+  .h-steps-list {
+    row-gap: 0.9rem;
+  }
+  .h-step-item {
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+  }
+  .h-step {
+    grid-row: 1 / -1;
+    display: grid;
+    grid-template-rows: subgrid;
+    align-content: start;
+  }
+}
+.h-step .h-step-icon {
+  transition: transform 0.35s var(--ease);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .h-step:hover .h-step-icon {
+    transform: rotate(-8deg) scale(1.08);
+  }
+}
+@media (max-width: 900px) {
+  .h-steps-line {
+    top: 1.5rem;
+    bottom: 1.5rem;
+    left: clamp(2.6rem, 2.2rem + 1vw, 3.2rem);
+    right: auto;
+    width: 4px;
+    height: auto;
+    background: linear-gradient(180deg, rgba(11, 111, 196, 0.15) 0%, var(--blue-bright) 15%, var(--blue) 55%, var(--navy) 88%, rgba(10, 46, 85, 0.15) 100%);
+  }
+  .h-steps-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.25rem;
+  }
+  /* Tablets: a narrower column so the texts don't sit as one long line in wide empty cards; the buttons line up
+     with it on the left. */
+  .h-steps-stage {
+    max-width: 40rem;
+  }
+  .h-steps-actions {
+    justify-content: start;
+  }
+  .h-step-arrow {
+    top: auto;
+    right: auto;
+    bottom: -1.125rem;
+    left: clamp(2.6rem, 2.2rem + 1vw, 3.2rem);
+    transform: translate(calc(-50% + 2px), 50%) rotate(90deg);
+  }
+}
+@media (max-width: 680px) {
+  .h-steps-line,
+  .h-step-arrow {
+    left: 2.25rem;
+  }
+  .h-step-no {
+    font-size: 3.2rem;
+  }
+  .h-step-icon {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+}
+
+/* ---- Security (components/home/Security.tsx; after Facility Features, while switched on): white ground; the photo
+   on the left (rounded .frame with parallax over a glow blob and an offset dot panel, a white glass chip on its
+   bottom edge), the text on the right with up to three glossy stat tiles (big condensed numbers in gradient text).
+   Stacked from 900px down, text first. ---- */
+.h-sec {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+.h-sec-blob {
+  top: 12%;
+  left: -12%;
+  width: 46vw;
+}
+.h-sec-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: clamp(2.5rem, 1rem + 5vw, 6rem);
+  align-items: center;
+}
+.h-sec-stage {
+  position: relative;
+  isolation: isolate;
+}
+.h-sec-dots {
+  position: absolute;
+  z-index: -1;
+  top: -1.75rem;
+  left: -1.75rem;
+  width: 62%;
+  height: 72%;
+  border-radius: var(--radius-card);
+  -webkit-mask-image: radial-gradient(farthest-side at 30% 30%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(farthest-side at 30% 30%, #000 40%, transparent 100%);
+}
+.h-sec-frame {
+  transition: transform 0.45s var(--ease);
+}
+.h-sec-photo {
+  width: 100%;
+  aspect-ratio: 5 / 4;
+}
+.h-sec-float {
+  position: absolute;
+  right: -1.5rem;
+  bottom: -1.5rem;
+  z-index: 3;
+  max-width: calc(100% - 1rem);
+}
+.h-sec-chip {
+  padding-right: 1.25rem;
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--navy);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 20px 36px -18px rgba(7, 31, 58, 0.7);
+}
+.h-sec-text .lede {
+  max-width: 36em;
+}
+.h-sec-stats {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+  gap: clamp(0.75rem, 0.5rem + 0.8vw, 1.25rem);
+  margin-top: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem);
+}
+.h-sec-stat-item {
+  display: grid;
+  min-width: 0;
+}
+.h-sec-stat {
+  --h-sec-pad: clamp(1rem, 0.8rem + 0.7vw, 1.4rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: var(--h-sec-pad);
+  padding-top: calc(var(--h-sec-pad) + 0.95rem);
+}
+/* A short glossy blue line inside the tile, above the value and in line with it (the card's glow layer, reused:
+   these tiles don't lift). Clear of the card's border and rounded corner. */
+.h-sec-stat::before {
+  z-index: 1;
+  inset: var(--h-sec-pad) auto auto var(--h-sec-pad);
+  width: 2.5rem;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--grad-blue);
+  box-shadow: 0 2px 8px -2px rgba(0, 84, 151, 0.55);
+  filter: none;
+  opacity: 1;
+}
+.h-sec-value {
+  font-family: var(--font-display);
+  font-stretch: var(--condensed);
+  font-size: clamp(2.2rem, 1.8rem + 1.4vw, 3rem);
+  font-weight: 800;
+  line-height: 0.95;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+.h-sec-label {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .h-sec-frame:hover {
+    transform: translateY(-5px);
+  }
+  .h-sec-frame:hover .h-zoom {
+    transform: scale(1.04);
+  }
+}
+/* Reviews right after Security (questions hidden): mist, so two white sections don't run together. */
+.h-sec + .h-reviews {
+  background: var(--mist);
+}
+@media (max-width: 900px) {
+  .h-sec-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .h-sec-text {
+    order: -1;
+  }
+  .h-sec-photo {
+    aspect-ratio: 2 / 1;
+  }
+  .h-sec-float {
+    right: 0.75rem;
+  }
+}
+@media (max-width: 680px) {
+  .h-sec-photo {
+    aspect-ratio: 5 / 4;
+  }
+  .h-sec-dots {
+    top: -1rem;
+    left: -0.75rem;
+  }
+  /* One tile per row, the number beside its meaning; the numbers share one column (subgrid), as wide as the
+     widest, so the meanings line up. */
+  .h-sec-stats {
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 0.65rem;
+  }
+  .h-sec-stat-item,
+  .h-sec-stat {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    align-items: center;
+  }
+  .h-sec-stat {
+    column-gap: 1rem;
+  }
+  .h-sec-value {
+    font-size: 2.1rem;
+  }
+}
+
+/* ---- Questions & answers (components/home/Faq.tsx; after Security, while switched on and holding questions): mist
+   ground. Desktop: heading, intro and the Call buttons on the left, the
+   questions on the right; below 1100px: heading, questions, buttons. Each question is a glossy .card around a
+   native <details>: the question in condensed caps beside a glossy round + chip that turns to × when open
+   (transform only). The answer slides open where the browser can animate to "auto" (::details-content). ---- */
+.h-faq {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+.h-faq-blob {
+  top: 30%;
+  right: -14%;
+  width: 50vw;
+}
+.h-faq-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-areas:
+    "head list"
+    "actions list";
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(2.5rem, 1rem + 5vw, 6rem);
+}
+.h-faq-head {
+  grid-area: head;
+}
+.h-faq-head .sec-head {
+  margin-bottom: clamp(1.25rem, 1rem + 1vw, 2rem);
+}
+.h-faq-intro {
+  max-width: 28em;
+}
+.h-faq-list {
+  grid-area: list;
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
+}
+/* The card is also the Motion item (StaggerItem): no CSS transition on its transform, which Motion drives. */
+.h-faq-card {
+  min-width: 0;
+  transition: none;
+}
+.h-faq-actions {
+  grid-area: actions;
+  align-self: start;
+  justify-content: start;
+  justify-items: stretch;
+}
+.h-faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.5rem;
+  padding: 1rem 1.1rem 1rem clamp(1.1rem, 0.9rem + 0.8vw, 1.6rem);
+  border-radius: var(--radius-card);
+  color: var(--navy);
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.4rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  cursor: pointer;
+  list-style: none;
+}
+.h-faq-q::-webkit-details-marker {
+  display: none;
+}
+.h-faq-q::marker {
+  content: "";
+}
+.h-faq-q:focus-visible {
+  outline-offset: -3px;
+}
+.h-faq-q-text {
+  min-width: 0;
+  text-wrap: balance;
+}
+/* The + chip: two bars on a glossy blue disc; turns 45° into × when open. */
+.h-faq-toggle {
+  position: relative;
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--grad-blue);
+  box-shadow:
+    var(--gloss),
+    0 0 0 4px rgba(0, 84, 151, 0.1),
+    0 8px 16px -8px rgba(0, 84, 151, 0.8);
+  transition: transform 0.4s var(--ease);
+}
+.h-faq-toggle::before,
+.h-faq-toggle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.9rem;
+  height: 2.5px;
+  margin: -1.25px 0 0 -0.45rem;
+  border-radius: 2px;
+  background: #fff;
+}
+.h-faq-toggle::after {
+  transform: rotate(90deg);
+}
+.h-faq-item[open] .h-faq-toggle {
+  transform: rotate(45deg);
+}
+.h-faq-a {
+  padding: 0 clamp(1.1rem, 0.9rem + 0.8vw, 1.6rem) 1.35rem;
+}
+.h-faq-a p {
+  max-width: 44em;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--text);
+}
+@media (hover: hover) {
+  .h-faq-q:hover .h-faq-q-text {
+    color: var(--blue);
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .h-faq-q:hover .h-faq-toggle {
+    transform: scale(1.08);
+  }
+  .h-faq-item[open] .h-faq-q:hover .h-faq-toggle {
+    transform: rotate(45deg) scale(1.08);
+  }
+}
+/* Smooth open/close where the browser can animate to "auto"; elsewhere it opens at once. */
+@supports (interpolate-size: allow-keywords) and selector(::details-content) {
+  @media (prefers-reduced-motion: no-preference) {
+    .h-faq-item {
+      interpolate-size: allow-keywords;
+    }
+    .h-faq-item::details-content {
+      block-size: 0;
+      overflow-y: clip;
+      transition:
+        block-size 0.4s var(--ease),
+        content-visibility 0.4s allow-discrete;
+    }
+    .h-faq-item[open]::details-content {
+      block-size: auto;
+    }
+  }
+}
+@media (max-width: 1100px) {
+  .h-faq-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "head"
+      "list"
+      "actions";
+    grid-template-rows: auto;
+  }
+  .h-faq-head {
+    margin-bottom: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+  }
+  .h-faq-actions {
+    grid-template-columns: repeat(2, max-content);
+    justify-content: center;
+  }
+}
+@media (max-width: 680px) {
+  .h-faq-actions {
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: stretch;
+  }
+  .h-faq-actions .h-actions-group + .h-actions-group > :first-child {
+    margin-top: 0;
+  }
+  .h-faq-q {
+    padding-right: 0.85rem;
+  }
+}
+
+/* ---- Rendering cost: the browser skips layout and paint for the homepage sections below the first screen until
+   they come near the viewport (content-visibility: auto). They stay in the page for screen readers, search and
+   find-in-page; contain-intrinsic-size keeps the scrollbar stable (the "auto" remembers each real height). ---- */
+.h-locations,
+.h-options,
+.h-sizes,
+.h-steps,
+.h-features,
+.h-sec,
+.h-faq,
+.h-reviews {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }

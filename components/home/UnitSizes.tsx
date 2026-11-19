@@ -26,15 +26,6 @@ export function visibleSizeGroups(content: SiteContent) {
     .filter((g) => g.name.trim() && g.sizes.length > 0);
 }
 
-/**
- * Decorative numbers of the homepage sections after Storage Sizes (it is "04"): they move up by one while it is
- * hidden, so the numbers never skip. Shared by the homepage and the admin preview.
- */
-export function numbersAfterSizes(content: SiteContent): { features: string; reviews: string } {
-  const n = visibleSizeGroups(content).length > 0 ? 5 : 4;
-  return { features: String(n).padStart(2, "0"), reviews: String(n + 1).padStart(2, "0") };
-}
-
 const DIMS = /^\s*(\d{1,3}(?:\.\d{1,2})?)\s*['′]?\s*[x×X]\s*(\d{1,3}(?:\.\d{1,2})?)\s*['′]?\s*$/;
 
 /** The outline's width and depth as fractions of its box (longest side = 1), or null when the size isn't "W x D". */
