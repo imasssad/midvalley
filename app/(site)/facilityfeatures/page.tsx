@@ -7,6 +7,8 @@
 //     A) layered: a big rounded photo with the text on a glossy card overlapping its edge (below it on phones);
 //     B) editorial: the text beside the rounded photo, which sits on an offset dot-grid panel.
 //   Each photo carries a glossy blue number badge ("01" / "08", decorative) over its top edge.
+// - "Storage Sizes" (components/home/UnitSizes.tsx, placement "features"): the same cards as on the homepage, on the
+//   ground the last feature row doesn't use, while content.unitSizes.showOnFeatures is on.
 // - The closing "Reserve at <location>" band (CtaBand).
 // Motion: the index pills come in one after another; in each row the text rises in from the side, the photo
 // drifts with parallax (A) or is uncovered by a sliding curtain (B), lifts onto its glow on hover, and the badge
@@ -15,6 +17,7 @@ import type { Metadata } from "next";
 import { CtaBand } from "@/components/CtaBand";
 import { PopGroup, PopItem } from "@/components/home/Pop";
 import { pickItems } from "@/components/home/pickItems";
+import { UnitSizes } from "@/components/home/UnitSizes";
 import { Curtain } from "@/components/motion/Curtain";
 import { Parallax } from "@/components/motion/Parallax";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
@@ -169,6 +172,12 @@ export default async function FeaturesPage() {
           );
         })}
       </div>
+
+      <UnitSizes
+        content={content}
+        placement="features"
+        ground={items.length > 0 && groundOf(items.length - 1) === "white" ? "mist" : "white"}
+      />
 
       <CtaBand
         content={content}

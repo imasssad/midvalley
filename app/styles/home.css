@@ -1211,13 +1211,13 @@ html:has(.h-lb[open]) {
   text-transform: uppercase;
 }
 
-/* ---- Storage Sizes (components/home/UnitSizes.tsx; after Storage Options, only while switched on and holding
-   sizes): white ground with two soft glow blobs and a fading dot field; one glossy .card per kind of storage
-   (condensed caps name, glossy blue count badge, a short blue bar under the head), the sizes as glossy white pills
-   in a wrapping grid, each with a tiny decorative floor-plan outline. Desktop: the first group wide on the left, the
-   others stacked on the right (--h-sizes-rest = how many rows it spans); tablet: first full width, the others two
-   by two; phones: one column, three pills per row. Then the orange Rent Online buttons, centred.
-   Pills are moved by Motion (PopItem), so their hover is a rim on ::after and a filled outline, no transform. ---- */
+/* ---- Storage Sizes (components/home/UnitSizes.tsx): on the homepage after Storage Options, and on the Facility
+   Features page after the feature rows (.ff-sizes, same look, no number pill). White ground with two soft glow blobs
+   and a fading dot field; one glossy .card per kind of storage (condensed caps name, glossy blue count badge, a short
+   blue bar under the head), the sizes as glossy white tiles in a wrapping grid. Desktop: three equal cards side by
+   side (fewer kinds: that many columns); tablet (under 980px): two columns, an odd card out (the first) full width on
+   top; phones (680px and under): one column, three tiles per row. Homepage only: the orange Rent Online buttons,
+   centred under the cards. Tiles are moved by Motion (PopItem), so their hover is a rim on ::after, no transform. ---- */
 .h-sizes {
   position: relative;
   isolation: isolate;
@@ -1248,29 +1248,30 @@ html:has(.h-lb[open]) {
 }
 .h-sizes-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  gap: clamp(1.25rem, 0.9rem + 1.6vw, 2.25rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 0.9rem + 1.4vw, 2rem);
 }
-.h-sizes-grid.is-single {
-  grid-template-columns: minmax(0, 1fr);
+.h-sizes-grid.is-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+/* A single kind of storage: one card, not stretched across the whole page. */
+.h-sizes-grid.is-cols-1 {
+  grid-template-columns: minmax(0, 40rem);
+  justify-content: center;
+}
+/* Equal heights in a row: the card fills its (animated) grid item. */
 .h-sizes-item {
   display: grid;
   min-width: 0;
-}
-.h-sizes-item:first-child {
-  grid-row: span var(--h-sizes-rest, 1);
-}
-.h-sizes-grid.is-single .h-sizes-item:first-child {
-  grid-row: auto;
 }
 
 /* The card: .card face (white-to-mist gloss, blue hairline, soft shadow). */
 .h-size-card {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
-  padding: clamp(1.15rem, 0.9rem + 1vw, 2rem);
+  gap: 1.25rem;
+  min-width: 0;
+  padding: clamp(1.15rem, 0.85rem + 1vw, 1.85rem);
 }
 .h-size-head {
   position: relative;
@@ -1296,7 +1297,7 @@ html:has(.h-lb[open]) {
 .h-size-name {
   min-width: 0;
   color: var(--navy);
-  font-size: clamp(1.45rem, 1.2rem + 0.9vw, 2rem);
+  font-size: clamp(1.4rem, 1.15rem + 0.8vw, 1.85rem);
   letter-spacing: 0.02em;
   overflow-wrap: anywhere;
 }
@@ -1304,9 +1305,9 @@ html:has(.h-lb[open]) {
   flex: none;
   display: grid;
   place-items: center;
-  min-width: 2.4rem;
-  height: 2.4rem;
-  padding-inline: 0.6rem;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding-inline: 0.55rem;
   border-radius: 999px;
   background: var(--grad-blue);
   box-shadow:
@@ -1316,37 +1317,31 @@ html:has(.h-lb[open]) {
   color: #fff;
   font-family: var(--font-display);
   font-stretch: 82%;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 800;
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
-.h-size-note {
-  margin-top: -0.35rem;
-  color: var(--muted);
-  font-size: var(--text-sm);
-  line-height: 1.5;
-}
 
-/* The sizes: equal-width glossy pills that wrap into a tidy grid. */
+/* The sizes: equal-width glossy tiles that wrap into a tidy grid, text exactly as typed. */
 .h-size-list {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(7.25rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(5.25rem, 1fr));
   align-content: start;
-  gap: 0.6rem;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
 }
-.h-size-pill {
+.h-size-tile {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  display: grid;
+  place-items: center;
   min-width: 0;
   min-height: 3rem;
-  padding: 0.45rem 0.6rem;
+  padding: 0.45rem 0.5rem;
   border: 1px solid rgba(0, 84, 151, 0.16);
-  border-radius: 999px;
+  border-radius: 14px;
   background: linear-gradient(180deg, #ffffff 0%, var(--mist) 100%);
   box-shadow:
     inset 0 1px 0 #fff,
@@ -1359,14 +1354,11 @@ html:has(.h-lb[open]) {
   line-height: 1.1;
   letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
-}
-.h-size-text {
-  min-width: 0;
-  overflow-wrap: anywhere;
   text-align: center;
+  overflow-wrap: anywhere;
 }
-/* Hover: a blue glossy rim fades in and the outline fills (the pill itself is moved by Motion). */
-.h-size-pill::after {
+/* Hover: a blue glossy rim fades in (the tile itself is moved by Motion). */
+.h-size-tile::after {
   content: "";
   position: absolute;
   inset: -1px;
@@ -1378,41 +1370,18 @@ html:has(.h-lb[open]) {
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
-/* The floor-plan outline: a box with the size's shape (longest side full), its front edge thicker like a door. */
-.h-size-plan {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 1.15rem;
-  height: 1.15rem;
-}
-.h-size-plan > span {
-  box-sizing: border-box;
-  width: calc(var(--pw, 1) * 100%);
-  height: calc(var(--pd, 1) * 100%);
-  min-width: 5px;
-  min-height: 5px;
-  border: 1.5px solid var(--blue);
-  border-bottom-width: 3px;
-  border-radius: 2px;
-  background: rgba(0, 84, 151, 0.1);
-  transition: background-color 0.3s ease;
-}
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .h-size-pill:hover::after {
+  .h-size-tile:hover::after {
     opacity: 1;
-  }
-  .h-size-pill:hover .h-size-plan > span {
-    background-color: rgba(0, 84, 151, 0.45);
   }
 }
 @media (forced-colors: active) {
-  .h-size-pill {
+  .h-size-tile {
     border-color: CanvasText;
   }
 }
 
-/* Rent Online, one button per location, centred under the cards. */
+/* Rent Online, one button per location, centred under the cards (homepage only). */
 .h-sizes-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1428,42 +1397,36 @@ html:has(.h-lb[open]) {
   border-left: 2px solid rgba(15, 34, 54, 0.28);
 }
 
-@media (max-width: 1100px) {
-  .h-sizes-grid {
+@media (max-width: 980px) {
+  .h-sizes-grid,
+  .h-sizes-grid.is-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .h-sizes-item:first-child {
-    grid-column: 1 / -1;
-    grid-row: auto;
-  }
-  /* The last card alone on its row takes the full width. */
-  .h-sizes-item:nth-child(even):last-child {
+  /* An odd number of cards: the first (the longest list) takes the full width on top. */
+  .h-sizes-grid.is-odd .h-sizes-item:first-child {
     grid-column: 1 / -1;
   }
 }
 @media (max-width: 680px) {
-  .h-sizes-grid {
+  .h-sizes-grid,
+  .h-sizes-grid.is-cols-2,
+  .h-sizes-grid.is-cols-1 {
     grid-template-columns: minmax(0, 1fr);
   }
-  .h-sizes-item:nth-child(even):last-child {
+  .h-sizes-grid.is-odd .h-sizes-item:first-child {
     grid-column: auto;
   }
   .h-sizes-dots {
     inset: -1.5rem -1rem;
   }
   .h-size-list {
-    grid-template-columns: repeat(auto-fill, minmax(5.9rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
     gap: 0.5rem;
   }
-  .h-size-pill {
+  .h-size-tile {
     min-height: 2.75rem;
-    padding: 0.4rem 0.45rem;
-    gap: 0.35rem;
-    font-size: 1rem;
-  }
-  .h-size-plan {
-    width: 0.9rem;
-    height: 0.9rem;
+    padding: 0.4rem 0.4rem;
+    font-size: 1.05rem;
   }
   .h-sizes-actions {
     flex-direction: column;

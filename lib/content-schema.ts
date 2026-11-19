@@ -71,11 +71,12 @@ export const photoSchema = z.object({
   /** Uploaded photos only: the optimised file's width and height in pixels. */
   width: pixels,
   height: pixels,
-  /** Uploaded photos only: the file as it was uploaded (src is the optimised WebP made from it). */
+  /** Optimised photos only: the file as it was uploaded or shipped (src is the optimised WebP made from it). */
   original: z
     .string()
     .trim()
-    .regex(/^\/media\/[\w.-]+$/)
+    .regex(/^\/(?:media|images(?:\/[\w-]+)?)\/[\w.-]+$/)
+    .refine((v) => !v.includes(".."))
     .optional(),
 });
 export type Photo = z.infer<typeof photoSchema>;
@@ -109,7 +110,7 @@ export const locationSchema = z.object({
   brandName: required(60),
   /** Storedge tenant portal (Make a payment). */
   paymentUrl: link,
-  /** Online rental / move-in. PLACEHOLDER: the old QuikStor reserve links, not confirmed by the client yet. */
+  /** Online rental: the location's Storedge move-in link ("#/move-in"), confirmed by the client in Update 1. */
   rentOnlineUrl: optionalLink,
   rentOnlineConfirmed: z.boolean(),
   mapsUrl: optionalLink,
@@ -191,7 +192,7 @@ const date = z.union([z.literal(""), z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Pi
 export const specialsSchema = z
   .object({
     enabled: z.boolean(),
-    /** The offer, in one line: "Winter Special: Rent 4 months, get up to 4 months free*" */
+    /** The offer, in one line: "Winter Special: Buy up to 4 months, get up to 4 months free*" */
     text: text(160),
     /** Optional small print after the offer. Empty hides it. */
     finePrint: text(200),
@@ -246,24 +247,29 @@ export const homeSchema = z.object({
 });
 
 /**
- * "Storage Sizes" on the homepage (after Storage Options): the unit sizes per kind of storage, as the client typed
- * them ("10x10", "10x12.5"), in his order. Sizes only: no prices or descriptions. Hidden when switched off, and a
- * group without sizes isn't shown.
+ * "Storage Sizes": the unit sizes per kind of storage (Regular Storage, Parking, Climate Control), as the client typed
+ * them ("10x10"), in his order. Sizes only: no prices, availability, descriptions or locations. It shows on the
+ * homepage (after Storage Options, while `enabled`) and on the Facility Features page (after the features, while
+ * `showOnFeatures`). A kind of storage without sizes isn't shown.
  */
+const sizeText = z.string().overwrite(cleanText).trim().min(1, "A size can't be empty.").max(20, "Keep a size to 20 characters or fewer.");
 export const unitSizesSchema = z.object({
+  /** Show on the homepage. */
   enabled: z.boolean(),
+  /** Show on the Facility Features page. */
+  showOnFeatures: z.boolean().default(true),
   heading: required(60),
   groups: z
     .array(
       z.object({
         /** "Regular Storage", "Parking", "Climate Control" */
-        name: required(40),
-        /** Optional line under the group's name. Empty hides it. */
-        note: text(200),
-        sizes: z.array(required(20)).max(60, "That's the most sizes one group can show."),
+        name: text(40).min(1, "Give this kind of storage a name."),
+        /** Kept only so older saved content still reads; not shown on the website and empty by default. */
+        note: text(200).default(""),
+        sizes: z.array(sizeText).max(60, "That's the most sizes one kind of storage can show."),
       }),
     )
-    .max(6, "That's the most groups the section can show."),
+    .max(6, "That's the most kinds of storage the section can show."),
 });
 export type UnitSizes = z.infer<typeof unitSizesSchema>;
 

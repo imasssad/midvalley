@@ -142,7 +142,7 @@ export const screenBlocks: Record<ScreenKey, Block[]> = {
       help: "A slim navy bar at the very top of every page, above the header. Keep the offer short: one line on computers.",
       fields: [
         { kind: "toggle", key: "enabled", label: "Show the specials bar" },
-        line("text", "Offer", 160, "For example: Winter Special: Rent 4 months, get up to 4 months free*"),
+        line("text", "Offer", 160, "For example: Winter Special: Buy up to 4 months, get up to 4 months free*"),
         line("finePrint", "Small print (optional)", 200, "Shown smaller after the offer, for example: *On select units. New customers only. Leave empty to hide it."),
       ],
     },
@@ -293,15 +293,16 @@ export const screenBlocks: Record<ScreenKey, Block[]> = {
     {
       path: ["unitSizes"],
       title: "Storage Sizes",
-      help: "The list of unit sizes right after Storage Options, one card per kind of storage. Sizes only: no prices. The Rent Online buttons under the cards come from Locations & contact.",
+      help: "The unit sizes, one card per kind of storage. It shows on the Home page (right after Storage Options) and also on the Facility Features page (after the features, before the closing band): one list, used in both places. Sizes only: no prices. The Rent Online buttons under the cards on the Home page come from Locations & contact.",
       fields: [
-        { kind: "toggle", key: "enabled", label: "Show the Storage Sizes section" },
+        { kind: "toggle", key: "enabled", label: "Show on the Home page" },
+        { kind: "toggle", key: "showOnFeatures", label: "Show on Facility Features" },
         line("heading", "Heading", 60),
         {
           kind: "list",
           key: "groups",
           label: "Kinds of storage",
-          help: "One card each, in this order. A kind of storage without any sizes isn't shown.",
+          help: "One card each, in this order (three side by side on a computer). A kind of storage without any sizes isn't shown.",
           itemName: "kind of storage",
           max: 6,
           collapse: true,
@@ -312,12 +313,11 @@ export const screenBlocks: Record<ScreenKey, Block[]> = {
           newItem: () => ({ name: "", note: "", sizes: [] }),
           fields: [
             line("name", "Name", 40, "For example: Regular Storage, Parking or Climate Control."),
-            line("note", "Short note under the name (optional)", 200, "For example, which location has these sizes. Leave empty to hide it."),
             {
               kind: "strings",
               key: "sizes",
               label: "Sizes",
-              help: "One size per box, typed exactly as it should show, for example 10x10 or 10x12.5 (width x depth in feet). Use the arrows to change the order.",
+              help: "One size per box, typed exactly as it should show, for example 10x10. Use the arrows to change the order.",
               itemName: "size",
               max: 60,
               maxLength: 20,
