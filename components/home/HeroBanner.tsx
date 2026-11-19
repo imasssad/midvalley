@@ -23,6 +23,9 @@ const KNOWN_SIZES: Record<string, Size> = {
   "/images/hero-promo-desktop.png": { width: 1774, height: 887 },
   "/images/hero-promo-tablet.png": { width: 1536, height: 1024 },
   "/images/hero-promo-mobile.png": { width: 864, height: 1821 },
+  "/images/hero-winter-desktop.jpg": { width: 2880, height: 1440 },
+  "/images/hero-winter-tablet.jpg": { width: 2304, height: 1536 },
+  "/images/hero-winter-mobile.jpg": { width: 1080, height: 2276 },
 };
 
 /** Banners uploaded in the admin panel carry their measured size (width/height, saved when the upload was

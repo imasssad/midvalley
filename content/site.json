@@ -24,8 +24,8 @@
         "phone": "(559) 734-7368",
         "brandName": "Mid Valley Storage Noble",
         "paymentUrl": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=e398d43a-ce49-4691-b9af-8157e3883811#/login",
-        "rentOnlineUrl": "https://ecom.quikstor.com/midvalleystorage/Account/Login",
-        "rentOnlineConfirmed": false,
+        "rentOnlineUrl": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=e398d43a-ce49-4691-b9af-8157e3883811#/move-in",
+        "rentOnlineConfirmed": true,
         "mapsUrl": "https://goo.gl/maps/LrHat5624ZYiJjnb6",
         "mapEmbedUrl": "",
         "gateHours": "6AM to 8PM",
@@ -44,8 +44,8 @@
         "phone": "(559) 608-5301",
         "brandName": "Mid Valley Storage Santa Fe",
         "paymentUrl": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=165a4ac4-3327-4405-9927-412c59c08e0e#/login",
-        "rentOnlineUrl": "https://ecom.quikstor.com/midvalleystorage_sf/Account/Login",
-        "rentOnlineConfirmed": false,
+        "rentOnlineUrl": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=165a4ac4-3327-4405-9927-412c59c08e0e#/move-in",
+        "rentOnlineConfirmed": true,
         "mapsUrl": "https://goo.gl/maps/omapQu9VBfuuR1Tc9",
         "mapEmbedUrl": "https://maps.google.com/maps?q=2410%20S%20Santa%20Fe%20St%2C%20Visalia%2C%20CA%2093292%2C%20USA&t=m&z=10&output=embed&iwloc=near",
         "gateHours": "6AM to 8PM",
@@ -84,23 +84,29 @@
     "mode": "image",
     "banner": {
       "desktop": {
-        "src": "/images/hero-promo-desktop.png",
+        "src": "/images/hero-winter-desktop.jpg",
         "alt": "",
-        "focus": "50% 50%"
+        "focus": "50% 50%",
+        "width": 2880,
+        "height": 1440
       },
       "tablet": {
-        "src": "/images/hero-promo-tablet.png",
+        "src": "/images/hero-winter-tablet.jpg",
         "alt": "",
-        "focus": "50% 50%"
+        "focus": "50% 50%",
+        "width": 2304,
+        "height": 1536
       },
       "mobile": {
-        "src": "/images/hero-promo-mobile.png",
+        "src": "/images/hero-winter-mobile.jpg",
         "alt": "",
-        "focus": "50% 50%"
+        "focus": "50% 50%",
+        "width": 1080,
+        "height": 2276
       },
-      "alt": "Sunsets, Summer, and Storage Specials. More space. More value. Right when you need it. 5x10 units $29.99 per month, 10x10 units $59.99 per month. Safe and secure, convenient location, month-to-month, clean and well maintained. Call us today at (559) 734-7368. Limited time only, while supplies last."
+      "alt": "Mid Valley Storage Winter Special: rent 4 months, get up to 4 months free. On select units, new customers only, Noble location only."
     },
-    "disclaimer": "*Valid at Noble location only. New customers only. Please visit office for full details.",
+    "disclaimer": "*On select units. New customers only. Noble location only.",
     "video": {
       "src": "/video/hero-original.mp4",
       "poster": {
@@ -108,6 +114,28 @@
         "alt": "Large drive-up storage buildings at dusk with pickup trucks parked in the wide yard",
         "focus": "50% 50%"
       }
+    },
+    "previousBanner": {
+      "banner": {
+        "desktop": {
+          "src": "/images/hero-promo-desktop.png",
+          "alt": "",
+          "focus": "50% 50%"
+        },
+        "tablet": {
+          "src": "/images/hero-promo-tablet.png",
+          "alt": "",
+          "focus": "50% 50%"
+        },
+        "mobile": {
+          "src": "/images/hero-promo-mobile.png",
+          "alt": "",
+          "focus": "50% 50%"
+        },
+        "alt": "Sunsets, Summer, and Storage Specials. More space. More value. Right when you need it. 5x10 units $29.99 per month, 10x10 units $59.99 per month. Safe and secure, convenient location, month-to-month, clean and well maintained. Call us today at (559) 734-7368. Limited time only, while supplies last."
+      },
+      "disclaimer": "*Valid at Noble location only. New customers only. Please visit office for full details.",
+      "replacedAt": "2026-11-19T00:00:00.000Z"
     }
   },
   "valueStrip": {
@@ -228,6 +256,63 @@
     "cta": {
       "heading": "Ready to get started?"
     }
+  },
+  "unitSizes": {
+    "enabled": true,
+    "heading": "Storage Sizes",
+    "groups": [
+      {
+        "name": "Regular Storage",
+        "note": "",
+        "sizes": [
+          "5x5",
+          "5x7",
+          "5x8",
+          "5x10",
+          "6x10",
+          "9x10",
+          "9x14",
+          "10x5",
+          "10x9",
+          "10x10",
+          "10x12",
+          "10x12.5",
+          "10x15",
+          "10x30",
+          "10x31",
+          "10x33",
+          "12x30",
+          "12x40",
+          "13x10",
+          "15x30",
+          "15x40",
+          "15x50",
+          "20x50"
+        ]
+      },
+      {
+        "name": "Parking",
+        "note": "",
+        "sizes": [
+          "11x14",
+          "11x21",
+          "11x25",
+          "11x30",
+          "11x35",
+          "11x40",
+          "11x50"
+        ]
+      },
+      {
+        "name": "Climate Control",
+        "note": "",
+        "sizes": [
+          "5x5",
+          "5x10",
+          "10x10"
+        ]
+      }
+    ]
   },
   "testimonials": {
     "heading": "What Our Customers Say",
@@ -501,7 +586,7 @@
     },
     "shareImage": {
       "src": "/images/share.jpg",
-      "alt": "Mid Valley Storage summer storage specials banner",
+      "alt": "Mid Valley Storage Winter Special: rent 4 months, get up to 4 months free",
       "focus": "50% 50%"
     }
   }

@@ -54,8 +54,8 @@ export const screens: Record<ScreenKey, Screen> = {
   home: {
     title: "Home page",
     group: "pages",
-    blurb: "Every section of the homepage under the banner: the value strip, About, Storage Options with its photos, Facility Features and the closing heading.",
-    scopes: [["valueStrip"], ["home"]],
+    blurb: "Every section of the homepage under the banner: the value strip, About, Storage Options with its photos, Storage Sizes, Facility Features and the closing heading.",
+    scopes: [["valueStrip"], ["home"], ["unitSizes"]],
     page: "/",
     note: "Reviews have their own screen. The location cards come from Locations & contact.",
   },

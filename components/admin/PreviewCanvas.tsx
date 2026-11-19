@@ -21,6 +21,7 @@ import { Locations } from "@/components/home/Locations";
 import { pickItems } from "@/components/home/pickItems";
 import { StorageOptions } from "@/components/home/StorageOptions";
 import { Testimonials } from "@/components/home/Testimonials";
+import { numbersAfterSizes, UnitSizes } from "@/components/home/UnitSizes";
 import { ValueStrip } from "@/components/home/ValueStrip";
 import { LocationCard } from "@/components/LocationCard";
 import { gateHoursChip, PageHero, type HeroChip } from "@/components/PageHero";
@@ -56,12 +57,23 @@ const parts: Part[] = [
   },
   { id: "about", screen: "home", render: ({ c }) => <AboutIntro content={c} no="01" /> },
   { id: "locations", screen: "locations", render: ({ c }) => <Locations content={c} no="02" /> },
-  { id: "storage", screen: "home", render: ({ c }) => <StorageOptions content={c} no="03" /> },
-  { id: "features", screen: "home", render: ({ c }) => <FeaturesList content={c} no="04" /> },
+  // Storage Sizes (it hides itself while switched off or empty) is drawn with Storage Options, so every preview that
+  // shows the storage part shows it in its place.
+  {
+    id: "storage",
+    screen: "home",
+    render: ({ c }) => (
+      <>
+        <StorageOptions content={c} no="03" />
+        <UnitSizes content={c} no="04" />
+      </>
+    ),
+  },
+  { id: "features", screen: "home", render: ({ c }) => <FeaturesList content={c} no={numbersAfterSizes(c).features} /> },
   {
     id: "reviews",
     screen: "reviews",
-    render: ({ c }) => <Testimonials content={c} no="05" />,
+    render: ({ c }) => <Testimonials content={c} no={numbersAfterSizes(c).reviews} />,
     hidden: ({ c }) => (c.testimonials.items.length ? null : "The reviews section is hidden until there is at least one review."),
   },
   { id: "cta", screen: "home", render: ({ c }) => <CtaBand content={c} heading={c.home.cta.heading} variant="rent" /> },

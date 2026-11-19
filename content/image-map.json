@@ -255,10 +255,34 @@
   },
   {
     "local": "/images/share.jpg",
-    "derived_from": "/images/hero-promo-desktop.png",
-    "note": "1200x630 JPEG made from the desktop promo banner for link previews (Open Graph). Phase 2.",
+    "derived_from": "/images/hero-winter-desktop.jpg",
+    "note": "1200x630 JPEG made from the desktop promo banner (Winter Special since Nov 2026) for link previews.",
     "used_on": [
       "og:image / twitter:image"
+    ]
+  },
+  {
+    "local": "/images/hero-winter-desktop.jpg",
+    "created": "2026-11",
+    "note": "Winter Special promo banner (2880x1440), designed for the client from the real temperature-controlled hallway photo (temperature-controlled.jpg) with the logo mark.",
+    "used_on": [
+      "home hero banner (desktop)"
+    ]
+  },
+  {
+    "local": "/images/hero-winter-tablet.jpg",
+    "created": "2026-11",
+    "note": "Winter Special promo banner (2304x1536), designed for the client from the real temperature-controlled hallway photo (temperature-controlled.jpg) with the logo mark.",
+    "used_on": [
+      "home hero banner (tablet)"
+    ]
+  },
+  {
+    "local": "/images/hero-winter-mobile.jpg",
+    "created": "2026-11",
+    "note": "Winter Special promo banner (1080x2276), designed for the client from the real temperature-controlled hallway photo (temperature-controlled.jpg) with the logo mark.",
+    "used_on": [
+      "home hero banner (mobile)"
     ]
   }
 ]

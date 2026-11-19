@@ -192,6 +192,28 @@ export const homeSchema = z.object({
   cta: ctaSchema,
 });
 
+/**
+ * "Storage Sizes" on the homepage (after Storage Options): the unit sizes per kind of storage, as the client typed
+ * them ("10x10", "10x12.5"), in his order. Sizes only: no prices or descriptions. Hidden when switched off, and a
+ * group without sizes isn't shown.
+ */
+export const unitSizesSchema = z.object({
+  enabled: z.boolean(),
+  heading: required(60),
+  groups: z
+    .array(
+      z.object({
+        /** "Regular Storage", "Parking", "Climate Control" */
+        name: required(40),
+        /** Optional line under the group's name. Empty hides it. */
+        note: text(200),
+        sizes: z.array(required(20)).max(60, "That's the most sizes one group can show."),
+      }),
+    )
+    .max(6, "That's the most groups the section can show."),
+});
+export type UnitSizes = z.infer<typeof unitSizesSchema>;
+
 export const testimonialsSchema = z.object({
   heading: required(60),
   /** Empty on purpose: the old site had no reviews. The section renders only when this has items. */
@@ -309,6 +331,7 @@ export const sectionSchemas = {
   hero: heroSchema,
   valueStrip: valueStripSchema,
   home: homeSchema,
+  unitSizes: unitSizesSchema,
   testimonials: testimonialsSchema,
   about: aboutSchema,
   features: featuresSchema,

@@ -258,6 +258,42 @@ export const screenBlocks: Record<ScreenKey, Block[]> = {
       ],
     },
     {
+      path: ["unitSizes"],
+      title: "Storage Sizes",
+      help: "The list of unit sizes right after Storage Options, one card per kind of storage. Sizes only: no prices. The Rent Online buttons under the cards come from Locations & contact.",
+      fields: [
+        { kind: "toggle", key: "enabled", label: "Show the Storage Sizes section" },
+        line("heading", "Heading", 60),
+        {
+          kind: "list",
+          key: "groups",
+          label: "Kinds of storage",
+          help: "One card each, in this order. A kind of storage without any sizes isn't shown.",
+          itemName: "kind of storage",
+          max: 6,
+          collapse: true,
+          itemTitle: (g, i) => {
+            const count = Array.isArray(g.sizes) ? g.sizes.length : 0;
+            return `${String(g.name || `Kind ${i + 1}`)} (${count} ${count === 1 ? "size" : "sizes"})`;
+          },
+          newItem: () => ({ name: "", note: "", sizes: [] }),
+          fields: [
+            line("name", "Name", 40, "For example: Regular Storage, Parking or Climate Control."),
+            line("note", "Short note under the name (optional)", 200, "For example, which location has these sizes. Leave empty to hide it."),
+            {
+              kind: "strings",
+              key: "sizes",
+              label: "Sizes",
+              help: "One size per box, typed exactly as it should show, for example 10x10 or 10x12.5 (width x depth in feet). Use the arrows to change the order.",
+              itemName: "size",
+              max: 60,
+              maxLength: 20,
+            },
+          ],
+        },
+      ],
+    },
+    {
       path: ["home", "features"],
       title: "Facility Features",
       help: "The blue section with the list of features. The full Facility Features page has its own screen.",
