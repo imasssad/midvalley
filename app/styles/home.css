@@ -463,8 +463,10 @@
   transition: opacity 0.4s ease;
 }
 .h-about-photo {
+  position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3; /* landscape: the office photo (1600x984) shows its full width, so it stays sharp */
+  overflow: hidden;
+  aspect-ratio: 4 / 3; /* the component sets the photo's own shape inline */
 }
 /* Chips overlapping the photo's edges (desktop): positioned on the stage; Motion owns their transform. */
 .h-about-chips {
@@ -487,7 +489,7 @@
   left: -2.25rem;
 }
 .h-about-chip-2 {
-  top: 47%;
+  top: -1.1rem; /* on the top edge, over the ceiling, so it never covers the staff at the counter */
   right: -1.5rem;
 }
 .h-about-chip-3 {
@@ -501,7 +503,6 @@
   .h-about-frame:hover::before {
     opacity: 1;
   }
-  .h-about-frame:hover .h-zoom,
   .h-features-frame:hover .h-zoom {
     transform: scale(1.05);
   }
@@ -509,9 +510,6 @@
 @media (max-width: 900px) {
   .h-about-grid {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .h-about-photo {
-    aspect-ratio: 4 / 3;
   }
   /* Chips in a row overlapping the photo's bottom edge. */
   .h-about-chips {
