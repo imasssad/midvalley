@@ -61,7 +61,7 @@ const NO_SLASH_REDIRECT = ["wp-admin", "wp-json", "wp-login\\.php", "wp-content"
      ...&output=embed, which may redirect to www.google.com/maps/embed: both hosts are allowed), the Google Calendar
      on the employee page and GTM's no-JavaScript iframe. 'self' is added for the admin panel's live preview iframe
      (/admin/preview), which is on this site.
-   - The Storedge rental center (rental-center.storedge.com) and QuikStor (ecom.quikstor.com) are plain links that
+   - The Storedge rental center (rental-center.storedge.com: payments and online move-in) is a plain link that
      open in a new tab. CSP does not limit navigation, so they need no entry here.
    If tags are added in Google Tag Manager later (for example Google Ads or a chat widget), their hosts must be
    added here, or the browser will block them (the console names the blocked host).

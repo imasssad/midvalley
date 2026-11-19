@@ -1,7 +1,7 @@
 // 404 page. Uses the old site's own 404 words (content.notFound: "404", "page not found", "Go Home Page"), now
 // linking to the real homepage (the old link pointed to http://home), plus the header's actions so nobody is
 // stuck: each location's payment link (content.header.paymentLabel + location name + street, opens the Storedge
-// portal in a new tab) and each location's call button (content.header.mobileCallWord + short name + phone).
+// portal in a new tab), its Rent Online link (the Storedge move-in page, new tab) and its call button (content.header.mobileCallWord + short name + phone).
 // A plain not-found.js can't export metadata in this Next version: the title comes from the root layout's default
 // (content.seo.notFound.title) and the description is a React 19 <meta>, hoisted into <head>.
 // "Valley glass": a white-to-mist ground with a dot grid, soft glows. Left: a huge condensed "404" in gradient
@@ -23,6 +23,7 @@ const order = (i: number) => ({ "--i": i }) as React.CSSProperties;
 export default async function NotFound() {
   const { locations, header, notFound, seo, labels } = await getSiteContent();
   const items = locations.items;
+  const rentable = items.filter((l) => l.rentOnlineUrl);
   return (
     <SiteChrome>
     <div className="section nf">
@@ -81,10 +82,37 @@ export default async function NotFound() {
                 })}
               </ul>
 
+              {/* Rent Online links (each location's Storedge move-in page, new tab), styled like the payment chips:
+                  "Rent Online: Visalia Noble (opens in a new tab)". Only locations that have a link. */}
+              {rentable.length > 0 && (
+                <ul className="nf-pay nf-rent" role="list">
+                  {rentable.map((l, i) => {
+                    const ext = externalLinkProps(l.rentOnlineUrl);
+                    return (
+                      <li key={l.id} className="enter-rise" style={order(3 + items.length + i)}>
+                        <a href={l.rentOnlineUrl} className="chip nf-chip" {...ext}>
+                          <span className="chip-dot" aria-hidden="true">
+                            <Icon name="key" size={15} />
+                          </span>
+                          <span className="nf-chip-text">
+                            <span className="nf-loc">
+                              {header.rentLabel}
+                              <span className="sr-only">: </span>
+                            </span>
+                            <span className="nf-name">{l.name}</span>
+                            {ext.target && <NewTabNote text={labels.newTab} />}
+                          </span>
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+
               {/* Call buttons, as in the phone header: "Call Noble (559) 734-7368". */}
               <ul className="nf-calls" role="list">
                 {items.map((l, i) => (
-                  <li key={l.id} className="enter-rise" style={order(3 + items.length + i)}>
+                  <li key={l.id} className="enter-rise" style={order(3 + items.length + rentable.length + i)}>
                     <a href={phoneHref(l.phone)} className="btn btn-cta nf-call">
                       <Icon name="phone" size={18} />
                       <span>

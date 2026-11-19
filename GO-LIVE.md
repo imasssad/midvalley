@@ -17,14 +17,11 @@ The new site uses only facts from the old site. Where the old site didn't say so
 out or marks it as a placeholder. Please confirm or provide each of these. Most of them can be filled in by you,
 directly in the admin panel, once you have your login (step 2).
 
-- [ ] **"Rent Online" links, one per location.**
-  - The old site had no Storedge "Rent Online" / move-in links. Its only "Reserve" buttons still go to the old
-    QuikStor system (and on the About Us page, the Santa Fe button pointed at the Noble account).
-  - The new site uses those old QuikStor links for now, as placeholders.
-  - Please send the correct online-rental link for **Visalia Noble** and for **Visalia Santa Fe**. Or tell us to
-    hide the Rent Online buttons.
-  - Where to change it: **Admin → Locations & contact**. Paste each link, then tick "The client confirmed this
-    Rent Online link".
+- [x] **"Rent Online" links, one per location.**
+  - Eric sent the Storedge move-in links for **Visalia Noble** and **Visalia Santa Fe** (Update 1). Every Rent
+    Online and Reserve button now uses them, each to its own location. The payment (`#/login`) links are unchanged.
+  - If a deployment already has saved content, run `npm run migrate:update1` once to apply them (see the README).
+  - Where to change them later: **Admin → Locations & contact**.
 - [ ] **Office hours** for each location.
   - The old site only listed gate hours (6AM to 8PM). Office hours stay hidden until they are filled in.
   - Where: **Admin → Locations & contact**.
@@ -151,6 +148,5 @@ Check each of these **before** the switch (step 5) and **before** cancelling any
 | **Google Search Console verification** | If Search Console was verified with a meta tag or an uploaded HTML file on the WordPress site, verification is lost when that site goes away. | In Search Console, open **Settings → Ownership verification** to see the method. A **DNS record** (TXT) or **Google Analytics / Tag Manager** method keeps working, as long as that TXT record is kept. A **meta tag** or **HTML file** method needs replacing: add the domain as a "Domain property" verified with a DNS TXT record, before the switch. |
 | **SSL certificate (https)** | SiteGround's certificate covers the old server only. | Vercel issues and renews a free certificate automatically once the domain points to it (step 5). Nothing to buy or move. |
 | **Instagram link** | The footer and contact page link to Instagram. | The new site keeps the same link (`instagram.com/midvalleystorage`). Change it in **Admin → Locations & contact** if it ever changes. Update the website link in the Instagram profile only if the address changes (it doesn't). |
-| **QuikStor links** on the old site | The old "Reserve" buttons still go to the old QuikStor system. | Confirm the correct Storedge "Rent Online" links (step 1). Once confirmed, nothing on the new site should point to QuikStor. If the QuikStor account is no longer used, it can be closed, but ask Eric first. |
 | **Employee page password** | The old Employee page is protected by a WordPress password. That password stops working with the old site. | The new Employee Portal uses its own password (`EMPLOYEE_PORTAL_PASSWORD`) and calendar link. Agree the password with Eric, let staff know, and check the calendar shows (step 6). |
 | **Analytics goals / conversions** | Goals in Google Analytics or Google Ads (such as "contact form sent" or "phone click") may depend on old page addresses or the old form. | Look through the goals (key events) in Google Analytics and the triggers in Tag Manager. Page addresses stay the same (`/contact` etc.). Anything tied to the Elementor form or a "thank you" page must be re-checked after the switch, with Tag Assistant (step 6). |

@@ -269,8 +269,9 @@
       "links": [
         {
           "text": "Reserve at Visalia Noble",
-          "href": "https://ecom.quikstor.com/midvalleystorage/Account/Login",
-          "target": "_blank"
+          "href": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=e398d43a-ce49-4691-b9af-8157e3883811#/move-in",
+          "target": "_blank",
+          "note": "Update 1: the old reserve link was replaced by this location's Storedge move-in link."
         }
       ]
     },
@@ -280,8 +281,9 @@
       "links": [
         {
           "text": "Reserve at Visalia Santa Fe",
-          "href": "https://ecom.quikstor.com/midvalleystorage_sf/Account/Login",
-          "target": "_blank"
+          "href": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=165a4ac4-3327-4405-9927-412c59c08e0e#/move-in",
+          "target": "_blank",
+          "note": "Update 1: the old reserve link was replaced by this location's Storedge move-in link."
         }
       ]
     }
@@ -289,13 +291,15 @@
   "links": [
     {
       "text": "Reserve at Visalia Noble",
-      "href": "https://ecom.quikstor.com/midvalleystorage/Account/Login",
-      "target": "_blank"
+      "href": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=e398d43a-ce49-4691-b9af-8157e3883811#/move-in",
+      "target": "_blank",
+      "note": "Update 1: the old reserve link was replaced by this location's Storedge move-in link."
     },
     {
       "text": "Reserve at Visalia Santa Fe",
-      "href": "https://ecom.quikstor.com/midvalleystorage_sf/Account/Login",
-      "target": "_blank"
+      "href": "https://rental-center.storedge.com?companyId=ee6dd943-e3a5-49c9-af42-8bc54fe490cc&facilityId=165a4ac4-3327-4405-9927-412c59c08e0e#/move-in",
+      "target": "_blank",
+      "note": "Update 1: the old reserve link was replaced by this location's Storedge move-in link."
     }
   ],
   "images": [

@@ -4,7 +4,8 @@
 //   pill; on phones these are the main navigation, so they come first, as big two-per-row tap tiles) and the
 //   Contact button (orange, the call to action). Source order = visual order at every width;
 // - tiles: one rounded glass tile per location (a glossy blue band with the number chip and the name, like the
-//   location cards, then address -> maps, phone, hours), and a Follow Us / Employee Portal tile;
+//   location cards, then address -> maps, phone, Rent Online (Storedge move-in, new tab), hours), and a Follow Us /
+//   Employee Portal tile;
 // - a strip of six rounded square photos (hover: the photo rises a little onto a soft glow and the image grows
 //   inside its box);
 // - the sign-off: the business name set huge in condensed caps (decorative: hidden from screen readers, the logo
@@ -26,7 +27,7 @@ import { NewTabNote } from "./NewTab";
 import { Photo } from "./Photo";
 
 export function Footer({ content, year }: { content: SiteContent; year: number }) {
-  const { business, footer, nav, labels } = content;
+  const { business, footer, nav, labels, header } = content;
   const locations = content.locations.items;
   const igProps = business.instagramUrl ? externalLinkProps(business.instagramUrl) : null;
 
@@ -102,6 +103,17 @@ export function Footer({ content, year }: { content: SiteContent; year: number }
                     </a>
                   </span>
                 </address>
+                {/* Rent Online: the location's Storedge move-in page (new tab). */}
+                {l.rentOnlineUrl && (
+                  <p className="ft-line">
+                    <Icon name="key" size={18} />
+                    <a href={l.rentOnlineUrl} className="ft-rent ft-tap" {...externalLinkProps(l.rentOnlineUrl)}>
+                      {header.rentLabel}
+                      <span className="sr-only">: {l.name}</span>
+                      {externalLinkProps(l.rentOnlineUrl).target && <NewTabNote text={labels.newTab} />}
+                    </a>
+                  </p>
+                )}
                 {l.gateHours && (
                   <p className="ft-line ft-hours">
                     <Icon name="clock" size={18} />

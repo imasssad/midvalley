@@ -17,7 +17,7 @@ export function LocationActions({ content, rent = true, className }: { content: 
     <Reveal className={cls} delay={0.1}>
       {locations.items.map((l) => (
         <div className="h-actions-group" key={l.id}>
-          {/* PLACEHOLDER (to confirm): rentOnlineUrl is the old QuikStor reserve link until the client confirms it. */}
+          {/* rentOnlineUrl: the location's Storedge move-in link (confirmed by the client). */}
           {rent && l.rentOnlineUrl && (
             <a className="btn btn-cta h-actions-btn" href={l.rentOnlineUrl} {...externalLinkProps(l.rentOnlineUrl)}>
               <Icon name="key" />

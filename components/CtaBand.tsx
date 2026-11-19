@@ -26,7 +26,7 @@ export function CtaBand({ content, heading, variant, id = "get-started" }: Props
               <p className="cta-loc">
                 <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span> {l.name}
               </p>
-              {/* PLACEHOLDER (to confirm): rentOnlineUrl is the old QuikStor reserve link until the client confirms it. */}
+              {/* rentOnlineUrl: the location's Storedge move-in link (confirmed by the client). */}
               {l.rentOnlineUrl && (
                 <a className="btn btn-cta btn-block" href={l.rentOnlineUrl} {...externalLinkProps(l.rentOnlineUrl)}>
                   <Icon name="key" />

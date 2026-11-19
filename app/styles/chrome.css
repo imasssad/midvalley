@@ -998,6 +998,16 @@ html:not(.js) .hm-btn:not([aria-expanded]) .hm-chev {
 .ft-line:has(.ft-phone) .icon {
   margin-top: 0.3rem;
 }
+/* Rent Online: a plain underlined link in the footer's light text (the orange buttons are higher up the page). */
+.site-footer a.ft-rent {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.site-footer a.ft-rent:hover {
+  text-decoration-thickness: 2px;
+}
 .ft-hours {
   padding-top: 0.75rem;
   border-top: 1px solid var(--dark-line);

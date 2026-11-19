@@ -77,7 +77,7 @@ export function LocationCard({ location: l, content, headingLevel: H = "h3", ind
           )}
         </dl>
         <div className="loc-actions">
-          {/* PLACEHOLDER (to confirm): rentOnlineUrl is the old QuikStor reserve link until the client confirms it. */}
+          {/* rentOnlineUrl: the location's Storedge move-in link (confirmed by the client). */}
           {l.rentOnlineUrl && (
             <a className="btn btn-cta" href={l.rentOnlineUrl} {...externalLinkProps(l.rentOnlineUrl)}>
               <Icon name="key" />
