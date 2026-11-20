@@ -30,10 +30,18 @@ directly in the admin panel, once you have your login (step 2).
     section until at least one review is added.
   - Only use real reviews, with the customer's permission.
   - Where: **Admin → Reviews**.
-- [ ] **Who should receive contact form messages** (`CONTACT_TO_EMAIL`). Several addresses are fine.
-  - The old form's recipient can't be seen from outside the old site.
-  - Every message is also kept in **Admin → Messages**, so nothing is lost while this is being decided.
+- [x] **Who should receive contact form messages** (`CONTACT_TO_EMAIL`): Eric chose **info@midvalleystorage.com**
+  (Nov 20).
+  - Still to do: set it in Vercel, together with `CONTACT_FROM_EMAIL` and `RESEND_API_KEY` once the domain is
+    verified in Resend (DEPLOY.md, section 7). Until then every message is kept in **Admin → Messages**.
 - [ ] **Employee Portal password, and the Google Calendar link** for the staff schedule.
+  - Password: Eric sent the staff password the old Mid Valley employee page uses (Nov 20). Staff keep using it. It
+    goes into Vercel as `EMPLOYEE_PORTAL_PASSWORD` only, never into this repository or the admin panel. It is
+    case-sensitive and the spaces count.
+  - Calendar: the schedule lives in Eric's management Google account. Still needed: the calendar's **embed link**
+    (Google Calendar → the calendar's Settings → Integrate calendar → the `src` address in the Embed code), and a
+    decision on who can see it (see DEPLOY.md, section 6). The developer does not need, and should not use, the
+    Google account's own password.
   - Until both are set, the Employee page shows "Employee page coming soon".
   - The developer adds them to Vercel (see DEPLOY.md, section 6).
 - [ ] **The "Upfront, flat rate" selling point** in the blue bar under the promo banner. This wording wasn't on
