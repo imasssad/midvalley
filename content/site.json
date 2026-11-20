@@ -28,8 +28,8 @@
         "rentOnlineConfirmed": true,
         "mapsUrl": "https://goo.gl/maps/LrHat5624ZYiJjnb6",
         "mapEmbedUrl": "",
-        "gateHours": "6AM to 8PM",
-        "officeHours": ""
+        "gateHours": "6AM to 8PM every day",
+        "officeHours": "9:30AM to 5:30PM Monday to Friday, 9AM to 5PM Saturday"
       },
       {
         "id": "santa-fe",
@@ -48,8 +48,8 @@
         "rentOnlineConfirmed": true,
         "mapsUrl": "https://goo.gl/maps/omapQu9VBfuuR1Tc9",
         "mapEmbedUrl": "https://maps.google.com/maps?q=2410%20S%20Santa%20Fe%20St%2C%20Visalia%2C%20CA%2093292%2C%20USA&t=m&z=10&output=embed&iwloc=near",
-        "gateHours": "6AM to 8PM",
-        "officeHours": ""
+        "gateHours": "6AM to 8PM every day",
+        "officeHours": "9:30AM to 5:30PM Monday to Friday, 9AM to 5PM Saturday"
       }
     ]
   },
@@ -180,8 +180,8 @@
         "We aim to become Visalia area’s premier and feature rich self storage facility. Whether you’re looking for a place to store your boat or RV after a camping or lake trip or looking to organize items from around the home or office, Mid Valley Storage does it all. Attentive detail without compromise can be seen throughout the facility from the moment the gate keypad recognizes your name and unit number, to the sophisticated temperature controlled units, well lit and video monitored RV and boat parking, and complete moving supply center in the office. Features aside, Mid Valley Storage has only one focus: the complete 110% satisfaction of its customers."
       ],
       "photo": {
-        "src": "/images/lobby.jpg",
-        "alt": "Mid Valley Storage office lobby with the service counter, a wall of security camera screens and moving supplies",
+        "src": "/images/security.jpg",
+        "alt": "Mid Valley Storage office: the service desk below a wall of security camera monitors",
         "focus": "50% 50%"
       }
     },
@@ -302,11 +302,11 @@
         }
       ],
       "photo": {
-        "src": "/images/security.jpg",
-        "alt": "Office service desk below a wall of security camera monitors",
-        "focus": "50% 50%"
+        "src": "/images/keycode-access.jpg",
+        "alt": "Driver reaching out of a car window to enter a code on the gate keypad",
+        "focus": "50% 55%"
       },
-      "photoLabel": "Video Surveillance"
+      "photoLabel": "Individual Keycode Access"
     },
     "faq": {
       "enabled": true,
@@ -421,11 +421,6 @@
       {
         "src": "/images/night-full-elevation.jpg",
         "alt": "Storage facility office and buildings lit up at night",
-        "focus": "50% 50%"
-      },
-      {
-        "src": "/images/rss.jpg",
-        "alt": "Wide view of a storage facility across the road",
         "focus": "50% 50%"
       }
     ],

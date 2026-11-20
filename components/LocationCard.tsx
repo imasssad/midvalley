@@ -65,7 +65,7 @@ export function LocationCard({ location: l, content, headingLevel: H = "h3", ind
               <dd>{l.gateHours}</dd>
             </div>
           )}
-          {/* PLACEHOLDER: office hours are unknown; this shows only once the admin fills them in. */}
+          {/* Office hours (given by the client, Nov 20); hidden when the admin leaves them empty. */}
           {l.officeHours && (
             <div className="loc-fact loc-hours">
               <dt>

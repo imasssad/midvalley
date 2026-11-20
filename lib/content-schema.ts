@@ -118,7 +118,7 @@ export const locationSchema = z.object({
   mapEmbedUrl: optionalLink,
   /** From the old Facility Features copy (gates open 6AM, close 8PM). */
   gateHours: text(80),
-  /** PLACEHOLDER: empty until the client gives office hours; renders only when filled. */
+  /** Office hours (given by the client, Nov 20). Optional: an empty value hides them on the website. */
   officeHours: text(120),
 });
 export type Location = z.infer<typeof locationSchema>;

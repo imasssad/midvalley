@@ -122,7 +122,7 @@ export function Footer({ content, year }: { content: SiteContent; year: number }
                     </span>
                   </p>
                 )}
-                {/* PLACEHOLDER: office hours are unknown; this shows only once the admin fills them in. */}
+                {/* Office hours (given by the client, Nov 20); hidden when the admin leaves them empty. */}
                 {l.officeHours && (
                   <p className="ft-line ft-hours">
                     <Icon name="clock" size={18} />

@@ -23,6 +23,7 @@ const ABOUT_PHOTO_SIZES = "(max-width: 680px) calc(100vw - 32px), (max-width: 90
 /** Shipped photos' pixel sizes (uploaded ones carry their own, measured when the upload was optimised). */
 const KNOWN_SIZES: Record<string, { width: number; height: number }> = {
   "/images/lobby.jpg": { width: 1600, height: 984 },
+  "/images/security.jpg": { width: 2592, height: 1944 },
 };
 
 function photoSize(photo: PhotoData) {
