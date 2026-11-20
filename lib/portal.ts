@@ -10,6 +10,7 @@ import "server-only";
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { jwtVerify, SignJWT } from "jose";
+import { toCalendarEmbedUrl } from "./calendar-url";
 
 export const PORTAL_COOKIE = "mvs_portal";
 export const PORTAL_PATH = "/employee";
@@ -22,7 +23,6 @@ export const PORTAL_WINDOW_MS = 15 * 60 * 1000;
 
 const ISSUER = "midvalleystorage.com";
 const AUDIENCE = "employee-portal";
-const CALENDAR_PREFIX = "https://calendar.google.com/";
 
 type Config = { password: string; sessionSecret: string };
 
@@ -105,15 +105,7 @@ export const portalCookieOptions = {
   maxAge: PORTAL_MAX_AGE,
 } as const;
 
-/** The Google Calendar embed address, only if it is a https://calendar.google.com/ address (else null). */
+/** The Google Calendar embed address (an embed address or a share link, converted by lib/calendar-url.ts), or null. */
 export function calendarEmbedUrl(): string | null {
-  const raw = process.env.EMPLOYEE_CALENDAR_EMBED_URL?.trim();
-  if (!raw || !raw.startsWith(CALENDAR_PREFIX)) return null;
-  try {
-    const url = new URL(raw);
-    if (url.protocol !== "https:" || url.hostname !== "calendar.google.com" || url.username || url.password) return null;
-    return url.toString();
-  } catch {
-    return null;
-  }
+  return toCalendarEmbedUrl(process.env.EMPLOYEE_CALENDAR_EMBED_URL);
 }
