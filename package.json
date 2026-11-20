@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "seed": "node scripts/seed.mjs",
     "admin:reset": "node scripts/reset-admin.mjs",
-    "migrate:update1": "node scripts/migrate-update1.mjs"
+    "migrate:update1": "node scripts/migrate-update1.mjs",
+    "migrate:update2": "node scripts/migrate-update2.mjs"
   },
   "dependencies": {
     "@vercel/blob": "2.8.0",
