@@ -20,36 +20,41 @@ directly in the admin panel, once you have your login (step 2).
 - [x] **"Rent Online" links, one per location.**
   - Eric sent the Storedge move-in links for **Visalia Noble** and **Visalia Santa Fe** (Update 1). Every Rent
     Online and Reserve button now uses them, each to its own location. The payment (`#/login`) links are unchanged.
-  - If a deployment already has saved content, run `npm run migrate:update1` once to apply them (see the README).
+  - If a deployment already has saved content, run `npm run migrate:update1` once to apply them (what it changes
+    is listed at the top of `scripts/migrate-update1.mjs`).
   - Where to change them later: **Admin → Locations & contact**.
-- [ ] **Office hours** for each location.
-  - The old site only listed gate hours (6AM to 8PM). Office hours stay hidden until they are filled in.
-  - Where: **Admin → Locations & contact**.
-- [ ] **Customer reviews (testimonials): yes or no?**
-  - The old homepage had a "What Our Customers Say" heading with no reviews under it. The new site hides that
-    section until at least one review is added.
-  - Only use real reviews, with the customer's permission.
-  - Where: **Admin → Reviews**.
+- [x] **Office hours** for each location (Eric, Nov 20): 9:30AM to 5:30PM Monday to Friday, 9AM to 5PM Saturday, at
+  both locations. Gate hours: 6AM to 8PM every day.
+  - If a deployment already has saved content, run `npm run migrate:update2` once (add `-- --dry-run` first to see
+    what it will change). It also applies the three photo changes below, and never overwrites an admin edit.
+  - Where to change them later: **Admin → Locations & contact**.
+- [ ] **Customer reviews (testimonials):** Eric wants them (Nov 20).
+  - The section stays hidden until at least one review is added, so nothing shows yet.
+  - Still to do: add real reviews, with the customer's permission, in **Admin → Reviews**.
 - [x] **Who should receive contact form messages** (`CONTACT_TO_EMAIL`): Eric chose **info@midvalleystorage.com**
   (Nov 20).
   - Still to do: set it in Vercel, together with `CONTACT_FROM_EMAIL` and `RESEND_API_KEY` once the domain is
     verified in Resend (DEPLOY.md, section 7). Until then every message is kept in **Admin → Messages**.
-- [ ] **Employee Portal password, and the Google Calendar link** for the staff schedule.
+- [ ] **Employee Portal password, and the Google Calendar link** for the staff schedule. Both answered (Nov 20);
+  only the Vercel settings are left.
   - Password: Eric sent the staff password the old Mid Valley employee page uses (Nov 20). Staff keep using it. It
     goes into Vercel as `EMPLOYEE_PORTAL_PASSWORD` only, never into this repository or the admin panel. It is
     case-sensitive and the spaces count.
-  - Calendar: the schedule lives in Eric's management Google account. Still needed: the calendar's **embed link**
-    (Google Calendar → the calendar's Settings → Integrate calendar → the `src` address in the Embed code), and a
-    decision on who can see it (see DEPLOY.md, section 6). The developer does not need, and should not use, the
-    Google account's own password.
+  - Calendar: Eric sent the calendar's share link (`https://calendar.google.com/calendar/u/4?cid=…`) and says the
+    calendar is public, which is why the portal password sits in front of it. That link can go into
+    `EMPLOYEE_CALENDAR_EMBED_URL` as it is: the site turns it into the embed address. The developer does not
+    need, and should not use, the Google account's own password.
   - Until both are set, the Employee page shows "Employee page coming soon".
   - The developer adds them to Vercel (see DEPLOY.md, section 6).
 - [ ] **The "Upfront, flat rate" selling point** in the blue bar under the promo banner. This wording wasn't on
   the old website. Please confirm it is accurate, or tell us what it should say. Where: **Admin → Home page**.
-- [ ] **The photo `rss.jpg`** in the About Us photo gallery ("Wide view of a storage facility across the road").
-  - It comes from the old site's media library, where its file name is RSS.jpg.
-  - Please confirm it shows a Mid Valley facility, and not another business.
-  - If it shouldn't be there, replace or remove it in **Admin → About Us page**.
+- [x] **The photo `rss.jpg`** in the About Us photo gallery: Eric asked to remove it (Nov 20). It is gone from the
+  gallery (`npm run migrate:update2` removes it from saved content). The file stays in `public/images/` so older
+  versions in the change history still show correctly.
+- [x] **A sharper office photo** next to "Visalia's best choice" (Eric, Nov 20): the About section now uses the
+  sharper 2592px photo of the same desk (`security.jpg`). So the homepage doesn't show it twice, the Security
+  section now uses the gate keypad photo (`keycode-access.jpg`), labelled "Individual Keycode Access" (the Facility
+  Features title for that photo). Both can be changed in **Admin → Home page**.
 - [ ] **A larger version of the promo banner for computer screens.** The current banner image is 1774 × 887
   pixels, which can look soft on large monitors. If you have the original design file, please send a wider export.
   Where: **Admin → Promo banner**.

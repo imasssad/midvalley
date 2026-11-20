@@ -42,7 +42,7 @@ in the repository.
 | `ADMIN_PASSWORD` | Yes, for the first sign-in | At least 10 characters. **Delete it from Vercel after the first sign-in.** | 10+ characters |
 | `NEXT_PUBLIC_SITE_URL` | Recommended | The public address, with no trailing slash. Used for canonical links, the sitemap, sharing previews and structured data. Defaults to `https://midvalleystorage.com`. On a preview you may set it to the preview URL. | `https://midvalleystorage.com` |
 | `NEXT_PUBLIC_GTM_ID` | Recommended | Google Tag Manager container. The old site uses **GTM-TBHW45PH**. If empty, no tracking loads. | `GTM-XXXXXXX` |
-| `CONTACT_TO_EMAIL` | Yes, for email | Who receives contact form messages. Separate several addresses with commas. **Still to be confirmed by the client.** | `office@example.com, eric@example.com` |
+| `CONTACT_TO_EMAIL` | Yes, for email | Who receives contact form messages. Separate several addresses with commas. The client chose `info@midvalleystorage.com` (Nov 20). | `info@midvalleystorage.com` |
 | `CONTACT_FROM_EMAIL` | Yes, for email | The sender address, on a domain verified in Resend (section 7). | `Mid Valley Storage <website@midvalleystorage.com>` |
 | `RESEND_API_KEY` | Yes, for email | Create it at resend.com → **API Keys**, with "Sending access". | `re_<random>` |
 | `EMPLOYEE_PORTAL_PASSWORD` | For the Employee Portal | The shared password staff type on `/employee`. Until it is set, the page shows its placeholder line and no form. | any passphrase |
@@ -162,7 +162,9 @@ Both are environment variables, so the owner doesn't type them into the admin pa
 3. Changing the password signs every device out of the portal, and staff use the new password from then on.
 
 To get the calendar address: in Google Calendar, open the calendar's **Settings → Integrate calendar**, and copy
-the `src="…"` address from the **Embed code**. It starts with `https://calendar.google.com/calendar/embed?`.
+the `src="…"` address from the **Embed code**. It starts with `https://calendar.google.com/calendar/embed?`. The
+calendar's share link (`https://calendar.google.com/calendar/u/0?cid=…`) works too: the site turns it into the embed
+address (lib/calendar-url.ts), shown in Pacific time.
 Anyone who should see the schedule needs access to that calendar in Google, or the calendar must be shared
 publicly. The portal only hides the address from people who don't know the password.
 
