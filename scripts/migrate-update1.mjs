@@ -33,6 +33,7 @@ import path from "node:path";
 import { blobHint, loadEnv, openStorage, ROOT, toJSON, UsageError } from "./seed.mjs";
 
 const CONTENT_PATH = "content/site.json";
+const MARKER = "migrations/update1.json";
 const HISTORY_PREFIX = "content/history/";
 const BY = { email: "migration", name: "Update 1 migration" };
 const NOTE = "Before Update 1 (npm run migrate:update1)";
@@ -235,16 +236,30 @@ async function listPaths(store, prefix) {
 async function main() {
   const args = process.argv.slice(2);
   if (args.includes("--help") || args.includes("-h")) {
-    console.log("Usage: npm run migrate:update1 [-- --dry-run] [-- --env <file>]");
+    console.log("Usage: npm run migrate:update1 [-- --dry-run] [-- --once] [-- --env <file>]\n  --once  skip when this store already recorded a run (used by the production build)");
     return;
   }
-  const unknown = args.filter((a, i) => !["--dry-run", "--env"].includes(a) && args[i - 1] !== "--env");
+  const unknown = args.filter((a, i) => !["--dry-run", "--once", "--env"].includes(a) && args[i - 1] !== "--env");
   if (unknown.length) throw new UsageError(`Unknown option(s): ${unknown.join(" ")}. Try --help.`);
   const dryRun = args.includes("--dry-run");
 
   await loadEnv(args);
   const store = await openStorage();
   console.log(`Storage:  ${store.describe}${dryRun ? "\nMode:     --dry-run (nothing is written)" : ""}\n`);
+
+  // Run-once record (migrations/update1.json in the store). With --once, a store that already has it is left alone,
+  // so the production build can call this on every deploy without ever undoing a later admin edit.
+  const marker = await store.readText(MARKER);
+  if (marker !== null && args.includes("--once")) {
+    let at = "";
+    try {
+      at = JSON.parse(marker).ranAt ?? "";
+    } catch {
+      // an unreadable record still counts as "already run"
+    }
+    console.log(`SKIPPED  already applied to this store${at ? ` on ${at}` : ""} (${MARKER}). Nothing to do.`);
+    return;
+  }
 
   const defaults = JSON.parse(await fs.readFile(path.join(ROOT, CONTENT_PATH), "utf8"));
   const storedText = await store.readText(CONTENT_PATH);
@@ -309,6 +324,7 @@ async function main() {
     await store.writeText(target, wanted);
     console.log(`UPDATED  ${target} (refreshed from the repository)`);
   }
+  if (!dryRun) await store.writeText(MARKER, toJSON({ ranAt: new Date().toISOString(), by: BY.name }));
   console.log("\nDone. The live site shows the change within the hour, or right away after the next admin save or a redeploy.");
 }
 

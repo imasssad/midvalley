@@ -20,13 +20,14 @@ directly in the admin panel, once you have your login (step 2).
 - [x] **"Rent Online" links, one per location.**
   - Eric sent the Storedge move-in links for **Visalia Noble** and **Visalia Santa Fe** (Update 1). Every Rent
     Online and Reserve button now uses them, each to its own location. The payment (`#/login`) links are unchanged.
-  - If a deployment already has saved content, run `npm run migrate:update1` once to apply them (what it changes
-    is listed at the top of `scripts/migrate-update1.mjs`).
+  - Saved content is brought up to date automatically: every production deploy runs the content migrations once
+    (`scripts/build-migrations.mjs`; what each changes is listed at the top of `scripts/migrate-update1.mjs` and
+    `scripts/migrate-update2.mjs`).
   - Where to change them later: **Admin → Locations & contact**.
 - [x] **Office hours** for each location (Eric, Nov 20): 9:30AM to 5:30PM Monday to Friday, 9AM to 5PM Saturday, at
   both locations. Gate hours: 6AM to 8PM every day.
-  - If a deployment already has saved content, run `npm run migrate:update2` once (add `-- --dry-run` first to see
-    what it will change). It also applies the three photo changes below, and never overwrites an admin edit.
+  - Saved content gets these on the next production deploy (`npm run migrate:update2`, run once automatically). It
+    also applies the three photo changes below, and never overwrites an admin edit.
   - Where to change them later: **Admin → Locations & contact**.
 - [ ] **Customer reviews (testimonials):** Eric wants them (Nov 20).
   - The section stays hidden until at least one review is added, so nothing shows yet.

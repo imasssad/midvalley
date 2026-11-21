@@ -110,6 +110,23 @@ After a `--force` run, visitors see the change within the hour, or immediately a
 redeploy. A normal seed only adds fields the site was already showing from its defaults, so visitors see no
 change.
 
+
+### Content updates (migrations)
+
+Some client updates change content that may already be saved in the Blob store (where admin edits win over the
+repository defaults). Those changes ship as migrations: `scripts/migrate-update1.mjs` and
+`scripts/migrate-update2.mjs` (each lists exactly what it changes at the top).
+
+- **Automatic:** `npm run build` first runs `scripts/build-migrations.mjs`. On a **production** build with a Blob store
+  connected, it runs each migration with `--once`. A migration records itself in the store
+  (`migrations/<name>.json`) and is skipped on every later deploy, so it can never undo a later admin edit. Preview
+  and local builds skip this. A failure is printed in the build log and does not stop the deploy.
+- **By hand** (same rules as the seed above): `npm run migrate:update2 -- --dry-run` to see what would change, then
+  `npm run migrate:update2`.
+
+Each migration only changes values that are still exactly as shipped, and saves a history version first, so
+**Admin → Change history & undo** can put the previous content back.
+
 ## 4. Admin logins
 
 The admin panel is at **`/admin`**.
